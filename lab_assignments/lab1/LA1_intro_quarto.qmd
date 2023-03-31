@@ -24,7 +24,7 @@ If you have completed *Check-in 1.3*, you have already completed steps 1 & 2.
 
 ### Create your Lab 1 File
 
-To create a Quarto document, you first need to install Quarto on your computer. To do this go to the following link <https://quarto.org/docs/get-started/>. You may have already installed Quarto during *Check-in 1.3*.
+To create a Quarto document, you first need to install Quarto on your computer. To do this, go [here](https://quarto.org/docs/get-started/). You may have already installed Quarto during *Check-in 1.3*.
 
 1.  Once you have Quarto installed, open RStudio on your computer.
 
@@ -44,7 +44,7 @@ To create a Quarto document, you first need to install Quarto on your computer. 
 
 ### Changing the Execution Options
 
-Execution options specify how the R code in your Quarto document should be displayed. This guide <https://quarto.org/docs/computations/execution-options.html> provides descriptions on the options you can specify in a document's execution.
+Execution options specify how the R code in your Quarto document should be displayed. This [guide](https://quarto.org/docs/computations/execution-options.html) provides descriptions on the options you can specify in a document's execution.
 
 To start, your YAML should look something like this:
 
@@ -55,10 +55,10 @@ knitr::include_graphics("images/quarto-yaml.png")
 
 Similar to how you added an `author`, `self-contained`, (and `editor`) line, you will first need to add an `execute` line to your YAML.
 
-**Use the guide above to specify execution options so that:**
+Use the guide above to specify execution options so that:
 
-1.  **your source code is always output on the page.**
-2.  **your document will render even if there are errors.**
+1.  your source code is always output on the page.
+2.  your document will render even if there are errors.
 
 ## Running the Provided Code
 
@@ -123,11 +123,11 @@ There are four different ways to do this:
 
 Now, in the code chunk you just created, carry out the following steps:
 
--   Step 1: Extract the distance column of the `cars` dataset (remember how we did this in the Practice Activity) and save it into a new object named `dist`.
+1. Extract the distance column of the `cars` dataset (remember how we did this in the Practice Activity) and save it into a new object named `dist`.
 
--   Step 2: Create a histogram of the distribution of the stopping distances (contained in `dist`).[^1]
+2. Create a histogram of the distribution of the stopping distances (contained in `dist`).[^1]
 
--   Step 3: Create a second plot, a scatterplot, visualizing the relationship between the stopping distance and speed.[^2]
+3. Create a second plot, a scatterplot, visualizing the relationship between the stopping distance and speed.[^2]
 
 [^1]: You are permitted to use whatever code you would prefer. This task can be completed with the `plot()` function, but if you would rather use `ggplot()`, you are more than welcome to. We will be getting there next week!
 
@@ -135,9 +135,9 @@ Now, in the code chunk you just created, carry out the following steps:
 
 To earn a "Success" on your plots, make sure each plot has reasonable axis labels. For example, if you use the `dist` variable, your axis should say "Stopping Distance" with the correct units not just "dist".
 
--   Step 4: Create another section header, describing the contents of this section.
+4. Create another section header, describing the contents of this section.
 
--   Step 5: Create a **numbered list** of two aspects of the plots you would like to improve.
+5. Create a **numbered list** of two aspects of the plots you would like to improve.
 
 ### Knit your document
 

@@ -17,7 +17,7 @@ Today we will...
   + Intro to Me + You + the course
   + Intro to R + RStudio
   + Directories & File Paths
-+ Troubleshooting (watch video in book)
++ Troubleshooting
 + [PA 1: Find the Mistakes](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA1.html)
 
 
@@ -54,11 +54,12 @@ We will be joined in class by Sophia.
 
 Sophia is...
 
-+ A sophomore Statistics major.
++ A second-year Statistics major pursuing a Data Science minor.
 
-+ Originally from 
++ Originally from San Ramon in the East Bay Area.
 
-+ 
++ A golfer, dancer, and crocheter!
+
 
 ## You!
 
@@ -129,6 +130,8 @@ To install a package use:
 install.packages("tibble")
 ```
 
++ You should have to install a package **only once**.
+
 . . .
 
 To load a package use:
@@ -140,6 +143,7 @@ To load a package use:
 library(tibble)
 ```
 
++ You have to load a package **each time you restart R**.
 
 ## Open-Source
 
@@ -147,9 +151,14 @@ Importantly, **R** is *open-source*.
 
 + There is no company that owns **R**, like there is for *SAS* or *Matlab*.
   + (*Python* is also open-source!)
+
+. . .
+
 + This means nobody can sell their **R** code!
   + But you can sell "helpers" like **RStudio**.
   + And you can keep code **private** within an organization or company.
+
+. . .
 
 **This means packages are created by users like you and me!**
 
@@ -160,9 +169,15 @@ Being a good open-source citizen means...
 
 ... **sharing** your code publicly when possible (later in this course, we'll learn about *GitHub*!).
 
+. . .
+
 ... **contributing** to public projects and packages, as you are able.
 
+. . .
+
 ... creating your own **packages**, if you can.
+
+. . .
 
 ... using **R** for **ethical and respectful** projects.
 
@@ -193,9 +208,13 @@ knitr::include_graphics("images/rstudio_session_4pane_layout.png")
 
 + In 2014, RStudio hired *Hadley Wickham* as Chief Data Scientist. They now employ around 20 full-time developers.
 
+. . .
+
 + Recall: You can __not__ sell __R__ code, so packages created by RStudio's team are freely available.  
 
-+ They make money off the IDE and other helper software.
+  + They make money off the IDE and other helper software.
+
+. . .
 
 + In 2020, RStudio became a PBC (*Public Benefit Corp*), meaning they are legally obligated to support education and open-source development.
 
@@ -207,18 +226,17 @@ knitr::include_graphics("images/rstudio_session_4pane_layout.png")
 
 - A **directory** is just a fancy name for a folder.
 
-- Your **working directory** is the folder that `R` "thinks" it lives in at the
-moment.
+- Your **working directory** is the folder that `R` "thinks" it lives in at the moment.
+  - If you save things you have created, they save to your working directory by default.
+
+. . .
 
 ```{r}
 #| echo: true
 #| code-line-numbers: false
-#| eval: false
 getwd()
 ```
 
-- If you save things you have created, they save to your working directory by
-default.
 
 
 ## Paths
@@ -253,7 +271,7 @@ Create a directory for this class!
 
 + An **R Project** is basically a "flag" planted in a certain directory.
 
-+ When you double click a **.Rproj** file, it:
++ When you double click an **.Rproj** file, it:
 
 :::: {.columns}
 
@@ -289,7 +307,7 @@ RStudio Projects are great for **reproducibility**!
 You can to send your project to someone else, and they can
 jump in and start working right away.
 
-+ This involves:
++ This means:
 
   1. Files are organized and well-named.
 
@@ -340,18 +358,20 @@ setwd("/User/reginageorge/Desktop/R_Class/Lab_1/")
 
 + Values have **types**:
 
+. . .
+
   1. **logical / boolean**: FALSE/TRUE or 0/1 values.
+
+. . .
 
   2. **integer**: whole numbers.
 
-  3. **double / float / numeric**: decimal numbers.
+. . .
 
-      + float: "floating-point value".
+  3. **double / float / numeric**: decimal numbers.
       
-      + double: floating-point value with more precision.
-      
-      + numeric: decimal value, regardless of precision.
-      
+. . .
+
   4. **character / string** - holds text, usually enclosed in quotes.
 
 
@@ -804,6 +824,8 @@ Today we will...
 
 + **Scripts** (`File > New File > R Script`) are files of code that are meant to be run on their own.
 
+. . .
+
 + Scripts can be run in RStudio by clicking the `Run` button at the top of the editor window when the script is open.
 
 + You can also run code interactively in a script by:
@@ -828,7 +850,7 @@ Notebooks are an implementation of **literate programming**.
 
 **Markdown** (without the "R") is a *markup language*.  
 
-+ This means it uses special symbols and formatting to make pretty documents.
++ It uses special symbols and formatting to make pretty documents.
 
 + Markdown files have the **.md** extension.
 
@@ -878,7 +900,7 @@ Quarto is the next generation RMarkdown.
 
 + More accessible defaults as well as better support for accessibility.
 
-+ Guardrails, particularly helpful for new learning: YAML completion, informative syntax errors, etc.
++ Guardrails, particularly helpful when learning: YAML completion, informative syntax errors, etc.
 
 + Support for other languages like Python, Julia, Observable, and more via Jupyter engine for executable code chunks.
 
@@ -902,9 +924,7 @@ knitr::include_graphics("images/horst_qmd_render_schema.png")
 
 ## Quarto formats
 
-Quarto makes moving between formats straightforward
-
-
+Quarto makes moving between formats straightforward.
 
 :::: {.columns}
 
@@ -1022,7 +1042,7 @@ When you click **Render**:
     -   This will save in the same folder as "Lab1.qmd".
 
 
-## [Lab 1: Introduction to Quarto + Challenge 1: Modifying your Quarto Document](https://earobinson95.github.io/stat331-calpoly/lab-assignments/Lab1/Lab1-intro-to-quarto.html)
+## [Lab 1: Introduction to Quarto + Challenge 1: Modifying your Quarto Document](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab1/LA1_intro_quarto.html)
 
 ## To do...
 
