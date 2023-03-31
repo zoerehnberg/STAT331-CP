@@ -8,13 +8,6 @@ editor: source
 self-contained: true
 ---
 
-```{r setup}
-#| include: false
-#| message: false
-library(tidyverse)
-```
-
-
 ## Monday, April 3
 
 Today we will...
@@ -25,7 +18,7 @@ Today we will...
   + Intro to R + RStudio
   + Directories & File Paths
 + Troubleshooting (watch video in book)
-+ [PA 1: Find the Mistakes](https://earobinson95.github.io/stat331-calpoly/practice-activities/PA1-find-the-mistakes.html)
++ [PA 1: Find the Mistakes](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA1.html)
 
 
 # Introductions
@@ -54,6 +47,18 @@ What this means for you:
 
 Questions?
 
+
+## Our Classroom Learning Assistant!
+
+We will be joined in class by Sophia.
+
+Sophia is...
+
++ A sophomore Statistics major.
+
++ Originally from 
+
++ 
 
 ## You!
 
@@ -162,189 +167,6 @@ Being a good open-source citizen means...
 ... using **R** for **ethical and respectful** projects.
 
 
-## R Basics: Data Types
-
-+ A **value** is a basic unit of stuff that a program works with.
-
-+ Values have **types**:
-
-  1. **logical / boolean**: FALSE/TRUE or 0/1 values.
-
-  2. **integer**: whole numbers.
-
-  3. **double / float / numeric**: decimal numbers.
-
-      + float: "floating-point value".
-      
-      + double: floating-point value with more precision.
-      
-      + numeric: decimal value, regardless of precision.
-      
-  4. **character / string** - holds text, usually enclosed in quotes.
-
-
-## R Basics: Variables
-
-**Variables** are names that refer to values.
-
-+ A variable is like a container that holds something - when you refer to the container, you get whatever is stored inside.
-
-+ We assign values to variables using the syntax ``object_name <- value``.
-  
-  + You can read this as “object name gets value” in your head.
-
-. . .
-
-```{r}
-#| echo: true
-message <- "So long and thanks for all the fish"
-year <- 2025
-the_answer <- 42
-earth_demolished <- FALSE
-```
-
-
-## R Basics: Data Structures
-
-*Homogeneous*: every element has the same data type.
-
-+ **Vector**: a one-dimensional column of homogeneous data.
-
-+ **Matrix**: the next step after a vector - it’s a set of homogenous data arranged in a two-dimensional, rectangular format.
-
-. . .
-
-*Heterogeneous*: the elements can be of different types.
-
-+ **List**: a one-dimensional column of heterogeneous data.
-
-+ **Dataframe**: a two-dimensional set of heterogeneous data arranged in a rectangular format.
-
-
-## R Basics: Indexing
-
-We use **square brackets** (``[]``) to access elements within data structures.
-
-  + In R, we start indexing from 1.
-  
-. . .
-
-:::: {.columns}
-
-::: {.column width="25%"}
-
-Vector:
-
-:::
-
-::: {.column width="75%"}
-
-```{r}
-#| eval: false
-#| echo: true
-#| code-line-numbers: false
-vec[4]    # 4th element
-vec[1:3]  # first 3 elements
-```
-
-:::
-
-::::
-
-:::: {.columns}
-
-::: {.column width="25%"}
-        
-Matrix:
-
-:::
-
-::: {.column width="75%"}
-
-```{r}
-#| eval: false
-#| echo: true
-#| code-line-numbers: false
-mat[2,6]  # element in row 2, col 6
-mat[,3]   # all elements in col 3
-```
-
-:::
-
-::::
-
-:::: {.columns}
-
-::: {.column width="25%"}
-
-List:
-
-:::
-
-::: {.column width="75%"}
-
-```{r}
-#| eval: false
-#| echo: true
-#| code-line-numbers: false
-li[[5]]    # 5th element
-```
-
-:::
-
-::::
-
-:::: {.columns}
-
-::: {.column width="25%"}
-
-Dataframe:
-
-:::
-
-::: {.column width="75%"}
-
-```{r}
-#| eval: false
-#| echo: true
-#| code-line-numbers: false
-df[1,2]     # element in row 1, col 2
-df[17,]     # all elements in row 17
-df$calName  # all elements in the col named "colName"
-```
-
-:::
-
-::::
-
-
-## R Basics: Logic
-
-We can combine logical statements using and, or, and not.
-
-+ (X AND Y) requires that both X and Y are true.
-
-+ (X OR Y) requires that one of X or Y is true.
-
-+ (NOT X) is true if X is false, and false if X is true.
-
-. . .
-
-```{r}
-#| echo: true
-x <- c(TRUE, FALSE, TRUE, FALSE)
-y <- c(TRUE, TRUE, FALSE, FALSE)
-
-x & y   # AND
-
-x | y   # OR
-
-!x & y  # NOT X AND Y
-```
-
-
-
-
 # Intro to RStudio
 
 ## What is RStudio?
@@ -411,7 +233,7 @@ This file lives in my user files `Users/`...
 
 ...on my account `zrehnber/` ...
 
-...in my OneDrive `OneDrive - Cal Poly` ...
+...in my `Documents` folder ...
 
 ...in a series of organized folders.
 
@@ -508,6 +330,189 @@ setwd("/User/reginageorge/Desktop/R_Class/Lab_1/")
 - That directory is specific to you!
 
 - R Markdown and Quarto (more on these later) ignore this code when knitting! 
+
+
+# R Basics
+
+## Data Types
+
++ A **value** is a basic unit of stuff that a program works with.
+
++ Values have **types**:
+
+  1. **logical / boolean**: FALSE/TRUE or 0/1 values.
+
+  2. **integer**: whole numbers.
+
+  3. **double / float / numeric**: decimal numbers.
+
+      + float: "floating-point value".
+      
+      + double: floating-point value with more precision.
+      
+      + numeric: decimal value, regardless of precision.
+      
+  4. **character / string** - holds text, usually enclosed in quotes.
+
+
+## Variables
+
+**Variables** are names that refer to values.
+
++ A variable is like a container that holds something - when you refer to the container, you get whatever is stored inside.
+
++ We assign values to variables using the syntax ``object_name <- value``.
+  
+  + You can read this as “object name gets value” in your head.
+
+. . .
+
+```{r}
+#| echo: true
+message <- "So long and thanks for all the fish"
+year <- 2025
+the_answer <- 42
+earth_demolished <- FALSE
+```
+
+
+## Data Structures
+
+*Homogeneous*: every element has the same data type.
+
++ **Vector**: a one-dimensional column of homogeneous data.
+
++ **Matrix**: the next step after a vector - it’s a set of homogenous data arranged in a two-dimensional, rectangular format.
+
+. . .
+
+*Heterogeneous*: the elements can be of different types.
+
++ **List**: a one-dimensional column of heterogeneous data.
+
++ **Dataframe**: a two-dimensional set of heterogeneous data arranged in a rectangular format.
+
+
+## Indexing
+
+We use **square brackets** (``[]``) to access elements within data structures.
+
+  + In R, we start indexing from 1.
+  
+. . .
+
+:::: {.columns}
+
+::: {.column width="25%"}
+
+Vector:
+
+:::
+
+::: {.column width="75%"}
+
+```{r}
+#| eval: false
+#| echo: true
+#| code-line-numbers: false
+vec[4]    # 4th element
+vec[1:3]  # first 3 elements
+```
+
+:::
+
+::::
+
+:::: {.columns}
+
+::: {.column width="25%"}
+        
+Matrix:
+
+:::
+
+::: {.column width="75%"}
+
+```{r}
+#| eval: false
+#| echo: true
+#| code-line-numbers: false
+mat[2,6]  # element in row 2, col 6
+mat[,3]   # all elements in col 3
+```
+
+:::
+
+::::
+
+:::: {.columns}
+
+::: {.column width="25%"}
+
+List:
+
+:::
+
+::: {.column width="75%"}
+
+```{r}
+#| eval: false
+#| echo: true
+#| code-line-numbers: false
+li[[5]]    # 5th element
+```
+
+:::
+
+::::
+
+:::: {.columns}
+
+::: {.column width="25%"}
+
+Dataframe:
+
+:::
+
+::: {.column width="75%"}
+
+```{r}
+#| eval: false
+#| echo: true
+#| code-line-numbers: false
+df[1,2]     # element in row 1, col 2
+df[17,]     # all elements in row 17
+df$calName  # all elements in the col named "colName"
+```
+
+:::
+
+::::
+
+
+## Logic
+
+We can combine logical statements using and, or, and not.
+
++ (X AND Y) requires that both X and Y are true.
+
++ (X OR Y) requires that one of X or Y is true.
+
++ (NOT X) is true if X is false, and false if X is true.
+
+. . .
+
+```{r}
+#| echo: true
+x <- c(TRUE, FALSE, TRUE, FALSE)
+y <- c(TRUE, TRUE, FALSE, FALSE)
+
+x & y   # AND
+
+x | y   # OR
+
+!x & y  # NOT X AND Y
+```
 
 
 # Troubleshooting Errors!
@@ -752,7 +757,7 @@ It *probably* means...
 matrix(c("a", "b", "c", "d"), num_row = 2)
 ```
 
-## [PA 1: Find the Mistakes](https://earobinson95.github.io/stat331-calpoly/practice-activities/PA1-find-the-mistakes.html)
+## [PA 1: Find the Mistakes](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA1.html)
 
 The components of the Practice Activity are described below:
 
@@ -770,17 +775,17 @@ Submit the name of the poem as the answer to the Canvas Quiz question.
 
 ## To do...
 
-+ **Review Pre-reading + Chapter 1: Introduction**
-+ **Concept Checks 1.1 - 1.4**
-  + Due Wednesday (1/11) at 8AM
++ **Do Pre-reading + Chapter 1: Introduction**
++ **Check-ins 1.1 - 1.4**
+  + Due Wednesday (4/5) at 8:00am
   
 + **PA 1: Find the Mistakes**
-  + Due **Wednesday** (1/11) at 11:59PM
+  + Due Wednesday (4/5) at 8:00am
   
 + **Bonus Challenge 0: FizzBuzz (+5)**
-  + Due Saturday (1/21) at 11:59pm 
+  + Due Saturday (4/15) at 11:59pm 
 
-## Wednesday, January 11th
+## Wednesday, April 5
 
 Today we will...
 
@@ -793,127 +798,118 @@ Today we will...
 + Challenge 1: Modifying your Quarto Document
 
 
-
-## Scripts + Notebooks
+# Scripts + Notebooks
 
 ## Scripts
 
-**Scripts** are files of code that are meant to be run on their own.
++ **Scripts** (`File > New File > R Script`) are files of code that are meant to be run on their own.
 
-`File > New File > R Script`
++ Scripts can be run in RStudio by clicking the `Run` button at the top of the editor window when the script is open.
 
-`#` indicates a comment 
++ You can also run code interactively in a script by:
 
-Scripts can be run in Rstudio by clicking the `Run` button at the top of the editor window when the script is open.
+  + highlighting lines of code and hitting run.
 
-You can also run code interactively in a script by: 
-+ highlighting lines of code (or even just placing your cursor on a line of code) and hitting run or `cntrl + enter`
+  + placing your cursor on a line of code and hitting run.
+
+  + placing your cursor on a line of code and hitting `ctrl + enter` or `command + enter`.
+
 
 ## Notebooks
 
-Notebooks are an implementation of literate programming.
+Notebooks are an implementation of **literate programming**.
 
-Allows you to integrate code, output, text, images, etc. into a single document.
++ They allow you to integrate code, output, text, images, etc. into a single document.
 
-**Reproducibility!**
++ **Reproducibility!**
+
 
 ## What is Markdown?
 
-**Markdown** (without the "R") is a *markup language*.  This means special symbols and formatting to pretty documents.
+**Markdown** (without the "R") is a *markup language*.  
 
-Markdown files have the **.md** extension.
++ This means it uses special symbols and formatting to make pretty documents.
+
++ Markdown files have the **.md** extension.
+
+<center>
 
 ![](https://d33wubrfki0l68.cloudfront.net/59f29676ef5e4d74685e14f801bbc10c2dbd3cef/c0688/lesson-images/markdown-1-markup.png)
+</center>
 
 ## What is R Markdown?
 
-**R Markdown** (with the "R") uses regular markdown, plus it can run and display **R** code.  (Other languages, too!)
+**R Markdown** (with the "R") uses regular *Markdown*, plus it can run and display **R** code. (Other languages, too!)
 
-R Markdown files have the **.Rmd** extension.
++ R Markdown files have the **.Rmd** extension.
+
+<center>
 
 ![](https://d33wubrfki0l68.cloudfront.net/ece57b678854545e6602a23daede51ad72da2170/21cca/lesson-images/outputs-1-word.png)
+
+</center>
+
 ##
+
+<center>
 
 ![](https://miro.medium.com/max/1200/1*jL-whKGBhuUlU7Q2oevz9w.png)
 
-## [We don't talk about Quarto](https://www.apreshill.com/blog/2022-04-we-dont-talk-about-quarto/)
+</center>
 
-```{r, echo = F, out.width="80%", fig.align='center'}
-knitr::include_graphics("images/quarto_yaml.png")
-```
 
 ## What is Quarto?
 
-Quarto **unifies** and **extends** the RMarkdown ecosystem.
+Quarto **unifies** and **extends** the R Markdown ecosystem.
 
-```{r, echo = F, out.width="50%", fig.align='center'}
+```{r}
+#| echo: false
+#| out-width: "50%"
+#| fig-align: center
 knitr::include_graphics("images/rmd_ecosystem.png")
 ```
 
 Quarto is the next generation RMarkdown.
 
-???
-It unifies it for people who love R Markdown by reducing little points of friction, so that websites, books, and slides all have a common approach.
-
-And it extends it for people who don't know RMarkdown by being a friendly way to work reproducibly and publish documents that have text and code in the same place
-
-Think of all the packages from the R Markdown universe that you've come to love and rely on over the years. Each package addresses a different need and offers a different output: for example, you can use blogdown or distill for creating websites and blogs, bookdown for writing a book, rticles for writing journal articles, etc.
-
-Quarto unifies the functionality from these packages,
-
-building on Pandoc on the technical side
-
-and on the human side -- over a decade of experience developing, maintaining, and tweaking these packages as well as community feedback R Markdown extension packages.
-
-Such a unification effort presents a fantastic opportunity to identify and address gaps functionality and inefficiencies in user experience, and the process of building Quarto has been no different.
 
 ## Quarto highlights
 
 + Consistent implementation of attractive and handy features across outputs: tabsets, code-folding, syntax highlighting, etc.
 
-+ More accessible defaults as well as better support for accessibility
++ More accessible defaults as well as better support for accessibility.
 
 + Guardrails, particularly helpful for new learning: YAML completion, informative syntax errors, etc.
 
 + Support for other languages like Python, Julia, Observable, and more via Jupyter engine for executable code chunks.
 
-???
-
-Some highlights of these improvements include
-
---\> consistent implementation of attractive and handy features across *all* outputs, like tabsets, code-folding, and syntax highlighting,
-
---\> more accessible defaults as well as better support for creating accessible documents,
-
---\> guardrails that are particularly helpful for new learners, like YAML completion and informative syntax errors,
-
---\> and perhaps most excitingly for those who are not coming from the R ecosystem, Quarto offers support for other languages like Python, Julia, Observable, and more via the Jupyter engine for executable code chunks. And it's designed to be expandable to more engines and languages, even those that might not exist today.
-
-\[pause\] So by now I'm assuming many of you have already started playing with Quarto, or you're waiting for me to do that. So, let's dive in and see what all the Quarto fuss is about!
 
 ## Rendering in Quarto
 
-Quarto CLI orchestrates each step of rendering
+Quarto CLI (command line interface) orchestrates each step of rendering.
 
 ```{r, echo = F, fig.align='center'}
 knitr::include_graphics("images/horst_qmd_render_schema.png")
 ```
 
-???
 
-Now that you've all had a chance to see Quarto in action, you might be wondering, "how are R Markdown and Quarto different"?
+<!-- Now that you've all had a chance to see Quarto in action, you might be wondering, "how are R Markdown and Quarto different"? -->
 
-The main difference is that with R Markdown, the R package rmarkdown does the heavy lifting of going from the source Rmd file to the the output, using knitr for evaluating the code chunks.
+<!-- The main difference is that with R Markdown, the R package rmarkdown does the heavy lifting of going from the source Rmd file to the the output, using knitr for evaluating the code chunks. -->
 
---\> With Quarto, on the other hand, the Quarto command line interface, or the Quarto CLI, does the orchestration of processing executable code chunks with either knitr or jupyter and then converting the resulting markdown file to the desired output.
+<!-- With Quarto, on the other hand, the Quarto command line interface, or the Quarto CLI, does the orchestration of processing executable code chunks with either knitr or jupyter and then converting the resulting markdown file to the desired output. -->
 
-While this is technically impressive, I'll be honest, it's not exactly what sparked my interest in Quarto in the first place.
+<!-- While this is technically impressive, I'll be honest, it's not exactly what sparked my interest in Quarto in the first place. -->
 
 ## Quarto formats
 
 Quarto makes moving between formats straightforward
 
-.pull-left[
+
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
 **Document**
 
 ``` yaml
@@ -928,7 +924,10 @@ title: "Lesson 1"
 format: revealjs
 ```
 
-].pull-right[
+:::
+
+::: {.column width="50%"}
+
 **Website**
 
 ``` yaml
@@ -940,25 +939,22 @@ website:
     left:
       - lesson-1.qmd
 ```
-]
 
-???
+:::
 
-What did spark my interest was how how straightforward it is with Quarto to move between output formats.
+::::
 
-As an educator, two things are of utmost importance to me about the tools I use to create my materials: reproducibility and ease of transition between output formats, like documents to slides to websites to books.
 
-Over the last year of using Quarto for pretty much everything, I've felt like I've finally found the tool that lets me go from one output type to the other with minimal, if any, futzing around with my source code beyond the yaml. For example, here are common things I produce
+<!-- What did spark my interest was how how straightforward it is with Quarto to move between output formats. -->
 
---\> a lesson in document form <br> --\> the same content in presentation form <br> --\> the same content on a page in a website,
+<!-- As an educator, two things are of utmost importance to me about the tools I use to create my materials: reproducibility and ease of transition between output formats, like documents to slides to websites to books. -->
 
-and you can see that all that needed to change going between these formats is a few lines in the yaml. Nothing in the content part of my document. No slide breaks to remove, no citation style to change, no headings to re-level. This ease of transition has freed up time to focus my time on content, and that, folks, is the dream!
+<!-- Over the last year of using Quarto for pretty much everything, I've felt like I've finally found the tool that lets me go from one output type to the other with minimal, if any, futzing around with my source code beyond the yaml. For example, here are common things I produce -->
 
-## Quarto preview
+<!-- a lesson in document form <br> --\> the same content in presentation form <br> --\> the same content on a page in a website, -->
 
-**Welcome to Quarto!**
+<!-- and you can see that all that needed to change going between these formats is a few lines in the yaml. Nothing in the content part of my document. No slide breaks to remove, no citation style to change, no headings to re-level. This ease of transition has freed up time to focus my time on content, and that, folks, is the dream! -->
 
-![](images/quarto_overview.png)
 
 ## Quarto components
 
@@ -966,43 +962,61 @@ and you can see that all that needed to change going between these formats is a 
 
 ## Markdown in Quarto
 
-Formatting the text in your document
+A few useful tips for formatting the **markdown** text in your document:
 
-**Markdown** is a *markup language*. This means special symbols and formatting to pretty documents.
++ \*text\* -- makes italics
 
-\*text\* -- makes italics
++ \*\*text\*\* -- makes bold text
 
-\*\*text\*\* -- makes bold text
++ \# -- makes headers
 
-\# -- makes headers
++ !\[ \]( ) -- includes images or HTML links
 
-!\[ \]( ) -- includes images or HTML links
++ \< \> -- embeds URLs
 
-\< \> -- embeds URLs
 
 ## R code options in Quarto
 
+**R code block** options are included at the top of each code block, prefaced with a #| (hashpipe).
+
+. . .
+
+<center>
+
+![](images/code_options.png)
+
+</center>
+
+
+## 
+
+<center>
+
 ![](images/quarto_code_options.png)
 
-## Hashpipe
+</center>
 
-`#|`
 
----
 ## Rendering your Quarto Document
+
+To take your *.qmd* file and make it look pretty, you have to **render** it.
+
+<center>
 
 ![](images/render.png)
 
 ![](images/render_on_save.png)
 
-???
+</center>
 
-When you click **Render**, here is what happens:
+
+## Rendering your Quarto Document
+
+When you click **Render**:
 
 -   Your file is saved.
--   The R code written in your *.qmd* file gets run.
-    -   Any code you ran already doesn't "count"; we start from scratch.
-    -   The code is run *in order*.
+-   The R code written in your *.qmd* file gets run **in order**.
+    -   We start from scratch, even if you previously ran some of the code.
 -   A new file is created.
     -   If your Quarto file is called "Lab1.qmd", then a file called "Lab1.html" will be created.
     -   This will save in the same folder as "Lab1.qmd".
@@ -1012,15 +1026,11 @@ When you click **Render**, here is what happens:
 
 ## To do...
 
-+ **PA 1: Find the Mistakes**
-  + Due **TONIGHT, Wednesday** (1/11) at 11:59PM
 + **Lab 1: Introduction to Quarto**
-  + Due Friday (1/13) at 11:59pm 
+  + Due Friday (4/7) at 11:59pm 
 + **Challenge 1: Modifying Your Quarto Document (+10)**
-  + Due Saturday (1/14) at 11:59pm 
+  + Due Saturday (4/8) at 11:59pm 
 + **Read Chapter 2: Importing Data + Basics of Graphics**
-  + **Concept Check 2.1 + 2.2** due **Tuesday** (1/17) at 8AM
+  + **Check-in 2.1 + 2.2** due Monday (4/10) at 8:00am
 + **Bonus Challenge 0: FizzBuzz (+5)**
-  + Due Saturday (1/21) at 11:59pm 
-
-
+  + Due Saturday (4/15) at 11:59pm 

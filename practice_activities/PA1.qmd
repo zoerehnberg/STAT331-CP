@@ -21,14 +21,14 @@ Some advice:
 
 ## Access
 
-You can access PA1: Find the Mistakes one of two ways:
+You can access PA1: Find the Mistakes in RStudio in one of two ways:
 
-1. Click [here](https://posit.cloud/content/5172799) to access an **RStudio Cloud** project which we work on in groups on Day 1 of the course
-  + Note: if you do not have an RStudio (Posit) Cloud account, you will be asked to create one.
-  + Make sure to save a permanent copy!
+1. Click [here](https://posit.cloud/content/5704780) to access a **Posit Cloud** project.
+  + Note: if you do not have a Posit Cloud account, you will be asked to create one.
+  + Note: make sure you save a permanent version!
 
-2. If you have already [installed R, RStudio, and Quarto](https://earobinson95.github.io/stat331-calpoly-text/01-introduction.html#checkin3-install), you can create a new [Quarto document](https://earobinson95.github.io/stat331-calpoly-text/01-introduction.html#notebooks), and copy the [practice activity template](https://raw.githubusercontent.com/earobinson95/stat331-calpoly/master/practice-activities/PA1-find-the-mistakes.qmd?token=GHSAT0AAAAAABYBOW2KDYAEG2R7JS4OT2HMY54NK7A) into the file.
-  + Make sure your quarto file is on Source mode and not Visual mode (top left) when you copy the template.
+2. If you have already [installed R, RStudio, and Quarto](https://earobinson95.github.io/stat331-calpoly-text/01-introduction.html#checkin3-install), you can create a new [Quarto document](https://earobinson95.github.io/stat331-calpoly-text/01-introduction.html#notebooks), and copy the [practice activity template](https://raw.githubusercontent.com/zoerehnberg/STAT331-S23/main/practice_activities/PA1.qmd) into the file.
+  + Make sure your Quarto file is on Source mode and not Visual mode (top left) when you copy the template.
 
 ## Part One: Setup
 
