@@ -170,7 +170,7 @@ top_secret[18:24, 3] <- top_secret[_____, __] - 100
 top_secret <- ___(top_secret)
 ```
 
-**Checkpoint:** Headquarters has informed you that at this stage of decoding, all numbers in indices 500 and beyond are below 100. The code below verifies that this is true for your `top_secret` object! 
+**Checkpoint:** Headquarters has informed you that at this stage of decoding, all numbers in indices 500 and beyond are above 100. The code below verifies that this is true for your `top_secret` object! 
 
 ```{r}
 # The code below verifies that indices 500 and beyond have values **below** 100
