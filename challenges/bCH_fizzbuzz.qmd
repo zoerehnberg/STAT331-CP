@@ -1,5 +1,5 @@
 ---
-title: "Bonus Challenge 0: FizzBuzz (+5)"
+title: "Bonus Challenge: FizzBuzz (+5)"
 author: "NAME"
 date: ""
 format: html
@@ -11,7 +11,7 @@ execute:
   error: true
 ---
 
-[Download the starter qmd file here](bCH_0_fizzbuzz.qmd).
+[Download the starter qmd file here](bCH_fizzbuzz.qmd).
 
 ## FizzBuzz
 
