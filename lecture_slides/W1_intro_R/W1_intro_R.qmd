@@ -809,11 +809,12 @@ Submit the name of the poem as the answer to the Canvas Quiz question.
 
 Today we will...
 
-+ Clarifying Questions
-  + Syllabus
-  + Chapter 1 Reading
-  + PA 1: Find the Mistakes
-+ Scripts + Notebooks
++ Answer Clarifying Questions:
+  + Syllabus?
+  + Chapter 1 Reading?
+  + PA 1: Find the Mistakes?
++ New Material
+  + Scripts + Notebooks
 + Lab 1: Introduction to Quarto
 + Challenge 1: Modifying your Quarto Document
 
@@ -842,8 +843,13 @@ Today we will...
 Notebooks are an implementation of **literate programming**.
 
 + They allow you to integrate code, output, text, images, etc. into a single document.
++ E.g.,
 
-+ **Reproducibility!**
+  + R Markdown notebook
+  + **Quarto notebook**
+  + Jupyter notebook
+
+**Reproducibility!**
 
 
 ## What is Markdown?
@@ -854,6 +860,9 @@ Notebooks are an implementation of **literate programming**.
 
 + Markdown files have the **.md** extension.
 
+
+##
+
 <center>
 
 ![](https://d33wubrfki0l68.cloudfront.net/59f29676ef5e4d74685e14f801bbc10c2dbd3cef/c0688/lesson-images/markdown-1-markup.png)
@@ -861,15 +870,11 @@ Notebooks are an implementation of **literate programming**.
 
 ## What is R Markdown?
 
-**R Markdown** (with the "R") uses regular *Markdown*, plus it can run and display **R** code. (Other languages, too!)
+**R Markdown** (with the "R") uses regular *Markdown*, **AND** it can run and display **R** code.
 
++ (Other languages, too!)
 + R Markdown files have the **.Rmd** extension.
 
-<center>
-
-![](https://d33wubrfki0l68.cloudfront.net/ece57b678854545e6602a23daede51ad72da2170/21cca/lesson-images/outputs-1-word.png)
-
-</center>
 
 ##
 
@@ -880,9 +885,20 @@ Notebooks are an implementation of **literate programming**.
 </center>
 
 
+## 
+
+<center>
+
+![](https://d33wubrfki0l68.cloudfront.net/ece57b678854545e6602a23daede51ad72da2170/21cca/lesson-images/outputs-1-word.png)
+
+</center>
+
+
 ## What is Quarto?
 
 Quarto **unifies** and **extends** the R Markdown ecosystem.
+
++ Quarto files have the **.qmd** extension.
 
 ```{r}
 #| echo: false
@@ -891,43 +907,29 @@ Quarto **unifies** and **extends** the R Markdown ecosystem.
 knitr::include_graphics("images/rmd_ecosystem.png")
 ```
 
-Quarto is the next generation RMarkdown.
+Quarto is the next generation R Markdown.
 
 
-## Quarto highlights
+## Highlights of Quarto
 
-+ Consistent implementation of attractive and handy features across outputs: tabsets, code-folding, syntax highlighting, etc.
++ Consistent implementation of attractive and handy features across outputs:
+  + E.g., tabsets, code-folding, syntax highlighting, etc.
 
-+ More accessible defaults as well as better support for accessibility.
++ More accessible defaults and better support for accessibility.
 
-+ Guardrails, particularly helpful when learning: YAML completion, informative syntax errors, etc.
++ Guardrails that are helpful when learning:
+  + E.g., YAML completion, informative syntax errors, etc.
 
-+ Support for other languages like Python, Julia, Observable, and more via Jupyter engine for executable code chunks.
-
-
-## Rendering in Quarto
-
-Quarto CLI (command line interface) orchestrates each step of rendering.
-
-```{r, echo = F, fig.align='center'}
-knitr::include_graphics("images/horst_qmd_render_schema.png")
-```
++ Support for other languages like Python, Julia, Observable, and more.
 
 
-<!-- Now that you've all had a chance to see Quarto in action, you might be wondering, "how are R Markdown and Quarto different"? -->
+## Quarto Formats
 
-<!-- The main difference is that with R Markdown, the R package rmarkdown does the heavy lifting of going from the source Rmd file to the the output, using knitr for evaluating the code chunks. -->
+Quarto makes moving between outputs straightforward.
 
-<!-- With Quarto, on the other hand, the Quarto command line interface, or the Quarto CLI, does the orchestration of processing executable code chunks with either knitr or jupyter and then converting the resulting markdown file to the desired output. -->
-
-<!-- While this is technically impressive, I'll be honest, it's not exactly what sparked my interest in Quarto in the first place. -->
-
-## Quarto formats
-
-Quarto makes moving between formats straightforward.
++ All that needs to change between these formats is a few lines in the front matter (YAML)!
 
 :::: {.columns}
-
 ::: {.column width="50%"}
 
 **Document**
@@ -945,7 +947,6 @@ format: revealjs
 ```
 
 :::
-
 ::: {.column width="50%"}
 
 **Website**
@@ -961,45 +962,34 @@ website:
 ```
 
 :::
-
 ::::
 
 
-<!-- What did spark my interest was how how straightforward it is with Quarto to move between output formats. -->
-
-<!-- As an educator, two things are of utmost importance to me about the tools I use to create my materials: reproducibility and ease of transition between output formats, like documents to slides to websites to books. -->
-
-<!-- Over the last year of using Quarto for pretty much everything, I've felt like I've finally found the tool that lets me go from one output type to the other with minimal, if any, futzing around with my source code beyond the yaml. For example, here are common things I produce -->
-
-<!-- a lesson in document form <br> --\> the same content in presentation form <br> --\> the same content on a page in a website, -->
-
-<!-- and you can see that all that needed to change going between these formats is a few lines in the yaml. Nothing in the content part of my document. No slide breaks to remove, no citation style to change, no headings to re-level. This ease of transition has freed up time to focus my time on content, and that, folks, is the dream! -->
-
-
-## Quarto components
+## Quarto Components
 
 ![](images/quarto_sections.jpeg){width="80%"}
 
+
 ## Markdown in Quarto
 
-A few useful tips for formatting the **markdown** text in your document:
+A few useful tips for formatting the **Markdown** text in your document:
 
 + \*text\* -- makes italics
-
 + \*\*text\*\* -- makes bold text
-
 + \# -- makes headers
-
 + !\[ \]( ) -- includes images or HTML links
-
 + \< \> -- embeds URLs
 
 
-## R code options in Quarto
+## R Code Options in Quarto
 
-**R code block** options are included at the top of each code block, prefaced with a #| (hashpipe).
+**R code chunk** options are included at the top of each code chunk, prefaced with a #| (hashpipe).
 
-. . .
++ These options control how the following code is run and reported in the final Quarto document.
++ R code options can also be included in the front matter (YAML) and are applied globally to the document.
+
+
+##
 
 <center>
 
@@ -1032,14 +1022,28 @@ To take your *.qmd* file and make it look pretty, you have to **render** it.
 
 ## Rendering your Quarto Document
 
+Quarto CLI (command line interface) orchestrates each step of rendering:
+
+1. Process the executable code chunks with either `knitr` or `jupyter`.
+2. Convert the resulting Markdown file to the desired output.
+
+```{r, echo = F, fig.align='center'}
+knitr::include_graphics("images/horst_qmd_render_schema.png")
+```
+
+<!-- The main difference is that with R Markdown, the R package rmarkdown does the heavy lifting of going from the source Rmd file to the the output, using knitr for evaluating the code chunks. -->
+
+
+## Rendering your Quarto Document
+
 When you click **Render**:
 
 -   Your file is saved.
 -   The R code written in your *.qmd* file gets run **in order**.
-    -   We start from scratch, even if you previously ran some of the code.
+    -   It starts from scratch, even if you previously ran some of the code.
 -   A new file is created.
     -   If your Quarto file is called "Lab1.qmd", then a file called "Lab1.html" will be created.
-    -   This will save in the same folder as "Lab1.qmd".
+    -   This will be saved in the same folder as "Lab1.qmd".
 
 
 ## [Lab 1: Introduction to Quarto + Challenge 1: Modifying your Quarto Document](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab1/LA1_intro_quarto.html)
@@ -1052,5 +1056,5 @@ When you click **Render**:
   + Due Saturday (4/8) at 11:59pm 
 + **Read Chapter 2: Importing Data + Basics of Graphics**
   + **Check-in 2.1 + 2.2** due Monday (4/10) at 8:00am
-+ **Bonus Challenge 0: FizzBuzz (+5)**
++ **Bonus Challenge: FizzBuzz (+5)**
   + Due Saturday (4/15) at 11:59pm 
