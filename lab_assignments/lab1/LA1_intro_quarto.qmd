@@ -129,7 +129,7 @@ Now, in the code chunk you just created, carry out the following steps:
 
 3. Create a second plot, a scatterplot, visualizing the relationship between the stopping distance and speed.[^2]
 
-[^1]: You are permitted to use whatever code you would prefer. This task can be completed with the `plot()` function, but if you would rather use `ggplot()`, you are more than welcome to. We will be getting there next week!
+[^1]: You are permitted to use whatever code you would prefer. This task can be completed with the `hist()` function, but if you would rather use `ggplot()`, you are more than welcome to. We will be getting there next week!
 
 [^2]: See previous footnote!
 
