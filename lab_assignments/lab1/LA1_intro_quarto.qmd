@@ -2,7 +2,6 @@
 title: "Lab 1: Introduction to Quarto"
 format: html
 self-contained: true
-
 execute:
   echo: false
 ---
@@ -18,9 +17,9 @@ If you have completed *Check-in 1.3*, you have already completed steps 1 & 2.
 
 2.  Create an RStudio Project **inside** of this folder.
 
-3.  Inside your Stat 331 folder, create another folder called either "Week 1" or "Labs".
+3.  Inside your Stat 331 folder, create another folder called either "Week_1" or "Labs".
 
-4.  Inside of this folder, create another folder called "Lab 1".
+4.  Inside of this folder, create another folder called "Lab_1".
 
 ### Create your Lab 1 File
 
@@ -38,7 +37,7 @@ To create a Quarto document, you first need to install Quarto on your computer. 
 -   add a line with `self-contained: true`.
 -   (optional) add a line to specify the `editor` as your preference for either source or visual.
 
-5.  Save the Quarto file as "lab1" in your "Week 1" or "Labs" folder. You can change up the name of your document, but the name **cannot** have spaces and it should describe what the document is.
+5.  Save the Quarto file as "lab1" in your "Week_1" or "Labs" folder. You can change up the name of your document, but the name **cannot** have spaces and it should describe what the document is.
 
 ## Lab Instructions
 

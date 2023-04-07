@@ -32,7 +32,7 @@ For this activity, we will be exploring the `penguins` data from the `palmerpeng
 
 `install.packages("palmerpenguins")`
 
-## Creating a Set-up Code Chunk
+## Creating a Setup Code Chunk
 
 1.  Insert a code chunk at the beginning of your document (directly under the YAML).
 2.  Name the code chunk *setup*.
@@ -41,10 +41,10 @@ For this activity, we will be exploring the `penguins` data from the `palmerpeng
 5.  Load in the `palmerpenguins` package.
 
 ::: callout-note
-Naming your code chunk "setup" has special properties in .qmd - specifically, this code chunk will run automatically when you try to run a subsequent code chunk. This ensures all packages and any other specifications for your document are loaded and will not cause you errors or messages.
+Naming your code chunk "setup" has special properties in *.qmd* - specifically, this code chunk will run automatically when you try to run a subsequent code chunk. This ensures all packages and any other specifications for your document are loaded and will not cause you errors or messages.
 :::
 
-## Data set `penguins`
+## Data Set: `penguins`
 
 I like to start by **seeing** the data set I will be working with, so I am going to pull the `penguins` data into my R environment.
 
@@ -60,25 +60,31 @@ data(penguins)
 Make sure to give your plots reader friendly axes labels!
 :::
 
-7. Use `ggplot2` to draw a barchart of `species`. Map `species` to the fill color of the barchart.
+::: callout-note
+Make sure your final report **does not** display any wanrings or messages from RStudio!
+:::
+
+7. Use <https://excalidraw.com/> (or pen and paper, or a tablet) to create a **game plan** for a barchart of `species` where `species` is mapped to the fill color of the barchart. Save or take a screenshot of your game plan -- you will be uploading this to Canvas with your practice activity submission.
+
+8. Use `ggplot2` to create the barchart you outlined above.
 
 ```{r}
 
 ```
 
-8. Create a scatterplot of the relationship between the bill length (`bill_length_mm`) and bill depth (`bill_depth_mm`).
+9. Create a scatterplot of the relationship between the bill length (`bill_length_mm`) and bill depth (`bill_depth_mm`).
 
 ```{r}
 
 ```
 
-9. Add an aesthetic to differentiate the species by color.
+10. Add an aesthetic to differentiate the species by color.
 
 ```{r}
 
 ```
 
-10. Add the location of the penguins (`island`) to your visualization. There may be more than one method to address this, however, one method will more easily address the questions below, so you might want to read that question first!
+11. Add the location of the penguins (`island`) to your visualization. There us more than one method to address this, however, one method will more easily address the questions below, so you might want to read those questions first!
 
 ```{r}
 
@@ -91,18 +97,18 @@ Make sure to give your plots reader friendly axes labels!
 
 1.  Which species of penguins is represented **least** in the Palmer Penguins data set?
 
-2.  Which species of penguins are found on Biscoe Island?
+2.  Which species of penguins are found on **every** island?
 
-3.  Which species of penguins are found on Dream Island?
+3.  Which species of penguins are found **only** on Dream Island?
 
-4.  Which species of penguins are found on Torgersen Island?
+4.  Which species of penguins are found **only** on Biscoe Island?
 
 5.  Color deficiencies can make differentiating groups difficult - which aesthetic could you add to your plot to double encode species?
 :::
 
-## If you finish early... take everything you know, and use it for evil (+2 Challenge Points)
+## If you finish early... take everything you know, and use it for evil! (+5 Challenge Points)
 
-The textbook spent lots of time showing you how to create different types of graphics, but I spent a lot less time showing you all of the different ways you could customize graphics in `ggplot2`. I want you to create the **ugliest version** of the scatterplot you created in (8) above, and then explain why, exactly, you made the decisions you did, and which principles of good graphics you’ve intentionally violated.
+For this Bonus Challenge, I want you to create the **ugliest version** of the scatterplot you created in (9) above. Then, explain why, exactly, you made the decisions you did, and which principles of good graphics you’ve intentionally violated.
 
 Ugliness is subjective, so the goal here is for you to explore the different ways you can customize the finer details of graphics. Make sure your finished masterpiece has appropriate axis labels and a title (after all, even ugly plots need to be correctly labeled!). You are free to add additional variables and layers, modify the aesthetics used, and leverage other packages. Let your creativity shine through!
 
@@ -110,9 +116,9 @@ Ugliness is subjective, so the goal here is for you to explore the different way
 
 ```
 
-Once you have created the ugliest graphic you can, [save your plot](https://r4ds.hadley.nz/data-visualize.html#sec-ggsave), and upload it to the [shared google slides](https://docs.google.com/presentation/d/1bChpVMyrhBnOjJLwK1ku9uIcM6I-ZTTMXkY0200CHhw/edit?usp=sharing) along with how you modified the chart - let's share code! - your explanation as to why you made the decisions you did, and which principles of good graphics you’ve intentionally violated.
+Once you have created the ugliest graphic you can, [save your plot](https://r4ds.hadley.nz/data-visualize.html#sec-ggsave), and upload it to the [shared google slides](https://docs.google.com/presentation/d/19bi4KyrpKrjntKtpcKZiZgsVf-cr4X2i2MnQ6hYln7Y/edit?usp=sharing) along with (1) how you modified the chart - let's share code! - and (2) your explanation for why you made the design decisions you did, including the  principles of good graphics you’ve intentionally violated.
 
-To receive your challenge points, upload the url link to your slide to the Canvas Assignment by **Wednesday, April 12 at 10:00am**. We want to be able to look at them during class!
+To receive your challenge points, upload the url link to your slide to the Canvas Assignment by **Monday, April 17 at 10:00am**.
 
 ### Useful References
 

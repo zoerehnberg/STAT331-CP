@@ -6,6 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="NAME">
 
 <title>PA 2: Using Data Visualization to Find the Penguins</title>
 <style>
@@ -2614,6 +2615,12 @@ vertical-align: -.125em;
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>NAME </p>
+          </div>
+  </div>
     
   
     
@@ -2640,8 +2647,8 @@ vertical-align: -.125em;
 <p>For this activity, we will be exploring the <code>penguins</code> data from the <code>palmerpenguins</code> package, which has <a href="https://allisonhorst.github.io/palmerpenguins/">fantastic documentation with really awesome artwork</a>. So, you will need to install the <strong>palmerpenguins</strong> package.</p>
 <p><code>install.packages(&quot;palmerpenguins&quot;)</code></p>
 </section>
-<section id="creating-a-set-up-code-chunk" class="level2">
-<h2 class="anchored" data-anchor-id="creating-a-set-up-code-chunk">Creating a Set-up Code Chunk</h2>
+<section id="creating-a-setup-code-chunk" class="level2">
+<h2 class="anchored" data-anchor-id="creating-a-setup-code-chunk">Creating a Setup Code Chunk</h2>
 <ol type="1">
 <li>Insert a code chunk at the beginning of your document (directly under the YAML).</li>
 <li>Name the code chunk <em>setup</em>.</li>
@@ -2659,12 +2666,12 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Naming your code chunk “setup” has special properties in .qmd - specifically, this code chunk will run automatically when you try to run a subsequent code chunk. This ensures all packages and any other specifications for your document are loaded and will not cause you errors or messages.</p>
+<p>Naming your code chunk “setup” has special properties in <em>.qmd</em> - specifically, this code chunk will run automatically when you try to run a subsequent code chunk. This ensures all packages and any other specifications for your document are loaded and will not cause you errors or messages.</p>
 </div>
 </div>
 </section>
 <section id="data-set-penguins" class="level2">
-<h2 class="anchored" data-anchor-id="data-set-penguins">Data set <code>penguins</code></h2>
+<h2 class="anchored" data-anchor-id="data-set-penguins">Data Set: <code>penguins</code></h2>
 <p>I like to start by <strong>seeing</strong> the data set I will be working with, so I am going to pull the <code>penguins</code> data into my R environment.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2691,26 +2698,40 @@ Note
 <p>Make sure to give your plots reader friendly axes labels!</p>
 </div>
 </div>
-<ol start="7" type="1">
-<li>Use <code>ggplot2</code> to draw a barchart of <code>species</code>. Map <code>species</code> to the fill color of the barchart.</li>
-</ol>
-<div class="cell">
-
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<ol start="8" type="1">
-<li>Create a scatterplot of the relationship between the bill length (<code>bill_length_mm</code>) and bill depth (<code>bill_depth_mm</code>).</li>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Make sure your final report <strong>does not</strong> display any wanrings or messages from RStudio!</p>
+</div>
+</div>
+<ol start="7" type="1">
+<li><p>Use <a href="https://excalidraw.com/" class="uri">https://excalidraw.com/</a> (or pen and paper, or a tablet) to create a <strong>game plan</strong> for a barchart of <code>species</code> where <code>species</code> is mapped to the fill color of the barchart. Save or take a screenshot of your game plan – you will be uploading this to Canvas with your practice activity submission.</p></li>
+<li><p>Use <code>ggplot2</code> to create the barchart you outlined above.</p></li>
 </ol>
 <div class="cell">
 
 </div>
 <ol start="9" type="1">
-<li>Add an aesthetic to differentiate the species by color.</li>
+<li>Create a scatterplot of the relationship between the bill length (<code>bill_length_mm</code>) and bill depth (<code>bill_depth_mm</code>).</li>
 </ol>
 <div class="cell">
 
 </div>
 <ol start="10" type="1">
-<li>Add the location of the penguins (<code>island</code>) to your visualization. There may be more than one method to address this, however, one method will more easily address the questions below, so you might want to read that question first!</li>
+<li>Add an aesthetic to differentiate the species by color.</li>
+</ol>
+<div class="cell">
+
+</div>
+<ol start="11" type="1">
+<li>Add the location of the penguins (<code>island</code>) to your visualization. There us more than one method to address this, however, one method will more easily address the questions below, so you might want to read those questions first!</li>
 </ol>
 <div class="cell">
 
@@ -2730,23 +2751,23 @@ Use the plots you created to address the following questions on Canvas:
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li><p>Which species of penguins is represented <strong>least</strong> in the Palmer Penguins data set?</p></li>
-<li><p>Which species of penguins are found on Biscoe Island?</p></li>
-<li><p>Which species of penguins are found on Dream Island?</p></li>
-<li><p>Which species of penguins are found on Torgersen Island?</p></li>
+<li><p>Which species of penguins are found on <strong>every</strong> island?</p></li>
+<li><p>Which species of penguins are found <strong>only</strong> on Dream Island?</p></li>
+<li><p>Which species of penguins are found <strong>only</strong> on Biscoe Island?</p></li>
 <li><p>Color deficiencies can make differentiating groups difficult - which aesthetic could you add to your plot to double encode species?</p></li>
 </ol>
 </div>
 </div>
 </section>
-<section id="if-you-finish-early-take-everything-you-know-and-use-it-for-evil-2-challenge-points" class="level2">
-<h2 class="anchored" data-anchor-id="if-you-finish-early-take-everything-you-know-and-use-it-for-evil-2-challenge-points">If you finish early… take everything you know, and use it for evil (+2 Challenge Points)</h2>
-<p>The textbook spent lots of time showing you how to create different types of graphics, but I spent a lot less time showing you all of the different ways you could customize graphics in <code>ggplot2</code>. I want you to create the <strong>ugliest version</strong> of the scatterplot you created in (8) above, and then explain why, exactly, you made the decisions you did, and which principles of good graphics you’ve intentionally violated.</p>
+<section id="if-you-finish-early-take-everything-you-know-and-use-it-for-evil-5-challenge-points" class="level2">
+<h2 class="anchored" data-anchor-id="if-you-finish-early-take-everything-you-know-and-use-it-for-evil-5-challenge-points">If you finish early… take everything you know, and use it for evil! (+5 Challenge Points)</h2>
+<p>For this Bonus Challenge, I want you to create the <strong>ugliest version</strong> of the scatterplot you created in (9) above. Then, explain why, exactly, you made the decisions you did, and which principles of good graphics you’ve intentionally violated.</p>
 <p>Ugliness is subjective, so the goal here is for you to explore the different ways you can customize the finer details of graphics. Make sure your finished masterpiece has appropriate axis labels and a title (after all, even ugly plots need to be correctly labeled!). You are free to add additional variables and layers, modify the aesthetics used, and leverage other packages. Let your creativity shine through!</p>
 <div class="cell">
 
 </div>
-<p>Once you have created the ugliest graphic you can, <a href="https://r4ds.hadley.nz/data-visualize.html#sec-ggsave">save your plot</a>, and upload it to the <a href="https://docs.google.com/presentation/d/1bChpVMyrhBnOjJLwK1ku9uIcM6I-ZTTMXkY0200CHhw/edit?usp=sharing">shared google slides</a> along with how you modified the chart - let’s share code! - your explanation as to why you made the decisions you did, and which principles of good graphics you’ve intentionally violated.</p>
-<p>To receive your challenge points, upload the url link to your slide to the Canvas Assignment by <strong>Wednesday, April 12 at 10:00am</strong>. We want to be able to look at them during class!</p>
+<p>Once you have created the ugliest graphic you can, <a href="https://r4ds.hadley.nz/data-visualize.html#sec-ggsave">save your plot</a>, and upload it to the <a href="https://docs.google.com/presentation/d/19bi4KyrpKrjntKtpcKZiZgsVf-cr4X2i2MnQ6hYln7Y/edit?usp=sharing">shared google slides</a> along with (1) how you modified the chart - let’s share code! - and (2) your explanation for why you made the design decisions you did, including the principles of good graphics you’ve intentionally violated.</p>
+<p>To receive your challenge points, upload the url link to your slide to the Canvas Assignment by <strong>Monday, April 17 at 10:00am</strong>.</p>
 <section id="useful-references" class="level3">
 <h3 class="anchored" data-anchor-id="useful-references">Useful References</h3>
 <ul>
