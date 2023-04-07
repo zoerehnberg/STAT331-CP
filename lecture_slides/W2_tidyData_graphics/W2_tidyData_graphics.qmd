@@ -582,19 +582,83 @@ ggplot(data = txhousing, aes(x = date, y = median, color = city)) +
 
 ## Statistical Transformation: `stat`
 
-A `stat` creates a new variable to plot (e.g., count, proportion).
+A `stat` transforms an existing variable into a new variable to plot.
 
-<center>
++ `identity` leaves the data as is.
++ `count` counts the number of observations.
++ `summary` allows you to specify a desired transformation function.
 
-![](https://unl-statistics.github.io/R-workshops/02-r-graphics/knitr/images/stat1.png)
+. . .
 
-</center>
-
-
-## `stat`
-
+Sometimes these statistical transformations happen under the hood when we call a `geom`.
 
 
+
+
+## Statistical Transformation: `stat`
+
+::: panel-tabset
+
+### `stat_count()`
+
+:::: {.columns}
+::: {.column width="50%"}
+
+```{r}
+#| echo: true
+#| code-line-numbers: "3"
+ggplot(data = mpg,
+       mapping = aes(x = class)) +
+  geom_bar()
+```
+
+:::
+::: {.column width="50%"}
+
+```{r}
+#| echo: true
+#| code-line-numbers: "3"
+ggplot(data = mpg,
+       mapping = aes(x = class)) +
+  stat_count(geom = "bar")
+```
+
+:::
+::::
+
+### `stat_summary()`
+
+:::: {.columns}
+::: {.column width="50%"}
+
+```{r}
+#| echo: true
+#| code-line-numbers: "4-5"
+ggplot(data = mpg,
+       mapping = aes(x = class,
+                     y = hwy)) +
+  stat_summary(geom = "bar",
+               fun = "mean") +
+  scale_y_continuous(limits = c(0,45))
+```
+
+:::
+::: {.column width="50%"}
+
+```{r}
+#| echo: true
+#| code-line-numbers: "4-5"
+ggplot(data = mpg,
+       mapping = aes(x = class,
+                     y = hwy)) +
+  stat_summary(geom = "bar",
+               fun = "max") +
+  scale_y_continuous(limits = c(0,45))
+```
+
+:::
+::::
+:::
 
 ## Faceting
 
@@ -907,8 +971,11 @@ ggplot(data = mpg,
 + **PA 2: Using Data Visualization to Find the Penguins**
   + Due **Wednesday** (4/12) at 8:00am
 
++ **Bonus Challenge: FizzBuzz (+5)**
+  + Due **Saturday** (4/15) at 11:59pm (optional)
+
 + **Bonus Challenge: Ugly Graphics of Penguins (+5)**
-  + Due **Monday** (4/17) at 10:00am
+  + Due **Monday** (4/17) at 10:00am (optional)
 
 
 
