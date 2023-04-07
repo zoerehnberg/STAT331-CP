@@ -3,7 +3,6 @@ title: "Challenge 2: Spicing things up with ggplot2"
 author: "Add your name!"
 format: html
 self-contained: true
-code-tools: true
 toc: true
 execute:
   echo: false
