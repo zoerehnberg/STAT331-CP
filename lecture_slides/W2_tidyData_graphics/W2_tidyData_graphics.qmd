@@ -1,5 +1,5 @@
 ---
-title: "Tidy Data + Basics of Graphics"
+title: "Basics of Graphics"
 format: 
   revealjs:
     #theme: [default, custom.scss]
@@ -23,7 +23,7 @@ Today we will...
   + Tidy Data
   + Load External Data
   + Graphics (and `ggplot2`)
-+ [PA 2: Using Data Visualization to Find the Penguins](https://earobinson95.github.io/stat331-calpoly/practice-activities/PA2-ggplot-palmer-penguins.html)
++ [PA 2: Using Data Visualization to Find the Penguins](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA2.html)
 
 
 # Tidy Data
@@ -593,26 +593,6 @@ A `stat` creates a new variable to plot (e.g., count, proportion).
 
 ## `stat`
 
-```{r}
-ggplot(data = mpg,
-       mapping = aes(x = class), stat = "count") +
-  geom_bar()
-```
-
-
-
-```{r}
-ggplot(data = mpg,
-       mapping = aes(x = class)) +
-  geom_bar(aes(y = after_stat(prop)))
-```
-
-```{r}
-ggplot(data = mpg) +
-  geom_bar(mapping = aes(x = class,
-                     y = stat()))
-```
-
 
 
 
@@ -917,7 +897,7 @@ ggplot(data = mpg,
 :::
 
 
-## [PA 2: Using Data Visualization to Find the Penguins](https://earobinson95.github.io/stat331-calpoly/practice-activities/PA2-ggplot-palmer-penguins.html)
+## [PA 2: Using Data Visualization to Find the Penguins](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA2.html)
 
 ![Artwork by Allison Horst](https://allisonhorst.github.io/palmerpenguins/reference/figures/lter_penguins.png)
 
@@ -927,8 +907,8 @@ ggplot(data = mpg,
 + **PA 2: Using Data Visualization to Find the Penguins**
   + Due **Wednesday** (4/12) at 8:00am
 
-+ **Bonus Challenge: Ugly Graphics of Penguins (+2)**
-  + Due **Wednesday** (4/12) at 10:00am
++ **Bonus Challenge: Ugly Graphics of Penguins (+5)**
+  + Due **Monday** (4/17) at 10:00am
 
 
 
@@ -937,7 +917,7 @@ ggplot(data = mpg,
 Today we will...
 
 + Review PA 2: Using Data Visualization to Find the Penguins
-+ [Ugly Graphics of Penguins](https://docs.google.com/presentation/d/1bChpVMyrhBnOjJLwK1ku9uIcM6I-ZTTMXkY0200CHhw/edit#slide=id.p)
++ [Ugly Graphics of Penguins](https://docs.google.com/presentation/d/19bi4KyrpKrjntKtpcKZiZgsVf-cr4X2i2MnQ6hYln7Y/edit?usp=sharing)
 + New Material
   + What makes a good graphic?
 + Lab 2: Exploring Rodents with ggplot2
