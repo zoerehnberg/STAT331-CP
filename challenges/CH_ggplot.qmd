@@ -103,13 +103,18 @@ We can add annotation to a `ggplot()` using the `annotate()` function.
 
 ```{r}
 ggplot(data = surveys, 
-       mapping = aes(y = species, x = weight, color = genus)) +
+       mapping = aes(y = species,
+                     x = weight,
+                     color = genus)) +
   geom_boxplot() +
   scale_color_manual(values = cdPalette_grey) + 
   annotate("text", y = 6, x = 250, label = "Sigmodon") +
   annotate("text", y = 4, x = 250, label = "Perognathus") +
   theme(legend.position = "none") +
-  labs(x = "Weight (g)", y = "", subtitle = "Species")
+  labs(x = "Weight (g)",
+       y = "",
+       subtitle = "Species",
+       title = "Rodent Weight by Species")
 ```
 
 Note that I've labeled the "Sigmodon" and "Perognathus" genera, so the reader can tell that these boxplots are associated with their respective genus. 
