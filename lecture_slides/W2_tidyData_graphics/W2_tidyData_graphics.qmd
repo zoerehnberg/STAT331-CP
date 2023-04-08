@@ -907,9 +907,6 @@ ggplot(data = tmp,
 ::::
 
 
-
-
-
 ## Creating a Game Plan
 
 There are a lot of pieces to put together when creating a good graphic.
@@ -984,98 +981,202 @@ ggplot(data = mpg,
 Today we will...
 
 + Review PA 2: Using Data Visualization to Find the Penguins
-+ [Ugly Graphics of Penguins](https://docs.google.com/presentation/d/19bi4KyrpKrjntKtpcKZiZgsVf-cr4X2i2MnQ6hYln7Y/edit?usp=sharing)
 + New Material
   + What makes a good graphic?
 + Lab 2: Exploring Rodents with ggplot2
 + Challenge 2: Spicing things up with ggplot2
 
-## Why are some plots easier to read than others?
 
-**What makes bad figures bad?**
-
-::: panel-tabset
-
-### aesthetic
-
-Edward R. Tufte is a better known critic of this style of visualization:
-
-+ Graphical excellence is the well-designed presentation of interesting data and consists of:
-  + complex ideas communicated with clarity, precision, and efficiency
-  + maximizes the “data-to-ink” ratio.
-  + nearly always multivariate
-  + requires telling the truth about the data.
-
-+ defines "chartjunk" as superfluous details
-
-### substantive
-
-bad data.
-
-### perceptual
-
-Looking at pictures of data means looking at lines, shapes, and colors
-
-Our visual system works in a way that makes some things easier for us to see than others
-
-+ “Preattentive” features
-+ Gestalt Principles
-+ color and contrast
-
-:::
-
-## Good Graphics
+## Graphics
 
 Graphics consist of:
 
 + **Structure:** boxplot, scatterplot, etc.
 
-+ **Aesthetics:** features such as color, shape, and size that map other characteristics to structural features
++ **Aesthetics:** features such as color, shape, and size that map other variables to structural features.
 
-Both the structure and aesthetics should help viewers interpret the information.
+**Both** the structure and aesthetics should help viewers interpret the information.
+
+
+## What makes bad graphics bad?
+
++ BAD DATA.
++ Too much "chartjunk" -- superfluous details (Tufte).
++ Design choices that are difficult for the human brain to process, including:
+
+:::: {.columns}
+::: {.column width="10%"}
+
+:::
+::: {.column width="50%"}
+
+  + Colors
+  + Orientation
+  + Organization
+
+:::
+::: {.column width="40%"}
+
+![](images/bad_graphic.png){.absolute width="300"}
+
+:::
+::::
+
+## What makes good graphics good?
+
+Edward R. Tufte is a well-known critic of visualizations, and his definition of **graphical excellence** consists of:
+
+  + communicating complex ideas with **clarity, precision, and efficiency**.
+  + maximizing the **data-to-ink** ratio.
+  + using multivariate displays.
+  + telling the truth about the data.
+
+
+## Graphics
+
+When creating graphics, we need to think carefully about how we make structure and aesthetic decisions.
+
 
 # Gestalt Principles
 
+
 ## Gestalt Principles
 
-What sorts of relationships are inferred, and under what circumstances?
+Our brains have an amazing ability to create and perceive structure among visual objects.
+
++ This is commonly referred to as the Gestalt principles of visual perception.
++ This framework can help us think about how to create the most expressive and effective data visualizations:
+
+
+## Gestalt Principles
 
 ::: panel-tabset
-### Graphic
+
+### Similarity
+
+Objects with the **same visual properties** are assumed to be similar and are grouped together.
+
+:::: {.columns}
+::: {.column width="65%"}
+
+<br>
+
+Use design elements such as **shape and color** to indicate groupings of the data.
+:::
+::: {.column width="35%"}
 
 ```{r}
-#| fig-align: center
-knitr::include_graphics("https://unl-statistics.github.io/R-workshops/02-r-graphics/knitr/images/gestalt3.jpg")
+knitr::include_graphics("images/similarity.png")
 ```
 
-### Features
-
-+ **Proximity:** Things that are spatially near to one another are related.
-+ **Similarity:** Things that look alike are related.
-+ **Enlosure:** A group of related elements are surrounded with a visual element
-+ **Symmetry:** If an object is asymmetrical, the viewer will waste time trying to find the problem instead of concentrating on the instruction.
-+ **Closure:** Incomplete shapes are perceived as complete.
-+ **Continuity:** Partially hidden objects are completed into familiar shapes.
-+ **Connection:** Things that are visually tied to one another are related.
-+ **Figure/Ground:** Visual elements are either in the foreground or the background.
 :::
+::::
+
+### Proximity
+
+Objects that are **close together** are perceived as a group.
+
+:::: {.columns}
+::: {.column width="50%"}
+
+Since physical distance connotes similarity, grouping bars on a chart can indicate similarities among their data.
+
+:::
+::: {.column width="50%"}
+  
+```{r}
+knitr::include_graphics("images/proximity.png")
+```
+
+:::
+::::
+### Continuity
+
+Elements that are **aligned** (on the same line, curve, or plane) are perceived to be more closely related to each other than to other elements.
+
+:::: {.columns}
+::: {.column width="60%"}
+
+It is often easier for us to perceive the groupings if the shapes are curves, rather than lines with sharp edges.
+
+:::
+::: {.column width="40%"}
+  
+```{r}
+knitr::include_graphics("images/continuity.png")
+```
+
+:::
+::::
+  
+
+### Enclosure
+
+Objects that appear to have a **boundary around them** are perceived as being related.
+
+  + Add line boundaries or shading to group objects.
+
+### Connection
+
+Objects that are **connected**, such as by a line, are perceived as a group.
+
+  + Connect data together to indicate a relationship.
+  + This connectedness is highly effective and often overrides other principles for group perception.
+  + Every line plot is an example of connectedness.
+  
+### Closure
+
+Complex arrangements of visual elements are perceived as a **single, recognizable pattern**.
+
+```{r}
+#| out-width: 25%
+#| fig-align: center
+knitr::include_graphics("images/closure.png")
+```
+
+### Figure and Ground
+
+Objects are perceived as either standing out prominently in the **foreground** of an image or receding into the **background**.
+
+  + Shading or color blocking can be employed to distinguish between the more important figure and less important ground features of an image.
+  + Place elements of the most importance in the foreground figure.
+  
+### Focal Point
+
+Whatever **stands out visually** is perceived as the most important. It will grab our attention first and hold it for the longest.
+
+  + Use design elements selectively to draw attention to the most important features of the data.
+
+:::
+
 
 ## Gestalt Principles
 
-Gestalt Hierarchy	| Graphs
-------------------| ------
-Enclosure	        | Facets
-Connection        |	Lines
-Proximitiy	      | White Space
-Similarity	      | Color/Shape
+Gestalt Hierarchy	| Graphical Feature
+------------------| ------------------
+1. Enclosure	    | Facets
+2. Connection     |	Lines
+3. Proximitiy	    | White Space
+4. Similarity	    | Color/Shape
 
-Implications for practice
+. . .
 
-+ Know how we perceive groups
-+ Know that we perceive some groups before others
-+ Design to facilitate and emphasize the most important comparisons
+Implications for practice:
+
++ Know that we perceive some groups before others.
++ Design to facilitate and emphasize the most important comparisons.
 
 # Pre-attentive Features
+
+## Pre-attentive Features
+
+<br>
+
+The next slide will have one point that is not like the others.
+
+<br>
+
+Raise your hand when you notice it.
 
 ## Pre-attentive Features
 
@@ -1093,22 +1194,25 @@ knitr::include_graphics("https://unl-statistics.github.io/R-workshops/02-r-graph
 
 ## Pre-attentive Features
 
-Pre-Attentive Features are things that "jump out" in less than 250 ms
+**Pre-attentive features** are features that we see and perceive before we even think about it.
 
-+ Color, form, movement, spatial localization
++ They will jump out at us in less than 250 ms.
 
-There is a hierarchy of features
++ E.g., color, form, movement, spatial location.
 
-+ Color is stronger than shape
-+ Combinations of pre-attentive features are usually not pre-attentive due to interference
+There is a **hierarchy** of features:
 
-## Pre-attentive Features: Double Encoding
++ Color is stronger than shape.
++ Combinations of pre-attentive features may **not** be pre-attentive due to interference.
+
+
+## Double Encoding
 ```{r}
 #| fig-align: center
 knitr::include_graphics("https://unl-statistics.github.io/R-workshops/02-r-graphics/knitr/4-Perception_files/figure-html/unnamed-chunk-5-1.png")
 ```
 
-## Pre-attentive Features: Double Encoding
+## No Double Encoding
 ```{r}
 #| fig-align: center
 knitr::include_graphics("https://unl-statistics.github.io/R-workshops/02-r-graphics/knitr/4-Perception_files/figure-html/unnamed-chunk-6-1.png")
@@ -1116,30 +1220,46 @@ knitr::include_graphics("https://unl-statistics.github.io/R-workshops/02-r-graph
 
 # Color
 
-# Color
+## Color
 
-+ Hue: shade of color (red, orange, yellow...)
++ Use color to your advantage!
+  + Color, hue, and intensity are pre-attentive, where bigger contrasts lead to faster detection.
+  + **Hue**: main color family (red, orange, yellow...)
+  + **Intensity**: amount of color
 
-+ Intensity: amount of color
+:::: {.columns}
+::: {.column width="30%"}
 
-+ Both color and hue are pre-attentive. Bigger contrast corresponds to faster detection.
+```{r}
+#| out-width: 90%
+knitr::include_graphics("images/hue.png")
+```
 
-+ Use color to your advantage
+:::
+::: {.column width="70%"}
+  
+```{r}
+knitr::include_graphics("images/intensity.png")
+```
 
-+ When choosing color schemes, we will want mappings from data to color that are not just numerically but also perceptually uniform
+:::
+::::
+  
+## Color Guidelines
 
-+ Distinguish between sequential scales and categorical scales
++ Use mappings from data to color that are numerically and perceptually uniform.
++ Be conscious of what certain colors “mean”.
++ Do not use rainbow color gradients.
++ Avoid using green-yellow-red color schemes -- you might have color-blind audience members!
 
-## Color: Implications and Guidelines
+## Color Guidelines
 
-+ Do not use rainbow color gradient schemes.
-+ Avoid any scheme that uses green-yellow-red signaling if you have a target audience that may include colorblind people.
-+ To “colorblind-proof” a graphic, you can use a couple of strategies:
-  + double encoding - where you use color, use another aesthetic (line type, shape)
-  + If you can print your chart out in black and white and still read it, it will be safe for colorblind users. This is the only foolproof way to do it!
-  + If you are using a color gradient, use a monochromatic color scheme where possible.
-  + If you have a bidirectional scale (e.g. showing positive and negative values), the safest scheme to use is purple - white - orange. In any color scale that is multi-hue, it is important to transition through white, instead of from one color to another directly.
-+ Be conscious of what certain colors “mean”
++ To colorblind-proof a graphic, try:
+  + **double encoding** - when you use color, **also** use another aesthetic (line type, shape, etc.).
+  + using a **monochromatic** color gradient.
+    + If you have a bidirectional scale (e.g., showing + and - values), use purple-white-orange. Always transition through white!
+  + printing your chart out in black and white -- if you can still read it, it will be safe for colorblind users.
+
 
 ## Gradients
 
@@ -1147,7 +1267,7 @@ knitr::include_graphics("https://unl-statistics.github.io/R-workshops/02-r-graph
 
 ### Qualitative schemes
 
-No more than 7 colors
+Usually no more than 7 colors:
 
 ```{r}
 #| fig-align: center
@@ -1164,50 +1284,55 @@ knitr::include_graphics("https://unl-statistics.github.io/R-workshops/02-r-graph
 
 ### Quantitative schemes
 
-Use color gradient with only one hue for positive values
+Use color gradient with only one hue for positive values:
 
 ```{r}
 #| fig-align: center
-knitr::include_graphics("https://unl-statistics.github.io/R-workshops/02-r-graphics/knitr/4-Perception_files/figure-html/unnamed-chunk-10-1.png")
+#| out-width: 50%
+knitr::include_graphics("images/blues.png")
 ```
 
-Use color gradient with two hues for positive and negative values. Gradient should go through a light, neutral color (white)
+Use color gradient with two hues for positive and negative values. Gradient should go through a light, neutral color (white).
 
 ```{r}
 #| fig-align: center
-knitr::include_graphics("https://unl-statistics.github.io/R-workshops/02-r-graphics/knitr/4-Perception_files/figure-html/unnamed-chunk-11-1.png")
+#| out-width: 50%
+knitr::include_graphics("images/PuOr.png")
 ```
 
 :::
 
 ## Color in ggplot2
 
-There are packages available for use that have color scheme options.
-
-Some Examples:
+There are several packages with color scheme options:
 
 + Rcolorbrewer
 + ggsci
 + viridis
 + wes anderson
 
-There are packages such as RColorBrewer and dichromat that have color palettes which are aesthetically pleasing, and, in many cases, colorblind friendly.
+These packages have color palettes hthatare aesthetically pleasing and, in many cases, colorblind friendly.
 
 You can also take a look at other [ways to find nice color palettes](https://lisacharlottemuth.com/2016/04/22/Colors-for-DataVis/).
 
+
 ## Week 2 Assignments
 
-[Lab 2: Exploring Rodents with ggplot2](https://earobinson95.github.io/stat331-calpoly/lab-assignments/Lab2-graphics/lab2-exploring-rodents-with-ggplot2.html)
+[Lab 2: Exploring Rodents with ggplot2](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab2/LA2_ggplot.html)
 
-[Challenge 2: Spicing things up with ggplot2](https://earobinson95.github.io/stat331-calpoly/lab-assignments/Lab2-graphics/challenge2-spicing-things-up-with-ggplot2.html)
+[Challenge 2: Spicing things up with ggplot2](https://zoerehnberg.github.io/STAT331-S23/challenges/CH_ggplot.html)
 
 ## To do...
 
 + **Lab 2: Exploring Rodents with ggplot2**
-  + due Friday, 1/20 at 11:59pm
+  + due Friday, 4/14 at 11:59pm
 
 + **Challenge 2: Spicing things up with ggplot2**
-  + due Saturday, 1/21 at 11:59pm
+  + due Saturday, 4/15 at 11:59pm
+  
++ **Bonus Challenges**
+  + FizzBuzz -- due Saturday, 4/15 at 11:59pm
+  + Ugly Graphics of Penguins -- due Monday, 4/17 at 10:00am
   
 + **Read Chapter 3: Data Cleaning and Manipulation**
-  + **Concept Check 3.1 + 3.2** due Monday (1/23) at 8am
+  + **Check-ins 3.1 + 3.2** due Monday 4/17 at 8:00am
