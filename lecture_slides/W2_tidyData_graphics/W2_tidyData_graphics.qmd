@@ -980,7 +980,6 @@ ggplot(data = mpg,
 Today we will...
 
 + Course Updates
-+ Review PA 2: Using Data Visualization to Find the Penguins
 + New Material
   + What makes a good graphic?
 + Lab 2: Exploring Rodents with ggplot2
