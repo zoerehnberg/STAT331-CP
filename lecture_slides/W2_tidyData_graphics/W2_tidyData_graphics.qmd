@@ -327,7 +327,6 @@ What aesthetics can we set (*see [ggplot2 cheat sheet](https://github.com/rstudi
 :::
 ::: {.column width="78%"}
 
-
 :::
 ::::
 
@@ -980,12 +979,31 @@ ggplot(data = mpg,
 
 Today we will...
 
++ Course Updates
 + Review PA 2: Using Data Visualization to Find the Penguins
 + New Material
   + What makes a good graphic?
 + Lab 2: Exploring Rodents with ggplot2
 + Challenge 2: Spicing things up with ggplot2
 
+
+## A Couple of Updates
+
+After experiencing the first week and a half of classes:
+
+1. Check-ins will be due Mondays at **10:00am** (instead of 8:00am).
+  + I will hope to release Canvas check-in quizzes by noon on Thursdays, so you are not required to work over the weekend.
+2. Practice activities will be due Wednesday at **10:00am** (instead of 8:00am).
+
+## A Couple of Updates
+
+After experiencing the first week and a half of classes:
+
+3. I will post skeleton rubrics for lab activities on Canvas (on Thursdays) to share the general structure of how you will be graded.
+  + Grading will be on a scale of *Master* to *Practitioner* to *Novice* to *No Effort*.
+  + If you make a meaningful error in your code, you cannot earn *Master* for that question.
+  + Your labs **will** have an appearance/workflow/code format portion. Check out the [guidelines](https://canvas.calpoly.edu/courses/98835/pages/lab-appearance-workflow-and-code-format).
+  
 
 ## Graphics
 
