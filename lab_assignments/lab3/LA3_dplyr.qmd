@@ -13,9 +13,9 @@ execute:
   message: false
 ---
 
-[Download starter .qmd file](lab3-hiphop-lyrics.qmd)
+[Download starter .qmd file](lab3-dplyr.qmd)
 
-[Download `hiphop.csv`](AAE.csv)
+[Download `AAE.csv`](AAE.csv)
 
 ::: callout-warning
 Save **both** your .qmd file and your data set in the same folder within your Stat 331 directory! **DO NOT** open your .qmd file straight from your downloads folder.
