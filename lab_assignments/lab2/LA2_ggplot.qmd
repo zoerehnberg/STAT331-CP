@@ -66,7 +66,7 @@ We will be investigating the animal species diversity and weights found within p
 **1. Using the `read_csv()` function, write the code necessary to load in the `surveys.csv` dataset. For simplicity, name the data set `surveys`.**
 
 ```{r data}
-# Code for question 1! 
+# Code for question 1!'
 ```
 
 ## Inspecting the Data
@@ -167,7 +167,7 @@ Great! Now that you can see the points, you should notice something odd: there a
 
 Some small changes can make **big** differences to plots. One of these changes are better labels for a plot's axes and legend.
 
-**15. Using the code you created in the [Boxplots](#boxplots) section above, modify the $x$-axis and $y$-axis labels to describe what is being plotted. Be sure to include any necessary units!**
+**15. Using the code you created in the [Boxplots](#boxplots) section above, modify the $x$-axis and $y$-axis labels to describe what is being plotted. Be sure to include any necessary units! You might also be getting overlap in the species names -- use `theme(axis.text.x = ____)` or `theme(axis.text.y = ____)` to turn the species axiss labels 45 degrees.**
 
 ```{r}
 # Code for question 15! 

@@ -6,7 +6,7 @@ self-contained: true
 execute: 
   echo: true
   error: true
-  code-fold: true
+code-fold: true
 ---
 
 <!-- Insert your setup code chunk here. This is just good practice. -->
