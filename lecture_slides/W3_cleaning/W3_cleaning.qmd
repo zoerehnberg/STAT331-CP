@@ -1017,10 +1017,8 @@ Today we will...
 
 + Review Lab 2
 + Using External Resources
-+ Extend `dplyr` verbs:
-  + `across()`
-  + `if_else()`
-  + `case_when()`
++ New Material
+  + Extend `dplyr` verbs
 + Thinking about Data Ethics
 + Lab 3: Familiarity with AAE
 + Challenge 3: Demographic Comparisons & Data Ethics
