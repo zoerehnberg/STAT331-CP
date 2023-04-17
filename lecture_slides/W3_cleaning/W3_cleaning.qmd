@@ -846,7 +846,7 @@ summarise(mean_calories = mean(fiber),
 
 ## `group_by() + summarize()`!
 
-1. `goup_by` a variable (or multiple variables)
+1. `group_by` a variable (or multiple variables)
 2. `summarize` a variable (or multiple variables) **within** the groups
 
 ```{r}
@@ -871,7 +871,7 @@ cereal |>
 
 ## `group_by() + mutate()`!
 
-1. `goup_by` a variable (or multiple variables)
+1. `group_by` a variable (or multiple variables)
 2. `mutate` a variable (or multiple variables) **within** the groups
 
 ```{r}
