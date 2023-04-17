@@ -1015,7 +1015,7 @@ Today you will use the `dplyr` package to clean some data and then use that clea
 
 Today we will...
 
-++ Review Lab 2
++ Review Lab 2
 + Using External Resources
 + Extend `dplyr` verbs:
   + `across()`
