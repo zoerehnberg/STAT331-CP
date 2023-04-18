@@ -1016,18 +1016,24 @@ Today you will use the `dplyr` package to clean some data and then use that clea
 Today we will...
 
 + Review Lab 2
-+ Using External Resources
++ Citing Your Sources!
 + New Material
   + Extend `dplyr` verbs
 + Thinking about Data Ethics
-+ Lab 3: Familiarity with AAE
++ [Lab 3](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab3/LA3_dplyr.html): Familiarity with AAE
 + Challenge 3: Demographic Comparisons & Data Ethics
 
 
 ## Lab 2
 
-
-# Using Outside Resources
++ Read through your .html to make sure it looks correct.
+  + Is any of your code producing errors/warnings/messages?
+  + Are images appearing properly?
+  + Are hyperlinks working properly?
++ Do not install packages in Quarto code chunks!
+  + Remember: **we only install packages once**.
++ Make sure you **cite** external sources.
+  + E.g., many people used `sapply()` to get the variable data types -- where did you find this solution?
 
 
 ## Citing Your Sources
@@ -1041,12 +1047,7 @@ When you write code, you will **need** to reference function/package documentati
 When you rely on external resources for an assignment in this course, **you must cite your sources**.
 
 + If you use **any** resources outside of the course text, the course slides, and the posted cheatsheets, you **must include a citation**!
-+ You lose points if you do not.
-
-
-## ChatGPT
-
-
++ You will lose points if you do not.
 
 
 # Extending `dplyr` verbs
@@ -1069,9 +1070,21 @@ How many cereals does each `manuf` have in this dataset?
 
 ```{r}
 #| echo: true
+#| eval: false
 cereal |> 
   group_by(manuf) |> 
   count()
+```
+
+```{r}
+#| eval: true
+#| echo: false
+cereal |> 
+  group_by(manuf) |> 
+  count() |> 
+  knitr::kable() |> 
+  kableExtra::scroll_box(height = "400px") |> 
+  kableExtra::kable_styling(font_size = 30)
 ```
 
 
@@ -1086,9 +1099,21 @@ For each `type` of cereal, calculate the `mean` nutrient levels.
 
 ```{r}
 #| echo: true
+#| eval: false
 cereal |> 
   group_by(type) |> 
   summarise(across(.cols = calories:potass, .fns = mean))
+```
+
+```{r}
+#| eval: true
+#| echo: false
+cereal |> 
+  group_by(type) |> 
+  summarise(across(.cols = calories:potass, .fns = mean)) |> 
+  knitr::kable() |> 
+  kableExtra::scroll_box(height = "170px") |> 
+  kableExtra::kable_styling(font_size = 30)
 ```
 
 ## Discretize with `if_else()`
@@ -1219,7 +1244,6 @@ cereal |>
 ```
 
 
-
 ## Piping into `ggplot()`
 
 Plot the `mean` `calories` per `cup` for each `manuf`.
@@ -1307,6 +1331,39 @@ Just like when creating graphics with `ggplot`, wrangling data with `dplyr` invo
 
 + To help us think through a wrangling problem, we are going to create a game plan **before** we start writing code.
 
+This might involve...
+
++ a sketch or flowchart.
++ a list of `dplyr` verbs and variable names.
++ annotating the `head` of the dataframe.
+
+
+## Creating a Game Plan
+
+::: panel-tabset
+
+### The Question
+
+What is the `median` grams of `sugars`per `shelf` and the number of cereals per `shelf`, when we drop the missing values (coded as `sugars = -1`)?
+
+<br>
+
+**The person with the nearest birthday**: explain **out loud** to your neighbor how you would do this manipulation.
+
+### The Code
+
+```{r}
+#| echo: true
+cereal |> 
+  select(sugars, shelf) |> 
+  filter(sugars != -1) |> 
+  group_by(shelf) |> 
+  summarise(med_sugars = median(sugars),
+            num_shelf = n())
+```
+
+:::
+
 
 
 # Thinking about Data Ethics
@@ -1315,8 +1372,6 @@ Just like when creating graphics with `ggplot`, wrangling data with `dplyr` invo
 ## Data Ethics
 
 **1. What do we mean by *data ethics*?**
-
-<br>
 
 <br>
 
@@ -1353,7 +1408,7 @@ Just like when creating graphics with `ggplot`, wrangling data with `dplyr` invo
 
 . . .
 
->Visit [Ethical Guidelines for Statistical Practice](https://www.amstat.org/your-career/ethical-guidelines-for-statistical-practice) and discuss one of the guidelines with your partner. 
+>Visit [Ethical Guidelines for Statistical Practice](https://www.amstat.org/your-career/ethical-guidelines-for-statistical-practice) and discuss one of the guidelines with your neighbor.
 >
 > + What surprises you? What did you learn? 
 > + In what scenario might this come into play?
@@ -1385,5 +1440,5 @@ Just like when creating graphics with `ggplot`, wrangling data with `dplyr` invo
   + Due Saturday, 4/22 at 11:59pm
   
 + **Read Chapter 4: Data Joins and Transformations**
-  + **Concept Check 4.1 + 4.2** due Monday 4/24 at 10:00am
+  + **Check-in 4.1 + 4.2** due Monday 4/24 at 10:00am
   
