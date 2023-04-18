@@ -813,7 +813,7 @@ We can calculate **summaries** of variables in the data.
 #| echo: true
 #| eval: true
 cereal |> 
-  summarise(mean_calories = mean(fiber))
+  summarise(mean_fiber = mean(fiber))
 ```
 
 . . .
@@ -823,7 +823,7 @@ Or **multiple** summaries at the same time.
 ```{r}
 #| echo: true
 cereal |> 
-summarise(mean_calories = mean(fiber),
+summarise(mean_fiber = mean(fiber),
           num_cereals = n(),
           mean_sugar = mean(sugars))
 ```
