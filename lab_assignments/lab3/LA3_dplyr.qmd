@@ -156,22 +156,26 @@ Helpful functions: `filter()`, `group_by()`, `summarize()`, `slice_max()`, `slic
 Useful variables: `word`, `familiarity`, `sex`, `age`, `ethnic`
 :::
 
-**12. People below the age of 20.**
+**12. Think about coding this up if your group of interest is non-white folks. Create a game plan with your thought process and include an image below. You do not need to provide R code.**
 
-```{r}
-# code chunk for Q12
-```
+![]()
 
-**13. Non-white women.**
+**13. Write code for people below the age of 20.**
 
 ```{r}
 # code chunk for Q13
 ```
 
-**14. White men above the age of 30.**
+**14. Write code for non-white women.**
 
 ```{r}
 # code chunk for Q14
+```
+
+**15. Write code for white men above the age of 30.**
+
+```{r}
+# code chunk for Q15
 ```
 
 
@@ -179,14 +183,14 @@ Useful variables: `word`, `familiarity`, `sex`, `age`, `ethnic`
 
 A joke among the [Tidy Tuesday](https://www.tidytuesday.com/) community is that Justin Bieber was one of the subjects in this study. Bieber, a white male, from a relatively small town (10,000-60,000 people) in Ontario would have been 17-23 at the time of the study.
 
-**15. Determine which subject you believe is secretly Bieber. Justify your answer.**
+**16. Determine which subject you believe is secretly Bieber. Justify your answer.**
 
 ::: callout-tip
 Refer again to the data set description. There is another clue about Bieber's identity.
 :::
 
 ```{r}
-# code chunk for Q15
+# code chunk for Q16
 ```
 
 
