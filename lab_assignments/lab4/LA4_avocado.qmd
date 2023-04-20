@@ -1,5 +1,5 @@
 ---
-title: "Lab 4: Avocado Prices"
+title: "Lab 4: Avocados"
 author: "YOUR NAME"
 format: 
   html:
