@@ -1,0 +1,103 @@
+---
+title: "Lab 4: Avocado Prices"
+author: "YOUR NAME"
+format: 
+  html:
+    self-contained: true
+    code-tools: true
+    toc: true
+editor: source
+execute: 
+  error: true
+  echo: fenced
+  message: false
+  warning: false
+---
+
+::: callout-tip
+I encourage you to think through your desired result **before** writing any code!
+:::
+
+[Download starter .qmd file](LA4_avocado.qmd)
+
+[Download data -- `avocado.csv`](avocado.csv)
+
+
+## Data Set-up
+
+In this lab, we're going to be looking at avocado prices.
+
+The data come to us from Kaggle and represent weekly retail data on avocado sales. A description of the data can be found [here.](https://www.kaggle.com/datasets/timmate/avocado-prices-2020).
+
+**0. Import the data and declare your package dependencies.**
+
+**1. Briefly describe the data. What information does it contain?**
+
+**2. Clean the data in any way you see fit.**
+
+::: callout-tip
+In particular, look carefully at the `geography` variable. Notice that there are several different levels of geographic regions contained in the same variable -- i.e., `"Los Angeles"`, `"California"`, and `"Total U.S."`. Think about how you want to handle this issue in your analysis.
+
+How many distinct geographic regions are there? Can you categorize them as **regions** vs. **metropolitan areas**? Will you create a new variable to indicate this? A new data set for each?
+
+You may also want to consider **renaming variables** so they make more sense. For example, find out what `4046` means in terms of avocado size.
+:::
+
+
+------------------------------------------------------
+
+# Exercises
+
+::: callout-note
+Use your cleaned data to answer these next three questions. In other words, `avocado_clean` is your starting point for each question.
+:::
+
+**3. Which 3 geographical regions (not metro areas) sold the most total organic, small Hass avocados in 2017?**
+
+**4. Use the `separate()` function to split the `date` variable into month, day, and year. Which month has the highest average volume of avocado sales for metro areas?**
+
+**5. Which metro areas sold the most avocados? Plot side-by-side box-plots of the total volume for only the five metro areas with the highest averages for the `total_volume` variable.**
+
+::: callout-tip
+You want each individual observations in your plot, but you will need to somehow identify the average for each metro area.
+
+*Hint:* One way you might approach this is by creating a new summarized data set and using `semi_join()`.
+:::
+
+------------------------------------------------------
+
+# Pivoting
+
+The following four California metro areas are in this data set: `"Los Angeles"`, `"San Diego"`, `"Sacramento"`, and `"San Francisco"`. 
+
+**6. Starting with your cleaned data, create a dataset with only these California metro areas. Answer the following questions about these California metro areas only.**
+
+**7. In which California metro area is the price of organic vs. conventional avocados most different? Support your answer with a few summary statistics AND a visualization.**
+
+::: callout-tip
+You do not have to, but you may want to transform your data. Sketch out what you want the data to look like before you begin to code! Come up with a game plan to answer this question.
+:::
+
+**8. The following plot shows, for all four California metro areas, the proportion of the average Hass avocado sales that are small, large, or extra large and conventional vs. organic. Recreate the plot. You do not have to replicate the exact finishing touches - e.g., color, theme - but your plot should resemble the content of this plot.**
+
+::: callout-tip
+This will require transforming your data! Sketch out what you want the data to look like before you begin to code! I recommend starting with your California data set you create in Q6. 
+:::
+
+::: callout-tip
+Helpful functions: `pivot_longer()`, `geom_col()`
+:::
+
+![Plot to recreate](https://github.com/earobinson95/stat331-calpoly/blob/master/lab-assignments/lab4/ca-avocado-size-proportions.png?raw=true)
+
+------------------------------------------------------
+
+# Challenge: Avocado Toast Ate My Mortgage
+
+A joke in the media is that millennials can't afford houses, because they spend all their money buying avocado toast. Let's use this data set to address that claim.
+
+> Find or make a dataset with house prices for these four California regions. Join this data with your California avocado data. 
+>
+> Use your new joined data to make an argument about the relationship between house prices and avocado prices/sales.
+>
+> Support your argument with a plot.
