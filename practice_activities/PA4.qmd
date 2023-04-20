@@ -1,5 +1,5 @@
 ---
-title: "PA 4: Governement Spending"
+title: "PA 4: Military Spending"
 subtitle: "Tidy Data with dplyr and tidyr"
 format: 
   html:
