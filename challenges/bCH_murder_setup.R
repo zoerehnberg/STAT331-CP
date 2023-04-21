@@ -3,9 +3,9 @@ table_names <- c("crime_scene_report","drivers_license",
                  "get_fit_now_check_in","get_fit_now_member",
                  "income", "interview","person")
 
-url_base <- "https://raw.githubusercontent.com/earobinson95/stat331-calpoly/master/practice-activities/data/sql-murder/"
+url_base <- "https://raw.githubusercontent.com/zoerehnberg/STAT331-S23/main/challenges/bCH_murder_data/"
 
-# For each table, read the table in and store it as the name of the table.
+# For each name, read in the table and store it as the name.
 purrr::walk(table_names, function(x) {
   assign(x, readr::read_csv(paste0(url_base, x, ".csv")), envir = .GlobalEnv)
 })

@@ -49,7 +49,7 @@ This code chunk will read in all of the tables for you.
 #| warning: false
 library(tidyverse)
 if (!"purrr" %in% installed.packages()) install.packages("purrr")
-source("https://raw.githubusercontent.com/earobinson95/stat331-calpoly/master/practice-activities/data/sql-murder-setup.R")
+source("https://raw.githubusercontent.com/zoerehnberg/STAT331-S23/main/challenges/bCH_murder_setup.R")
 ```
 
 ::: callout-tip
