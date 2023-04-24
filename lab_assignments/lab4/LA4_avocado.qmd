@@ -96,7 +96,7 @@ Helpful functions: `pivot_longer()`, `geom_col()`
 
 A joke in the media is that millennials can't afford houses, because they spend all their money buying avocado toast. Let's use this data set to address that claim.
 
-> Find or make a dataset with house prices for these four California regions. Join this data with your California avocado data. 
+> Find or build a dataset with house prices for these four California metro areas. Join this data with your California avocado data.
 >
 > Use your new joined data to make an argument about the relationship between house prices and avocado prices/sales.
 >

@@ -1,0 +1,1513 @@
+---
+title: "WEEK 5: SPECIAL DATA TYPES"
+format: 
+  revealjs:
+    theme: [default, ../../slide_custom.scss]
+    auto-stretch: false
+editor: source
+self-contained: true
+---
+
+```{r setup}
+#| include: false
+#| message: false
+library(tidyverse)
+library(palmerpenguins)
+```
+
+## Monday, February 6th
+
+Today we will...
+
++   Review PA 4: Military Spending
++ Final Project Group Formation
++ Review Lab 4
++ Mini lecture on text material
+  + Reordering Factor Variables
+  + Working with Date & Time Variables
++ [PA 5.1: Zodiac Killer](https://earobinson95.github.io/stat331-calpoly/practice-activities/PA5_1-zodiac-killer.html)
+
+## Final Project Group Formation
+
+You will be completing a final project in Stat 331/531 in teams of four. More details to come soon!
+
+In general, coming up submissions to be aware of:
+
++ **Group Formation Survey** due **Friday, 2/10 at 11:59pm**
+  + Meant to help me gather information about your preferences and work style in order to facilitate the team formation process.
+  + Your groupmates do not need to be in the same section as you, but you might find it useful for worktime during class.
++ Group Contracts
+  + Let's have an open conversation with our team to make things go smooth
++ Project Proposal -- I will provide details on this!
++ Final Project Deliverable
+  + Might be broken up into two steps since I know we like to procrastinate!
+
+## Lab 4: Tips
+
+**Don't include pages of output**
+
+Use the code chunk option
+
+`#| output: false`
+
+`#| results: false`
+
+<br>
+
+**Data Description Components**
+
+Make sure to include context when describing the data set as well as the data characteristics. 
+
++ Where did the data come from? What years? Location? Source?
++ What is the data being used for? 
++ What are the variables (in context) and observations (in context)?
+
+## `mutate()` vs `summarise()`
+
+::: panel-tabset
+### `mutate()` preserve observations
+
+![](images/mutate-sketch.JPG)
+
+### `summarise()` collapse observations
+
+![](images/summarise-sketch.JPG)
+:::
+
+## Lab 4: Game Plans!
+
+:::: columns
+::: column
+
+**Read**
+
+Average
+
+Total
+
+Which or For Each
+
+Minimum
+
+Maximum
+
+Minimum and Maximum
+
+:::
+::: column
+
+**Think**
+
+`summarize(avg_var = mean())`
+
+`summarize(total = sum())`
+
+`group_by()`
+
+`slice_min()`
+
+`slice_max()`
+
+`arrange() |> slice(1,n())`
+
+:::
+::::
+
+## Lab 4: Better alternatives to bar plots
+
+```{r}
+library(tidyverse)
+avocado <- read_csv(here::here("lab-assignments", "lab4", "avocado-updated-2020.csv"))
+
+major_region <- c("California", "West", "South Central", "Great Lakes", "Midsouth", "Southeast", "Northeast", "Plains", "Total U.S.")
+
+avocado_clean <- avocado |> 
+  #rename PLU codes and tidy up data
+  rename(small_hass = "4046", 
+         large_hass = "4225", 
+         xlarge_hass = "4770") |> 
+  mutate(geography_type = if_else(geography %in% major_region, "Major", "Metro"),
+         across(c(type:geography_type), as.factor)
+         )
+
+avocado_california <- avocado_clean |> 
+  filter(geography %in% c("Los Angeles", "San Diego", "Sacramento", "San Francisco"))
+
+organic_price_diff <- avocado_california |> 
+  pivot_wider(id_cols = c(date, year, geography, geography_type),
+              names_from = type,
+              values_from = average_price
+              ) |> 
+  mutate(price_diff = organic - conventional) 
+
+# organic_price_diff |> 
+#   ggplot(aes(x = price_diff, 
+#              y = geography, 
+#              color = geography, 
+#              fill = geography,
+#              shape = geography)) +
+#   geom_jitter(alpha = 0.3, show.legend = F) +
+#   geom_boxplot(alpha = 0.5, show.legend = F) +
+#   geom_vline(xintercept = 0, linetype = "dashed") +
+#   theme_bw() +
+#   theme(legend.position = "none",
+#         axis.title.y = element_blank()) +
+#   labs(subtitle = "Year",
+#        x = "Difference in Price ($)\nOrganic - Conventional")
+```
+
+*Bar plots are typically reserved for displaying frequencies*
+
+::: panel-tabset
+
+### Summary Data
+```{r}
+diff_summary <- organic_price_diff |> 
+  group_by(geography) |> 
+  summarise(mean_price_diff = mean(price_diff),
+            sd_price_diff = sd(price_diff)
+            ) |> 
+  arrange(desc(mean_price_diff))
+diff_summary 
+```
+
+### Bar plots
+
+```{r}
+#| echo: true
+#| code-fold: true
+#| fig-height: 4
+#| fig-width: 6
+#| fig-align: center
+diff_summary  |> 
+  ggplot(aes(x = mean_price_diff, 
+             y = geography,
+             fill = geography)
+         ) +
+  geom_bar(stat = "identity") +
+  labs(subtitle = "Geography",
+       x = "Difference in Price ($)\nOrganic - Conventional",
+       y = "") +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+### Cleveland Dot Plots
+
+Read more about [Cleveland Dot Plots](https://uc-r.github.io/cleveland-dot-plots)
+
+```{r}
+#| echo: true
+#| code-fold: true
+#| fig-height: 4
+#| fig-width: 6
+#| fig-align: center
+diff_summary |> 
+  arrange(desc(mean_price_diff)) |> 
+  ggplot(aes(x = mean_price_diff, 
+             y = geography,
+             fill = geography)
+         ) +
+  geom_segment(aes(xend = 0,
+                   yend = geography)
+  ) +
+  geom_point() +
+  labs(subtitle = "Geography",
+       x = "Difference in Price ($)\nOrganic - Conventional",
+       y = "") +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  scale_fill_brewer(palette = "Dark2")
+```
+:::
+
+# Factor Variables
+
+## `library(forcats)` [cheatsheet](https://posit.co/wp-content/uploads/2022/10/factors-1.pdf)
+
+:::: columns
+::: column
+**Common tasks**
+
++ Turn a `character` or `numeric` variable into a factor
+
++ Make a factor by discritizing / "binning" a numeric variable
+
++ Rename or reorder the `levels` of an existing `factor`
+:::
+::: column
+```{r}
+#| out-width: 50%
+#| fig-align: center
+knitr::include_graphics("https://github.com/rstudio/hex-stickers/blob/main/thumbs/forcats.png?raw=true")
+```
+:::
+::::
+
+::: callout-note
+The packages `forcats` ("for categoricals") gives nice shortcuts for
+wrangling categorical variables.
+
+  + `forcats` loads with the `tidyverse`!
+:::
+
+
+## Create a `factor`
+
+```{r}
+#| echo: true
+x <- c("apple", "dog", "banana", "cat", "banana", "Queen Elizabeth", "dog")
+x
+```
+
+<br>
+
+```{r}
+#| echo: true
+x <- factor(x)
+x
+```
+
+## What happened?
+
+```{r}
+#| fig-align: center
+knitr::include_graphics("images/factor_mapping.jpg")
+```
+
+<!-- :::: columns -->
+<!-- ::: column -->
+<!-- ```{r} -->
+<!-- #| echo: false -->
+<!-- x <- c(1,4,2,3,2,5,4) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- #| echo: true -->
+<!-- x -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- ::: column -->
+<!-- ```{r} -->
+<!-- x <- factor(c("apple", "dog", "banana", "cat", "banana", "Queen Elizabeth", "dog")) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- #| echo: true -->
+<!-- #| eval: false -->
+<!-- levels(x) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- #| echo: false -->
+<!-- levels(x) |>  -->
+<!--   knitr::kable() -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- :::: -->
+
+## `fct_recode()`
+
+new level = old level
+
+```{r}
+#| echo: true
+x <- fct_recode(x,
+                "fruit" = "apple",
+                "fruit" = "banana",
+                "pet"   = "cat",
+                "pet"   = "dog"
+                )
+x
+```
+
+::: callout-note
+Notice Queen Elizabeth is a "remaining" level that was never recoded.
+:::
+
+## `fct_relevel()`
+
+```{r}
+#| echo: true
+x <- fct_relevel(x, 
+                 levels = c("Queen Elizabeth", 
+                            "pet", 
+                            "fruit")
+)
+levels(x)
+```
+
+
+## Factors in the `tidyverse`
+
+::: panel-tabset
+### cereal
+
+```{r}
+#| echo: true
+library(liver)
+data(cereal)
+str(cereal)
+```
+
+### previously `case_when()`
+```{r}
+#| echo: true
+cereal_casewhen <- cereal |> 
+  mutate(manuf = case_when(manuf == "A" ~ "American Home Food Products", 
+                           manuf == "G" ~ "General Mills", 
+                           manuf == "K" ~ "Kelloggs", 
+                           manuf == "N" ~ "Nabisco", 
+                           manuf == "P" ~ "Post", 
+                           manuf == "Q" ~ "Quaker Oats", 
+                           manuf == "R" ~ "Ralston Purina"
+                           ),
+         manuf = as.factor(manuf)
+  )
+summary(cereal_casewhen$manuf)
+```
+
+### now `fct_recode`
+
+```{r}
+#| echo: true
+
+cereal_recode <- cereal |> 
+  mutate(manuf = fct_recode(manuf, 
+                             "American Home Food Products" = "A", 
+                             "General Mills" = "G", 
+                             "Kelloggs" = "K", 
+                             "Nabisco" = "N", 
+                             "Post" = "P", 
+                             "Quaker Oats" = "Q", 
+                             "Ralston Purina" = "R"
+                           )
+  )
+
+summary(cereal_recode$manuf)
+```
+:::
+
+<!-- cereal_relabel <- cereal |> -->
+<!--   mutate(manuf = fct_relabel(manuf, -->
+<!--                              A ~ "American Home Food Products", -->
+<!--                              G ~ "General Mills", -->
+<!--                              K ~ "Kelloggs", -->
+<!--                              N ~ "Nabisco", -->
+<!--                              P ~ "Post", -->
+<!--                              Q ~ "Quaker Oats", -->
+<!--                              R ~ "Ralston Purina" -->
+<!--                            ) -->
+<!--   ) -->
+
+## Factors in `ggplot2`
+
+Disclaimer: fix your axes and legend labels!
+
+::: panel-tabset
+### original
+
+```{r}
+#| echo: true
+#| code-fold: true
+#| code-line-numbers: 14
+library(ggridges)
+cereal_recode |> 
+  ggplot(aes(x = sugars, 
+             y = manuf, 
+             fill = manuf)) +
+  geom_density_ridges() +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  labs()
+```
+
+### `fct_reorder()`
+
+Default reorders by the median value
+
+```{r}
+#| echo: true
+#| code-fold: true
+#| code-line-numbers: 3
+cereal_recode |> 
+  ggplot(aes(x = sugars, 
+             y = fct_reorder(.f = manuf, 
+                             .x = sugars,
+                             .fun = mean), 
+             fill = manuf)
+         ) +
+  geom_density_ridges() +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  labs()
+```
+:::
+
+## Factors in `ggplot2`
+
+Disclaimer: fix your axes and legend labels!
+
+::: panel-tabset
+### Original
+
+```{r}
+#| echo: true
+#| code-fold: true
+#| code-line-numbers: 6
+cereal_recode |> 
+  group_by(manuf, shelf) |> 
+  summarise(avg_sugar = mean(sugars, na.rm = TRUE)) |> 
+  ggplot(aes(x = shelf, 
+             y = avg_sugar, 
+             color = manuf)
+         ) +
+  geom_line() +
+  theme_minimal() +
+  labs()
+```
+
+### `fct_reorder2()`
+
+```{r}
+#| echo: true
+#| code-fold: true
+#| code-line-numbers: 6
+cereal_recode |> 
+  group_by(manuf, shelf) |> 
+  summarise(avg_sugar = mean(sugars, na.rm = TRUE)) |> 
+  ggplot(aes(x = shelf, 
+             y = avg_sugar, 
+             color = fct_reorder2(manuf, .x = shelf, .y = avg_sugar))
+         ) +
+  geom_line() +
+  theme_minimal() +
+  labs()
+```
+
+::: 
+
+## [Lab 5: Factors in Data Visualizations](https://earobinson95.github.io/stat331-calpoly/lab-assignments/lab5/lab5-factors-in-visualizations.html)
+
++ We will be working with the `survey.csv data` from *Lab 2: Exploring Rodents with ggplot2* to improve our plots!
+
++ See [Will Chase's 2020 RStudio Conference Presentation - Glamour of Graphics](https://www.youtube.com/watch?v=h5cTacaWE6I&ab_channel=PositPBC)
+  + [slides](https://www.williamrchase.com/slides/assets/player/KeynoteDHTMLPlayer.html#0)
+
++ You will be asked to "sketch your game plan" with [https://excalidraw.com/](https://excalidraw.com/).
+
+::: callout-caution
+
+You will be **required** to use functions from the {forcats} package! e.g. `reorder()` is a no go, use `fct_reorder` instead!
+
+:::
+
+# Date + Time Variables
+
+# `library(lubridate)`
+
+:::: columns
+::: column
+**Common Tasks**
+
++ Convert a date-like variable ("May 8, 1995") to a special DateTime Object.
+
++ Find the weekday, month, year, etc from a DateTime object
+
++ Convert between timezones
+
+:::
+::: column
+```{r}
+#| fig-align: center
+#| out-width: 50%
+knitr::include_graphics("https://github.com/rstudio/hex-stickers/blob/main/thumbs/lubridate.png?raw=true")
+```
+:::
+::::
+
+::: callout-note
+The package `lubridate` is AMAZING for this. 
+
++ `lubridate` does not **load** with the `tidyverse` but it does **install**
+  with it.
+  
+```{r}
+#| echo: true
+library(lubridate)
+```
+:::
+
+## `datetime` Objects
+
+There are actually three data types (classes) in R for dates and datetimes.
+
++ Date (duh)
+
++ POSIXlt (???)
+
++ and POSIXct (???)
+
+## History of `POSIXlt` and `POSIXct`
+
+:::: columns
+::: column
+- `POSIXct` -- stores date/time values as the number of seconds since
+January 1, 1970 ("Unix Epoch")
+
+- `POSIXlt` -- stores date/time values as a list with elements for second,
+minute, hour, day, month, and year, among others. 
+:::
+::: column
+In the "old days", to make a Date or Datetime object, you'd have to get the
+format *just right*.
+
+```{r}
+#| echo: true
+as.Date("1995-05-08") |>  str()
+as_datetime("1995-05-08") |>  str()
+```
+:::
+::::
+
+## Enter `lubridate`!
+
+:::: columns
+::: column
+```{r}
+#| echo: true
+make_date(year = 1995, month = 05, day = 08)
+mdy("May 8, 1995")
+dmy("8-May-1995", tz = "America/Chicago")
+```
+:::
+::: column
+```{r}
+#| echo: true
+parse_datetime("05/8/1995", format = "mdy")
+
+parse_datetime("5/8/1995", format = "%m/%d/%Y")
+
+```
+:::
+::::
+
+## Common mistake with dates
+
+*What is wrong with these two code chunks?*
+
+```{r}
+#| echo: true
+as_datetime(2023-02-6)
+```
+
+<br>
+
+```{r}
+#| echo: true
+my_date <- 2023-02-6
+my_date
+```
+
+## Components of dates
+
+
+```{r}
+#| echo: true
+bday <- ymd_hms("1995-05-8 6:32:12", tz = "America/Chicago")
+bday
+```
+
+<br>
+
+:::: columns
+::: column
+```{r}
+#| echo: true
+year(bday)
+month(bday)
+day(bday)
+```
+:::
+::: column
+```{r}
+#| echo: true
+wday(bday)
+
+wday(bday, label = TRUE)
+
+wday(bday, label = TRUE)
+```
+:::
+::::
+
+## When is my ______ birthday?
+
+<br>
+
+next birthday...
+
+```{r}
+#| echo: true
+(bday + years(28)) |>  
+  wday(label = TRUE, abbr = FALSE)
+```
+
+<br>
+
+hundredth...
+
+```{r}
+#| echo: true
+bday + years(100)
+```
+
+## [PA 5.1: Zodiac Killer](https://earobinson95.github.io/stat331-calpoly/practice-activities/PA5_1-zodiac-killer.html)
+
+One of the most famous mysteries in California history is the identity of the so-called “Zodiac Killer”, who murdered 7 people in Northern California between 1968 and 1969. A new murder was committed last year in California, suspected to be the work of a new Zodiac Killer on the loose.
+
+Unfortunately, the date and time of the murder is not known. You have been hired to crack the case. Use the clues below to discover the murderer’s identity.
+
+> Submit the name of the killer to the Canvas Quiz.
+
+## To do...
+
++ **PA 5.1: Zodiac Killer**
+  + Due Wednesday, 2/8 at 8:00am
+
++ **Lab 5: Factors in Data Visualization**
+  + Due Friday, 2/10 at 11:59pm
+  
++ **Final Project Group Formation Survey**
+  + Due Friday, 2/10 at 11:59pm
+  
+## Wednesday, February 8th
+
+Today we will...
+
++ Review PA 5.1: Zodiac Killer
++ Bonus Challenge: Save the Date
++ Midterm Exam 2/15: What to Expect
+  + Example Game Plans
+  + Example Open-ended Analysis
++ Mini lecture on text material
+  + Strings
+  + Regular Expressions
++ Example: "Messy" Covid Variants
++ [PA 5.2: Scrambled Message](https://earobinson95.github.io/stat331-calpoly/practice-activities/PA5_2-scrambled-message-regex.html)
+
+## [Bonus Challenge: Save the Date](https://earobinson95.github.io/stat331-calpoly/bonus-challenges/bonus-challenge-data-mishaps-night.html)
+
+:::: {.columns}
+:::{.column  width="55%"}
+**What** [Data Mishaps Night](https://datamishapsnight.com/)
+
+**When** Thursday, February 23rd at 5pm PST
+
+**Where** Zoom!
+:::
+:::{.column  width="45%"}
+```{r}
+#| out-width: 70%
+#| fig-align: center
+knitr::include_graphics("https://datamishapsnight.files.wordpress.com/2021/01/data-mishaps_main_withtext-4.png?w=768")
+```
+:::
+::::
+
+::: callout-caution
+You must register for **free** [here](https://datamishapsnight.com/) to receive the link!
+:::
+
++ Submit to canvas a "reflection" for each of the keynote and/or theme sessions you attend. 
++ Each "reflection" gets you +2 challenge points (that is up to +8 for the whole night!)
+
+## [Midterm Exam](https://earobinson95.github.io/stat331-calpoly/midterm-exam/what-to-expect-midterm-exam.html) -- In-class Wednesday 2/15
+
++ You will have one hour and 50 minutes to complete the exam on your own computer.
++ The exam is worth a total of 100 points and consists of 3 sections: General Questions, Short Answer, and Open-Ended Analysis.
++ I will bring paper copies of the exam questions 
++ A `.qmd` starter file for the short answer will be unlocked at the start of each sections class.
++ You will be creating your own `.qmd` file for the open-ended analysis. You may bring one already created on your computer.
+
+::: callout-caution
+While this is an open resource exam, you will likely get caught running out of time if you have to look everything up. Know what functions you might need to approach the problem and where to find documentation for implementing these functions.
+:::
+
+## Lab 4: Game Plans!
+
+Q2: Clean the data in any way you see fit.
+
+::: panel-tabset
+### version 1
+![](images/q1-game-plan-sketch.JPG)
+
+### 2
+![](images/q1-game-plan-sketch2.JPG)
+
+### 3
+![](images/q1-game-plan-sketch3.JPG)
+:::
+
+## Lab 4: Game Plans!
+
+Q3: Which major geographical region sold the most total organic, small Hass avocados in 2017?
+
+![](images/q3-game-plan-sketch.JPG)
+
+## Lab 4: Game Plans!
+
+Q8: The following plot shows, for all four California regions, the proportion of the average Hass avocado sales that are small, large, or extra large; conventional vs. organic. Recreate the plot.
+
+::: panel-tabset
+### version 1
+
+![](images/q8-game-plan-sketch-v2.JPG)
+
+### 2
+![](images/q8-game-plan-sketch-v1.JPG)
+
+
+### 3
+![](images/q8-game-plan-sketch-v3.JPG)
+
+:::
+
+# `stringr`
+
+## strings
+
+A **string** is a bunch of **characters**.
+
+Don't confuse a **string** (many characters, one object) with a **character vector** (vector of strings).
+
+<br>
+
+```{r}
+#| echo: true
+my_string <- "Hi, my name is Bond!"
+my_vector <- c("Hi", "my", "name", "is", "Bond")
+```
+
+<br>
+
+```{r}
+#| echo: true
+my_string
+```
+
+<br>
+
+```{r}
+#| echo: true
+my_vector
+```
+
+# `stringr`
+
+:::: columns
+::: column
+**Common tasks**
+
++ Find which strings contain a particular pattern
+
++ Remove or replace a pattern
+
++ Edit a string (for example, make it lowercase)
+:::
+::: column
+```{r}
+#| fig-align: center
+#| out-width: 40%
+knitr::include_graphics("https://github.com/rstudio/hex-stickers/blob/main/PNG/stringr.png?raw=true")
+```
+:::
+::::
+
+::: callout-note 
+The package `stringr` is very useful for strings!  
+
++ `stringr` loads with the `tidyverse`.
+
++ all the functions are `str_xxx()`.
+:::
+
+## `pattern = `
+
+The **pattern argument** in all of the `stringr` functions ...
+
+```{r}
+#| eval: false
+#| echo: true
+my_vector <- c("Hello,", "my name is", "Bond", "James Bond")
+
+str_detect(my_vector, pattern = "Bond")
+str_locate(my_vector, pattern = "Bond")
+str_match(my_vector, pattern = "Bond")
+str_extract(my_vector, pattern = "Bond")
+str_subset(my_vector, "pattern = Bond")
+```
+
+::: callout-note
+Discuss with a neighbor. For each of these functions, give:
+
++ The **object structure** of the output.
++ The **data type** of the output.
++ A brief explanation of what they do.
+::::
+
+
+## `str_detect()`
+
+Returns **logical vector** `TRUE/FALSE` indicating if the pattern was found in that element of the original vector
+
+```{r}
+#| echo: true
+my_vector <- c("Hello,", "my name is", "Bond", "James Bond")
+str_detect(my_vector, pattern = "Bond")
+```
+
++ Pairs well with `filter()`
++ Could be used with `summarise()` and `sum` or `mean`
+
+::: {.callout-note collapse="true"}
+### Related functions 
+`str_subset()` returns just the strings that contain the match
+
+`str_which()` returns the indexes of strings that have a match
+:::
+
+## `str_match()` 
+
+Returns **character matrix** with either `NA` or the pattern, depending on if the pattern was found.
+
+```{r}
+#| echo: true
+my_vector <- c("Hello,", "my name is", "Bond", "James Bond")
+str_match(my_vector, pattern = "Bond")
+```
+
+## `str_extract()` 
+
+Returns **character vector** with either `NA` or the pattern, depending on if the pattern was found.
+
+```{r}
+#| echo: true
+my_vector <- c("Hello,", "my name is", "Bond", "James Bond")
+str_extract(my_vector, pattern = "Bond")
+```
+
+::: callout-warning
+`str_extract()` only returns the **first** pattern match.
+
+Use `str_extract_all()` to return **every** pattern match.
+:::
+
+## `str_locate()` 
+
+Returns a **date frame** with two **numeric variables** for the starting and ending location, giving either `NA` or the start and end position of the pattern.
+
+```{r}
+#| echo: true
+my_vector <- c("Hello,", "my name is", "Bond", "James Bond")
+str_locate(my_vector, pattern = "Bond")
+```
+
+## `str_subset()`
+
+Returns a **character vector** with a subset of the original **character vector** with elements where the pattern occurs.
+
+```{r}
+#| echo: true
+my_vector <- c("Hello,", "my name is", "Bond", "James Bond")
+str_subset(my_vector, pattern = "Bond")
+```
+
+::: callout-note
+### Related Functions
+
+`str_sub()` extracts values based on location.
+:::
+
+## Replace / Remove patterns
+
+::: panel-tabset
+
+### `str_replace()`
+
+replaces the **first** matched pattern
+
++ Pairs well with `mutate()`
+
+```{r}
+#| echo: true
+str_replace(my_vector, pattern = "Bond", replace = "Franco")
+```
+
+### `str_remove()`
+
+Removes the **first** matched pattern
+
+Special case -- `str_replace(x, pattern, replace = "")`
+
+```{r}
+#| echo: true
+my_vector <- c("Hello,", "my name is", "Bond", "James Bond")
+str_remove(my_vector, pattern = "Bond")
+```
+
+:::
+
+::: {.callout-note collapse="true"}
+### Related functions 
+
+`str_replace_all()` replaces **all** matched patterns
+
+`str_remove_all()` removes **all** matched patterns
+:::
+
+## Make edits
+
+Convert letters in the string to a specific capitalization format.
+
+::: panel-tabset
+
+### `str_to_lower()` 
+
+converts all letters in the strings to lowercase
+
+<br>
+
+```{r}
+#| echo: true
+my_vector <- c("Hello,", "my name is", "Bond", "James Bond")
+str_to_lower(my_vector)
+```
+
+### `str_to_upper()` 
+
+converts all letters in the strings to uppercase
+
+<br>
+
+```{r}
+#| echo: true
+str_to_upper(my_vector)
+```
+
+### `str_to_title()` 
+
+converts the first letter of the strings to uppercase
+
+<br>
+
+
+```{r}
+#| echo: true
+str_to_title(my_vector)
+```
+
+:::
+
+
+<!-- ## `separate_xxx_delim()` -->
+
+<!-- `separate_longer_delim()` -->
+
+<!-- `separate_wider_delim()` -->
+
+## Combine Strings
+
+::: panel-tabset
+### `str_c()`
+
+Joins multiple strings into a single string.
+
+```{r}
+#| echo: true
+prompt <- "Hello, my name is"
+first  <- "James"
+last   <- "Bond"
+str_c(prompt, last, ",", first, last, sep = " ")
+```
+
+::: callout-note
+Similar to `paste()` and `paste0()`
+:::
+
+### `str_flatten()`
+
+Combines into a single string.
+
+```{r}
+#| echo: true
+my_vector <- c("Hello,", "my name is", "Bond", "James Bond")
+str_flatten(my_vector, collapse = " ")
+```
+
+::: callout-note
+`str_c()` will do the same thing, but it it is encouraged to use `str_flatten()` instead.
+:::
+
+### `str_glue()`
+
+Uses environment to create a string and evaluates {expressions}.
+
+```{r}
+#| echo: true
+first <- "James"
+last <- "Bond"
+str_glue("My name is {last}, {first} {last}")
+```
+
+::: callout-tip
+See the R package [`glue`](https://glue.tidyverse.org/)!
+:::
+
+:::
+
+## Hints and Tips for Success
+
++ Refer to the [`stringr` cheatsheet](https://posit.co/wp-content/uploads/2022/10/strings-1.pdf)
+
++ Remember that `str_xxx` functions need the first argument to be a **vector of strings**, not a **data set**.
+  + You might want to use them *inside* functions like `filter()` or `mutate()`.
+
+```{r}
+#| echo: true
+#| code-line-numbers: 3
+cereal |> 
+  mutate(
+    is_bran = str_detect(name, "Bran"), 
+    .after = name
+  )
+```
+
+# regex
+
+```{r}
+#| fig-align: center
+#| out-width: 70%
+knitr::include_graphics("images/regular_expressions.png")
+```
+
+## Regular Expressions
+
+> "Regexps are a very terse language that allow you to describe patterns in 
+> strings."
+>
+> *R for Data Science*
+
+R uses "extended" regular expressions, which are common.
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: 2
+str_detect(string  = my_string_vector, 
+           pattern = "REGULAR EXPRESSION"
+           )
+```
+
+[Web app to test R regular expressions](https://spannbaueradam.shinyapps.io/r_regex_tester/)
+
+::: callout-tip
+Regular expressions are a reason to use `stringr`!
+
+You might encounter `gsub()`, `grep()`, etc. from Base R.
+:::
+
+## Meta Characters `.` `^`  `$` `\`  `|` `*` `+` `?` `{` `}` `[` `]` `(` `)`
+
+::: panel-tabset
+
+### Wild card `.`
+
+```{r}
+#| echo: true
+toung_twister <- c("She", "sells", "seashells", "by", "the", "seashore!")
+toung_twister
+```
+<br>
+`.` Represents any character
+
+```{r}
+#| echo: true
+str_subset(toung_twister, pattern = ".ells")
+```
+
+### Anchoring `^ $`
+
+```{r}
+#| echo: true
+toung_twister <- c("She", "sells", "seashells", "by", "the", "seashore!")
+toung_twister
+```
+
+<br>
+
+`^` Looks at the beginning  
+
+```{r}
+#| echo: true
+str_subset(toung_twister, pattern = "^s")
+```
+
+`$` Looks at the end  
+
+```{r}
+#| echo: true
+str_subset(toung_twister, pattern = "s$")
+```
+
+### Quantifiers `? + *`
+
+```{r}
+#| echo: true
+shells_str <- c("shes", "shels", "shells", "shellls", "shelllls")
+shells_str
+```
+
+<br>
+
+`?` Occurs 0 or 1 times  
+
+```{r}
+#| echo: true
+str_subset(shells_str, pattern = "shel?s")
+```
+
+`+` Occurs 1 or more times
+
+```{r}
+#| echo: true
+str_subset(shells_str, pattern = "shel+s")
+```
+
+`*` Occurs 0 or more times
+
+```{r}
+#| echo: true
+str_subset(shells_str, pattern = "shel*s")
+```
+
+### More Quantifiers `{}`
+
+```{r}
+#| echo: true
+shells_str <- c("shes", "shels", "shells", "shellls", "shelllls")
+shells_str
+```
+
+<br>
+
+`{n}` matches exactly n times.
+
+```{r}
+#| echo: true
+str_subset(shells_str, pattern = "shel{2}s")
+```
+
+`{n,}` matches at least n times.
+
+```{r}
+#| echo: true
+str_subset(shells_str, pattern = "shel{2,}s")
+```
+
+`{n,m}` matches between n and m times.
+
+```{r}
+#| echo: true
+str_subset(shells_str, pattern = "shel{1,3}s")
+```
+:::
+
+## Groups `()`
+
+Groups can be created with `( )`
+
+`|` -- "either" / "or"
+
+<br>
+```{r}
+#| echo: true
+toung_twister2 <- c("Peter", "Piper", "picked", "a", "peck", "of", "pickled", "peppers!")
+toung_twister2
+```
+
+<br>
+
+```{r}
+#| echo: true
+str_subset(toung_twister2, pattern = "p(e|i)ck")
+```
+
+## Character Classes `[]`
+
+```{r}
+#| echo: true
+toung_twister2 <- c("Peter", "Piper", "picked", "a", "peck", "of", "pickled", "peppers!")
+```
+
+. . .
+
+```{r}
+#| echo: true
+str_subset(toung_twister2, pattern = "p[ei]ck")
+```
+. . .
+
+`[^ ]` except - think "not"
+
+```{r}
+#| echo: true
+str_subset(toung_twister2, pattern = "p[^i]ck")
+```
+
+. . .
+
+`[ - ]` range
+
+```{r}
+#| echo: true
+str_subset(toung_twister2, pattern = "p[ei]ck[a-z]")
+```
+
+. . .
+
+`[Pp]` Capitalization matters
+
+```{r}
+#| echo: true
+str_subset(toung_twister2, pattern = "^p")
+```
+
+```{r}
+#| echo: true
+str_subset(toung_twister2, pattern = "^[Pp]")
+```
+
+## `[]` Character Classes
+
+::: panel-tabset
+### Shortcuts
++ [A-Z] matches any capital letter.
++ [a-z] matches any lowercase letter.
++ [A-z] or [:alpha:] matches any letter
++ [0-9] or [:digit:] matches any number
++ See the stringr cheatsheet for more shortcuts, like [:punct:]
+
+### More Shortcuts
+`\w` Looks for any **"word"**  (conversely "not" "word" `\W`) 
+
+`\d` Looks for any **digit** (conversely "not" digit `\D`) 
+
+`\s` Looks for any **whitespace** (conversely "not" whitespace `\S`) 
+:::
+
+## Let's try it out!
+
+Discuss with a neighbor which regular expressions would search for words that do the following:
+
++ end with a vowel
++ start with x, y, or z
++ *do not* contain x, y, or z
++ contain [British spelling](https://www.oxfordinternationalenglish.com/differences-in-british-and-american-spelling/)
+
+Test your answers out on
+
+```{r}
+#| echo: true
+test_vec <- c("zebra", "xray", "apple", "yellow", "color", "colour", "summarize", "summarise")
+```
+
+## Escape `\`
+
+In order to match a special character you need to "escape" first
+
+::: callout-warning
+In general, look at punctuation characters with suspicion.
+:::
+
+```{r}
+toung_twister3 <- c("How", "much", "wood", "could", "a", "woodchuck", "chuck", "if", "a", "woodchuck", "could", "chuck", "wood?")
+toung_twister3 
+```
+```{r}
+#| echo: true
+#| error: true
+str_subset(toung_twister3, pattern = "?")
+```
+
+```{r}
+#| echo: true
+#| error: true
+str_subset(toung_twister3, pattern = "\\?")
+```
+
+::: callout-note
+Could also use `[]` character class
+
+```{r}
+#| echo: true
+#| error: true
+str_subset(toung_twister3, pattern = "[?]")
+```
+:::
+
+## When in Doubt
+<br>
+<br>
+```{r}
+#| fig-align: center
+#| out-width: 80%
+knitr::include_graphics("images/backslashes.png")
+```
+Use the [web app to test R regular expressions](https://spannbaueradam.shinyapps.io/r_regex_tester/)
+
+## Tips for working with regex
+
++ Read the regular expressions out loud like a "request"
+
+. . .
+
++ Test out your expressions on small examples first
+  + [Web app to test R regular expressions](https://spannbaueradam.shinyapps.io/r_regex_tester/)
+  + `str_view()` and `str_view_all()`
+
+::: {.callout-note collapse="true"}  
+### `str_view()` and `str_view_all()`
+```{r}
+#| echo: true
+shells_str
+str_view(shells_str, "l+")
+str_view_all(shells_str, "l+")
+```
+:::
+
+## Tips for working with regex
+
++ Read the regular expressions out loud like a "request"
+
++ Test out your expressions on small examples first
+  + [Web app to test R regular expressions](https://spannbaueradam.shinyapps.io/r_regex_tester/)
+  + `str_view()` and `str_view_all()`
+
++ I use the [`stringr` cheatsheet](https://posit.co/wp-content/uploads/2022/10/strings-1.pdf) more than any other package cheatsheet!
+
+. . .
+
++ Everyone has a love-hate relationship with regular expressions. Be kind to yourself.
+
+# strings in the `tidyverse`
+
+```{r}
+#| include: false
+library(readxl)
+library(tidyverse)
+military <- read_xlsx(here::here("practice-activities",
+                                 "data", 
+                                 "gov_spending_per_capita.xlsx"), 
+                      sheet = "Share of Govt. spending", 
+                      skip  = 7, 
+                      n_max  = 191)
+```
+
+## `matches(pattern)`
+
+Selects all variables with a name that matches the supplied pattern
+
++ pairs well with `select()`, `rename_with()`, and `across()`
+
+::: panel-tabset
+
+### Before
+```{r}
+#| echo: true
+military_clean <- military |> 
+  mutate(across(`1988`:`2019`, 
+                ~ na_if(.x, y = ". .")
+                ),
+         across(`1988`:`2019`, 
+                ~ na_if(.x, y = "xxx")
+                )
+         )
+```
+
+### With regex
+```{r}
+#| echo: true
+#| code-line-numbers: 3, 6 
+military_clean <- military |> 
+  mutate(
+         across(matches("[1-9][1-9][1-9][1-9]"), 
+                ~ na_if(.x, y = ". .")
+                ),
+         across(matches("[1-9][1-9][1-9][1-9]"), 
+                ~ na_if(.x, y = "xxx")
+                )
+         )
+```
+:::
+
+## "Messy" Covid Variants
+
+I received this data from a grad school colleague the other day who asked if I knew how to "clean" it.
+
+![](images/covid-data-snip.JPG)
+
+What is that column?! `r emo::ji("wow")`
+
+`[{'variant': 'Other', 'cumWeeklySequenced': 2366843.0, 'newWeeklyPercentage': 4.59}, {'variant': 'V-20DEC-01 (Alpha)', 'cumWeeklySequenced': 0.0, 'newWeeklyPercentage': 0.0}, {'variant': 'V-21APR-02 (Delta B.1.617.2)', 'cumWeeklySequenced': 0.0, 'newWeeklyPercentage': 0.0}, {'variant': 'V-21OCT-01 (Delta AY 4.2)', 'cumWeeklySequenced': 0.0, 'newWeeklyPercentage': 0.0}, {'variant': 'V-22DEC-01 (Omicron CH.1.1)', 'cumWeeklySequenced': 2366843.0, 'newWeeklyPercentage': 24.56}, {'variant': 'V-22JUL-01 (Omicron BA.2.75)', 'cumWeeklySequenced': 2366843.0, 'newWeeklyPercentage': 8.93}, {'variant': 'V-22OCT-01 (Omicron BQ.1)', 'cumWeeklySequenced': 2366843.0, 'newWeeklyPercentage': 49.57}, {'variant': 'VOC-21NOV-01 (Omicron BA.1)', 'cumWeeklySequenced': 2366843.0, 'newWeeklyPercentage': 0.02}, {'variant': 'VOC-22APR-03 (Omicron BA.4)', 'cumWeeklySequenced': 2366843.0, 'newWeeklyPercentage': 0.08}, {'variant': 'VOC-22APR-04 (Omicron BA.5)', 'cumWeeklySequenced': 2366843.0, 'newWeeklyPercentage': 5.59}, {'variant': 'VOC-22JAN-01 (Omicron BA.2)', 'cumWeeklySequenced': 2366843.0, 'newWeeklyPercentage': 1.41}, {'variant': 'unclassified_variant', 'cumWeeklySequenced': 2366843.0, 'newWeeklyPercentage': 5.26}]`
+
+## Enter `stringr`! `r emo::ji("party")`
+
+Let's see how this works.
+
+## [PA 5.2: Scrambled Message](https://earobinson95.github.io/stat331-calpoly/practice-activities/PA5_2-scrambled-message-regex.html)
+
+In this activity, you will be using regular expressions to decode a message.
+
++ Remember, the `stringr` functions go *inside* `dplyr` verbs like `mutate()` and `filter()`. Think of them as you would `as.factor()`
+
++ [Reminder about Indexing Vectors](https://earobinson95.github.io/stat331-calpoly-text/00-prereading.html#indexing-by-location)
+
+```{r}
+#| echo: true
+toung_twister3
+```
+
+  + You can grab the elements out of a vector with [] -- read "where"
+
+```{r}
+#| echo: true
+toung_twister3[c(3,6, 10,13)]
+```
+
+  + If you want to replace those elements or change those elements use the assignment arrow!
+
+```{r}
+#| echo: true
+toung_twister3[c(3,6, 10,13)] <- "WOOD!"
+```
+
+## To do...
+
++ **PA 5.2: Scrambled Message**
+  + Due Friday, 2/10 at 8:00am
+
++ **Lab 5: Factors in Data Visualization**
+  + Due Friday, 2/10 at 11:59pm
+
++ **Final Project Group Formation Survey**
+  + Due Friday, 2/10 at 11:59pm
+
++ [**Bonus Challenge: Murder Mystery in SQL City**](https://earobinson95.github.io/stat331-calpoly/bonus-challenges/bonus-challenge-murder-in-sql-city.html)
+  + Due Sunday 2/12 at 11:59pm
+  
++ **Read Chapter 6: Version Control**
+  + **Concept Check 6.1 + 6.2** due Monday (2/13) at 8:00am
+
+  

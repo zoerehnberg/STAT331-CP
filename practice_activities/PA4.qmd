@@ -130,8 +130,7 @@ A clever way to filter out observations you **don't want** is with a join. A too
 ```
 
 ::: callout-tip
-To join by different variables on `datasetX` and `datasetY`, use a named vector. For example, `by = c("a" = "b")` will match `datasetX$a` to `datasetY$b`.
-:::
+Join by different variables on `dataX` and `dataY`: `join_by(a == b)` will match `dataX$a` to `dataY$b`.:::
 
 ::: callout-note
 ### Canvas Q1
@@ -142,7 +141,7 @@ To join by different variables on `datasetX` and `datasetY`, use a named vector.
 ::: callout-tip
 Think about what uniquely separates the rows for the regions from the rows for the countries.
 
-Useful functions: `filter()`, `across()`, `is.na`
+Useful functions: `filter()`, `if_all()`, `is.na`
 :::
 
 ```{r}

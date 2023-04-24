@@ -20,16 +20,57 @@ Today we will...
 
 -   Review PA 3: Identify the Mystery College
 -   New Material
+    -   Lambda functions
     -   Pivoting with `tidyr`
     -   Joining with `dplyr`
--   [PA 4: Military Spending](https://earobinson95.github.io/stat331-calpoly/practice-activities/PA4-military-spending)
--   [Bonus Challenge: Murdery Mystery in SQL City](https://earobinson95.github.io/stat331-calpoly/bonus-challenges/bonus-challenge-murder-sql-city)
+-   [PA 4: Military Spending](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA4.html)
+-   [Bonus Challenge: Murder in SQL City](https://zoerehnberg.github.io/STAT331-S23/challenges/bCH_murder.html)
 
-## Lab 3: Familiar Words -- Sketch it out!
 
-"For each demographic group listed below, determine **all** words in this study that were the most **and** least familiar, **on average**."
+## Lambda Functions
 
-![](https://github.com/earobinson95/stat331-calpoly/blob/master/lab-assignments/Lab3-dplyr/q11-q13-sketch.png?raw=true)
+We know how to use `across()` to apply  built-in functions across many columns.
+
+```{r}
+library(liver)
+data(cereal)
+```
+
+```{r}
+#| echo: true
+cereal |> 
+  summarize(across(calories:potass, mean))
+```
+
+. . .
+
+But what if we want to pass **additional arguments** to a function?
+
++ E.g., we need to drop missing data (`na.rm = T`).
++ E.g., we need to calculate a **trimmed** mean (`trim = 0.1`).
+
+
+## Lambda Functions
+
+When you want to specify additional arguments, you need to use a **lambda function** rather than just the function name:
+
+<center>
+`~ <FUN_NAME>(.x, <ARGS>)`
+</center>
+
+. . .
+
+Calculate trimmed means, trimming 10% of the data on each end.
+
+```{r}
+#| echo: true
+cereal |> 
+  summarize(across(calories:potass, ~ mean(.x, trim = 0.1)))
+```
+
+
+
+
 
 # Data Layouts
 
@@ -42,6 +83,7 @@ Tidy data...
 -   **has different formats for different tasks.**
 
 ![R4DS](https://r4ds.hadley.nz/images/tidy-1.png)
+
 
 ## Consequences of Messy Data
 
@@ -83,6 +125,7 @@ head(cereal) |>
   kableExtra::scroll_box(height = "210px") |> 
   kableExtra::kable_styling(font_size = 30)
 ```
+
 
 ## Creating Tidy Data
 
@@ -184,6 +227,7 @@ cereal_long |>
 :::
 :::
 
+
 ## Manual Method
 
 Consider daily rainfall observed in SLO in January 2023.
@@ -200,19 +244,14 @@ How would you **manually** convert this to **long format**?
 
 ::: incremental
 1.  Create a new column: `Day_of_Week`.
-
 2.  Create a new column: `Rainfall` (hold daily rainfall values).
-
 3.  Now we have three columns (`Week`, `Day_of_Week`, and `Rainfall`) -- start moving Sunday values over.
-
 4.  Duplicate `Week` 1-5 and copy Monday values over.
-
 5.  Duplicate `Week` 1-5 and copy Tuesday values over.
-
 6.  Continue for the rest of the days of the week.
-
 7.  You may want to `arrange()` by `Week` to get the rainfall values chronological order.
 :::
+
 
 ## Computational Approach
 
@@ -354,6 +393,7 @@ mean_protein |>
   kableExtra::kable_styling(font_size = 30)
 ```
 
+
 # Data Joins
 
 ## Relational Data
@@ -379,8 +419,7 @@ con <- dbConnect(
   password = "relational", 
   host = "relational.fit.cvut.cz", 
   port = 3306,
-  dbname = "imdb_small"
-)
+  dbname = "imdb_small")
 dbListTables(con)
 
 my_dm <- dm_from_src(con)
@@ -424,17 +463,11 @@ rm(con, my_dm)
 #| warning: false
 
 actors <- read_csv("data/actors.csv")
-
 directors <- read_csv("data/directors.csv")
-
 directors_genres <- read_csv("data/directors_genres.csv")
-
 movies <- read_csv("data/movies.csv")
-
 movies_directors <- read_csv("data/movies_directors.csv")
-
 movies_genres <- read_csv("data/movies_genres.csv")
-
 roles <- read_csv("data/roles.csv")
 ```
 
@@ -476,7 +509,6 @@ A key uniquely identifies an observation in a data set.
 ## `inner_join()`
 
 Keeps obsertvations when their keys are present in **both** datasets.
-
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -623,13 +655,16 @@ directors_subset |>
 
 . . .
 
+:::: {.columns}
+::: {.column width="60%"}
+
 ```{r}
 #| eval: false
 #| echo: true
 #| code-line-numbers: "3"
 inner_join(directors_genres, 
            directors, 
-           by = c("director_id" = "id"))
+           join_by(director_id == id))
 ```
 
 ```{r}
@@ -637,11 +672,46 @@ inner_join(directors_genres,
 #| echo: false
 inner_join(directors_subset,
            directors_genres_subset,
-           by = c("id" = "director_id")) |> 
+           join_by(id == director_id)) |> 
   knitr::kable() |> 
   kableExtra::scroll_box(height = "170px") |> 
   kableExtra::kable_styling(font_size = 30)
 ```
+
+:::
+::: {.column width="40%"}
+<font size = 6>
+Join by different variables on `dataX` and `dataY`: `join_by(a == b)` will match `dataX$a` to `dataY$b`.
+
+</font>
+:::
+::::
+
+## Piping Joins
+
+Remember: the dataset you pipe in becomes the **first argument** of the function you are piping into!
+
++ So if you are using a pipe, you will only be specifying the **right** dataset inside the `join` function.
+
+. . .
+
+```{r}
+#| eval: false
+#| echo: true
+#| code-line-numbers: false
+inner_join(directors_genres, movies_directors)
+```
+
+...is equivalent to...
+
+```{r}
+#| eval: false
+#| echo: true
+#| code-line-numbers: false
+directors_genres |> 
+  inner_join(movies_directors)
+```
+
 
 
 ## Mutating Joins
@@ -657,6 +727,7 @@ inner_join(directors_subset,
 ![](images/joins.png){width=70%}
 
 </center>
+
 
 ## Mutating Joins
 
@@ -747,7 +818,8 @@ Keeps observations when their keys are present in **both** datasets, **but only 
 ```{r}
 #| echo: true
 #| eval: false
-semi_join(directors_genres, movies_directors)
+directors_genres |> 
+  semi_join(movies_directors)
 ```
 
 ```{r}
@@ -820,7 +892,8 @@ directors_genres_subset |>
 ```{r}
 #| echo: true
 #| eval: false
-anti_join(directors_genres, movies_directors)
+directors_genres |> 
+  anti_join(movies_directors)
 ```
 
 ```{r}
@@ -856,42 +929,21 @@ directors_genres_subset |>
 :::
 
 
-## Piping Joins
-
-Remember: the dataset you pipe in becomes the **first argument** of the function you are piping into!
-
-```{r}
-#| eval: false
-#| echo: true
-#| code-line-numbers: false
-inner_join(directors_genres, movies_directors)
-```
-
-...is equivalent to...
-
-```{r}
-#| eval: false
-#| echo: true
-#| code-line-numbers: false
-directors_genres |> 
-  inner_join(movies_directors)
-```
-
-
-## [PA 4: Military Spending](https://earobinson95.github.io/stat331-calpoly/practice-activities/PA4-military-spending)
+## [PA 4: Military Spending](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA4.html)
 
 Today you will be tidying messy data to explore the relationship between countries of the world and military spending.
 
 + **Due Wednesday, 4/26 at 10:00am**
 
-## [Bonus Challenge: Murder in SQL City](https://earobinson95.github.io/stat331-calpoly/bonus-challenges/bonus-challenge-murder-in-sql-city.html)
+## [Bonus Challenge: Murder in SQL City](https://zoerehnberg.github.io/STAT331-S23/challenges/bCH_murder.html)
 
 For this challenge, you will be using table joins to solve a murder mystery!
 
++ Completing this Challenge will require the manipulation of strings -- we will focus on this next week.
 + **Due Monday, 5/8 at 11:59pm**
 
 <center>
-![](images/sql-murder-relational-data.png)
+![](images/sql-murder-relational-data.png){width=50%}
 </center>
 
 
@@ -899,27 +951,24 @@ For this challenge, you will be using table joins to solve a murder mystery!
 
 -   **PA 4: Military Spending**
     -   Due Wednesday, 4/26 at 10:00am
--   **Bonus Challenge: Murder Mystery in SQL City**
+-   **Bonus Challenge: Murder in SQL City**
     -   Due Monday, 5/8 at 11:59pm
 
 
-## Wednesday, January 25th
+## Wednesday, April 26
 
 Today we will...
 
--   Review Lab 3
--   Review PA 4: Military Spending
--   Housekeeping items...
-    -   Providing References in Labs + Challenges
-    -   Clean variable names
-    -   Lifecycle stages
-    -   `dplyr` package updates
-    -   Saving & Piping Data Joins
+-   Review Lab 3: Familiarity with AAE
+-   Miscellaneous...
+    -   Clean Variable Names
+    -   Lifecycle Stages
 -   Extensions to Relational Data
--   Lab 4: Avocado Prices
+-   Lab 4: Avocados
 -   Challenge 3: Avocado Toast Ate My Mortgage
 
-## Getting Help and using Chat GPT
+
+ <!--## Getting Help and using ChatGPT
 
 ::: columns
 ::: column
@@ -933,7 +982,7 @@ Today we will...
 </script>
 ```
 
- <!--<blockquote class="twitter-tweet">
+<blockquote class="twitter-tweet">
 
 <p lang="en" dir="ltr">
 
@@ -943,118 +992,98 @@ My cheating policy this quarter for #ChatGPT: Treat AI like a human tutor. <br><
 
 --- Kelly Bodwin (@KellyBodwin) <a href="https://twitter.com/KellyBodwin/status/1613112086925824000?ref_src=twsrc%5Etfw">January 11, 2023</a>
 
-</blockquote>  -->
+</blockquote> 
 
 :::
-:::
+:::  -->
 
-## Lab 3: Distinct number of words
 
-<br>
+## Lab 3: Familiarity with AAE
 
-::: columns
-::: column
-```{r}
-#| eval: false
-#| echo: true
-count(distinct(hiphop_clean, word))
-```
 
-<br>
 
-```{r}
-#| eval: false
-#| echo: true
-hiphop_clean |> 
-  distinct(word) |> 
-  count()
-```
 
-<br>
+## Lab 3: Familiarity with AAE -- Sketch it out!
 
-$f(g(h(x)))$
+For each demographic group listed below, determine **all** words in this study that were the most **and** least familiar, **on average**.
 
-in piping syntax is
+![](https://github.com/earobinson95/stat331-calpoly/blob/master/lab-assignments/Lab3-dplyr/q11-q13-sketch.png?raw=true)
 
-`x |> h() |> g() |> f()`
-:::
 
-::: column
-```{r}
-#| eval: false
-#| echo: true
-n_distinct(hiphop_clean$word)
-```
-
-<br>
-
-```{r}
-#| eval: false
-#| echo: true
-hiphop_clean |> 
-  pull(word) |> 
-  n_distinct()
-```
-:::
-:::
-
-## Clean variable names with [`library(janitor)`](https://sfirke.github.io/janitor/)
+## Clean Variable Names with [`janitor`](https://sfirke.github.io/janitor/)
 
 ```{r}
 #| include: false
 library(readxl)
 library(tidyverse)
 military <- read_xlsx("../../practice_activities/gov_spending_per_capita.xlsx", 
-                      sheet = "Share of Govt. spending", 
-                      skip  = 7, 
-                      n_max  = 191)
+                sheet = "Share of Govt. spending", 
+                skip  = 7, 
+                n_max  = 191)
 
 military_clean <- military |> 
-  mutate(across(`1988`:`2019`, ~ na_if(.x, y = ". .")),
-         across(`1988`:`2019`, ~ na_if(.x, y = "xxx"))
-         )
+  mutate(across(`1988`:`2019`,
+                ~ na_if(.x, y = ". .")),
+         across(`1988`:`2019`,
+                ~ na_if(.x, y = "xxx")))
 ```
 
-Converts all names of variables in a data set to *snake_case*.
+Data from external sources likely has variable names not ideally formatted for R.
+
+Names may...
+
++ contain spaces.
++ start with numbers.
++ start with a mix of capital and lower case letters.
+
+. . .
+
+```{r}
+#| eval: true
+#| echo: true
+names(military)[1:12]
+```
+
+
+## Clean Variable Names with [`janitor`](https://sfirke.github.io/janitor/)
+
+
+The `janitor` package converts all variable names in a dataset to *snake_case*.
+
+Names will...
+
++ start with a lower case letter.
++ have spaces filled in with `_`.
 
 ```{r}
 #| eval: true
 #| echo: true
 #| code-line-numbers: "3-5"
-names(military)
-
 library(janitor)
 military_clean_names <- military |> 
   clean_names()
 
-names(military_clean_names)
+names(military_clean_names)[1:12]
 ```
 
-## Lifceycle stages
 
-[Learn more about lifecycle stages](https://lifecycle.r-lib.org/articles/stages.html) of packages, functions, function arguments in R.
+## Lifceycle Stages
 
-::: columns
-::: column
-```{r}
-#| fig-align: center
-#| out-width: 80%
-knitr::include_graphics("images/depreciated.PNG")
-knitr::include_graphics("images/superseded.png")
-```
-:::
+As packages get updated, the functions and function arguments included in those packages will change.
 
-::: column
-```{r}
-#| fig-align: center
-#| fig-cap: "Image source: deanattali.com/blog/cranalerts/"
-#| out-width: "100%"
-knitr::include_graphics("https://deanattali.com/assets/img/blog/cranalerts/automation.png")
-```
-:::
-:::
++ The accepted syntax for a function may change.
++ A function/functionality may disappear.
 
-## Deprecated Functions: Military Spending Example
+![[Learn more about lifecycle stages](https://lifecycle.r-lib.org/articles/stages.html) of packages, functions, function arguments in R.](images/lifecycle.png)
+
+
+## Deprecated Functions
+
+A **deprecated** functionality has a better alternative available and is scheduled for removal.
+
++ You get a warning telling you what to use instead.
+
+. . .
 
 ```{r}
 #| warning: true
@@ -1063,148 +1092,117 @@ knitr::include_graphics("https://deanattali.com/assets/img/blog/cranalerts/autom
 #| code-line-numbers: "2"
 military_clean |> 
   filter(across(Notes:`2019`, is.na)) |> 
-  slice_head(n = 3)
+  slice_head(n = 3) |> 
+  select(1:8)
 ```
+
+
+## Deprecated Functions
+
+You **should not** use deprecated functions!
+
+Instead, we use...
 
 ```{r}
 #| echo: true
 #| code-line-numbers: "2"
 military_clean |>
   filter(if_all(Notes:`2019`, ~ is.na(.x))) |> 
-  slice_head(n = 3)
+  slice_head(n = 3) |> 
+  select(1:8)
 ```
 
-## `dplyr` updates
 
-There was an update to the `dplyr` package to Version 1.1.0 on Sunday 1/29/2023.
+## Superceded Functions
 
-[See changelog for updates](https://dplyr.tidyverse.org/news/index.html)
+A **superseded** functionality has a better alternative, but is not going away .
 
-![](images/dplyr-update.jpg)
++ This is a softer alternative to deprecation.
++ A superseded function will not give a warning (since there’s no risk if you keep using it), but the documentation will give you a recommendation.
 
-## `group_by()` vs `.by =` argument
-
-![](images/groupby-dplyr-update.jpg)
-
-## `across()`
-
-![](images/across-dplyr-update.jpg)
-
-```{r}
-#| eval: false
-#| echo: true
-#| code-line-numbers: "6-7"
-
-military |> 
-  mutate(across(`1988`:`2019`, na_if, y = ". ."))
-
-
-military |> 
-  mutate(across(`1988`:`2019`, ~ na_if(.x, y = ". .")))
-```
-
-## `join_by()`
-
-![](images/joins-dplyr-update.jpg)
-
-## Saving & Piping data joins
-
-```{r}
-#| eval: false
-#| echo: true
-genres_movies_joined <- inner_join(directors_genres, movies_directors)
-
-genres_movies_joined <- directors_genres |> 
-  inner_join(movies_directors)
-```
 
 # Extensions to Relational Data
 
+
+## Relational Data
+
+When we work with multiple tables of data, we say we are working with **relational data**.
+
++ It is the *relations*, not just the individual datasets, that are important.
+
+When we work with relational data, we rely on **keys**.
+
+-   A key uniquely identifies an observation in a dataset.
+-   A key allows us to relate datasets to each other
+
+
 ## IMDb Movies Data
 
-Multiple tables of data are called **relational data** because it is the *relations*, not just the individual data sets, that are important.
-
-**Keys:**
-
--   Uniquely identifies an observation in a data set
--   Relate data sets to each other
-
 ![](images/imdb-keys.png)
+
+How can we find each director's active years?
+
 
 ## Joining Multiple Data Sets
 
 ::: panel-tabset
-### movies_directors
+### Data
+
+:::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| echo: true
+movies_directors[1:5,]
+```
+:::
+::: {.column width="50%"}
+```{r}
+#| echo: true
+directors[1:5,]
+```
+:::
+::::
 
 ```{r}
 #| echo: true
-movies_directors
+movies[1:5,]
 ```
 
-### directors
+
+### Sketch
 
 ```{r}
-#| echo: true
-directors
-```
-
-### movies
-
-```{r}
-#| echo: true
-movies
-```
-
-### sketch
-
-```{r}
-#| out-width: "70%"
+#| out-width: "80%"
 #| fig-align: center
-knitr::include_graphics("images/imdb-multiple-joins.png")
+knitr::include_graphics("images/multiple_joins.png")
 ```
 
 ### 1st + 2nd
 
 ```{r}
 #| echo: true
-join_one_data <- movies_directors |> 
+movies_directors |> 
   inner_join(directors, 
-             by = c("director_id" = "id")
-             )
-join_one_data
-```
-
-If you update `dplyr`...
-
-```{r}
-#| echo: true
-#| eval: false
-#| code-line-numbers: "3"
-directors_movie_ids <- movies_directors |> 
-  inner_join(directors, 
-             by = join_by(id == director_id)
-             )
+             join_by(director_id == id))
 ```
 
 ### + 3rd
 
 ```{r}
 #| echo: true
-join_two_data <- movies_directors |> 
+movies_directors |> 
   inner_join(directors, 
-             by = c("director_id" = "id")
-             ) |> 
+             join_by(director_id == id)) |> 
   inner_join(movies,
-             by = c("movie_id" = "id")
-             ) |> 
+             join_by(movie_id == id)) |> 
   rename(movie_name = name)
-join_two_data
 ```
 :::
 
+
 ## Joining on Multiple Variables
 
-Using the hiphop data from Lab 3...
+Using the AAE data from Lab 3...
 
 ```{r}
 aae <- read_csv("../../lab_assignments/lab3/AAE.csv")
@@ -1240,25 +1238,8 @@ familiarity
 #| code-line-numbers: 3"-4"
 music_wordfam <- music |> 
   full_join(familiarity,
-            by = c("word" = "word", 
-                   "subj" = "participant")
-            )
-music_wordfam 
-```
-:::
-
-::: {.column width="45%"}
-if `dplyr` updated...
-
-```{r}
-#| eval: false
-#| echo: true
-#| code-line-numbers: "3-4"
-music_wordfam <- music |> 
-  full_join(familiarity,
-            by = join_by(word == word, 
-                         subj == participant)
-            )
+            join_by(word == word, 
+                    subj == participant))
 music_wordfam 
 ```
 :::
@@ -1267,7 +1248,7 @@ music_wordfam
 
 ## Lab + Challenge
 
-[Lab 4: Avocado Prices + Challenge 4: Avocado Toast Ate My Mortgage](https://earobinson95.github.io/stat331-calpoly/lab-assignments/lab4/lab4-avocado-prices.html)
+[Lab 4: Avocados + Challenge 4: Avocado Toast Ate My Mortgage](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab4/LA4_avocado.html)
 
 <br> **Handy Helpers**
 
@@ -1280,6 +1261,7 @@ music_wordfam
 `semi_join()`: Keeps values found in another data set
 
 `anti_join()`: Keeps values not found in another data set
+
 
 ## Workflow
 
@@ -1313,13 +1295,14 @@ demographics_subj <- data_clean |>
 
 4.  Output **only** the the information you want to include in your assignment.
 
+
 ## To do...
 
--   **Lab 4: Avocado Prices**
-    -   Due Friday, 2/3 at 11:59pm
+-   **Lab 4: Avocados**
+    -   Due Friday, 4/28 at 11:59pm
 -   **Challenge 4: Avocado Toast Ate My Mortgage**
-    -   Due Saturday, 2/4 at 11:59pm
+    -   Due Saturday, 4/29 at 11:59pm
 -   **Read Chapter 5: Special Data Types**
-    -   **Concept Check 5.1 + 5.2 + 5.3** due Monday (2/6) at 8:00am
--   [**Bonus Challenge: Murder Mystery in SQL City**](https://earobinson95.github.io/stat331-calpoly/bonus-challenges/bonus-challenge-murder-in-sql-city.html)
-    -   Due Sunday 2/12 at 11:59pm
+    -   **Check-ins 5.1 + 5.2 + 5.3** due Monday (5/1) at 10:00am
+-   [**Bonus Challenge: Murder Mystery in SQL City**](https://zoerehnberg.github.io/STAT331-S23/challenges/bCH_murder.html)
+    -   Due Monday 5/8 at 11:59pm
