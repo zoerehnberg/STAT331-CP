@@ -69,9 +69,6 @@ cereal |>
 ```
 
 
-
-
-
 # Data Layouts
 
 ## Tidy Data
@@ -79,7 +76,7 @@ cereal |>
 Tidy data...
 
 -   is rectangular.
--   has variables as rows and observations as columns.
+-   has observations as rows and variables as columns.
 -   **has different formats for different tasks.**
 
 ![R4DS](https://r4ds.hadley.nz/images/tidy-1.png)
