@@ -311,7 +311,7 @@ Take a **long** dataset and turn it into a **wide** daaset.
 
 ## `pivot_wider()`
 
-We calculate the mean amount of protein for cereals on each shelpf and for each manufacturer.
+We calculate the mean amount of protein for cereals on each shelf and for each manufacturer.
 
 ```{r}
 #| echo: true
@@ -997,7 +997,9 @@ My cheating policy this quarter for #ChatGPT: Treat AI like a human tutor. <br><
 
 ## Lab 3: Familiarity with AAE
 
++ The [`tidyverse`](https://www.tidyverse.org/packages/) package automatically loads `ggplot2`, `dplyr`, `readr`, etc. -- do not load these twice!
 
++ Do not use `mutate()` + `distinct()`, when you can use `summarize()`!
 
 
 ## Lab 3: Familiarity with AAE -- Sketch it out!
@@ -1127,6 +1129,8 @@ When we work with multiple tables of data, we say we are working with **relation
 
 + It is the *relations*, not just the individual datasets, that are important.
 
+. . .
+
 When we work with relational data, we rely on **keys**.
 
 -   A key uniquely identifies an observation in a dataset.
@@ -1137,7 +1141,7 @@ When we work with relational data, we rely on **keys**.
 
 ![](images/imdb-keys.png)
 
-How can we find each director's active years?
+**How can we find each director's active years?**
 
 
 ## Joining Multiple Data Sets
@@ -1149,27 +1153,33 @@ How can we find each director's active years?
 ::: {.column width="50%"}
 ```{r}
 #| echo: true
-movies_directors[1:5,]
+directors[1:4,]
 ```
 :::
 ::: {.column width="50%"}
 ```{r}
 #| echo: true
-directors[1:5,]
+movies_directors[1:4,]
 ```
 :::
 ::::
 
+:::: {.columns}
+::: {.column width="25%"}
+
+:::
+::: {.column width="50%"}
 ```{r}
 #| echo: true
-movies[1:5,]
+movies[1:4,]
 ```
-
+:::
+::::
 
 ### Sketch
 
 ```{r}
-#| out-width: "80%"
+#| out-width: "90%"
 #| fig-align: center
 knitr::include_graphics("images/multiple_joins.png")
 ```
@@ -1178,15 +1188,29 @@ knitr::include_graphics("images/multiple_joins.png")
 
 ```{r}
 #| echo: true
+#| eval: false
 movies_directors |> 
   inner_join(directors, 
              join_by(director_id == id))
+```
+
+
+```{r}
+#| eval: true
+#| echo: false
+movies_directors |> 
+  inner_join(directors, 
+             join_by(director_id == id)) |> 
+  knitr::kable() |> 
+  kableExtra::scroll_box(height = "400px") |> 
+  kableExtra::kable_styling(font_size = 30)
 ```
 
 ### + 3rd
 
 ```{r}
 #| echo: true
+#| eval: false
 movies_directors |> 
   inner_join(directors, 
              join_by(director_id == id)) |> 
@@ -1194,54 +1218,102 @@ movies_directors |>
              join_by(movie_id == id)) |> 
   rename(movie_name = name)
 ```
+
+```{r}
+#| eval: true
+#| echo: false
+movies_directors |> 
+  inner_join(directors, 
+             join_by(director_id == id)) |> 
+  inner_join(movies,
+             join_by(movie_id == id)) |> 
+  rename(movie_name = name) |> 
+  knitr::kable() |> 
+  kableExtra::scroll_box(height = "300px") |> 
+  kableExtra::kable_styling(font_size = 30)
+```
+
 :::
 
 
 ## Joining on Multiple Variables
 
-Using the AAE data from Lab 3...
+Consider the `rodent` data from Lab 2.
+
++ We want to add `species_id` to the rodent measurements.
 
 ```{r}
-aae <- read_csv("../../lab_assignments/lab3/AAE.csv")
-music <- aae |> 
-  select(word, subj, folk:pop)
+rodent <- read_csv("../../lab_assignments/lab2/surveys.csv")
+species <- rodent |> 
+  select(genus:taxa, species_id) |> 
+  distinct()
 
-familiarity <- aae |> 
-  select(word, subj, familiarity) |> 
-  rename(participant = subj)
+measurements <- rodent |> 
+  select(genus, species, sex:weight) |> 
+  rename(genus_name = genus)
 ```
 
 ::: panel-tabset
-## Music Taste
+
+## Species
 
 ```{r}
 #| echo: true
-music
+#| eval: false
+species
 ```
 
-## Word Familiarity
+```{r}
+#| eval: true
+#| echo: false
+species |> 
+  knitr::kable() |> 
+  kableExtra::scroll_box(height = "300px") |> 
+  kableExtra::kable_styling(font_size = 30)
+```
+
+## Measurements
 
 ```{r}
 #| echo: true
-familiarity
+#| eval: false
+measurements
 ```
 
-## Join by word + subj
+```{r}
+#| eval: true
+#| echo: false
+measurements[1:100,] |> 
+  knitr::kable() |> 
+  kableExtra::scroll_box(height = "300px") |> 
+  kableExtra::kable_styling(font_size = 30)
+```
 
-::: columns
-::: {.column width="55%"}
+## Join by `species` + `genus`
+
 ```{r}
 #| echo: true
-#| code-line-numbers: 3"-4"
-music_wordfam <- music |> 
-  full_join(familiarity,
-            join_by(word == word, 
-                    subj == participant))
-music_wordfam 
+#| eval: false
+species |> 
+  full_join(measurements,
+            join_by(species == species, 
+                    genus == genus_name))
 ```
+
+```{r}
+#| eval: true
+#| echo: false
+species |> 
+  full_join(measurements[1:100,],
+            join_by(species == species, 
+                    genus == genus_name)) |> 
+  knitr::kable() |> 
+  kableExtra::scroll_box(height = "200px") |> 
+  kableExtra::kable_styling(font_size = 30)
+```
+
 :::
-:::
-:::
+
 
 ## Lab + Challenge
 
@@ -1257,12 +1329,12 @@ music_wordfam
 
 `semi_join()`: Keeps values found in another data set
 
-`anti_join()`: Keeps values not found in another data set
+`anti_join()`: Keeps values **not** found in another data set
 
 
 ## Workflow
 
-1.  Load packages + read in original data
+1.  Load packages + read in data.
 
 ```{r}
 #| echo: true
@@ -1271,17 +1343,17 @@ library(tidyverse)
 data_original <- read_csv(file = "path/to/datal.csv")
 ```
 
-2.  Clean data -- save your changes! This is now your new "master" data set
+2.  Clean data and **save** changes -- use this data from now on!
 
 ```{r}
 #| echo: true
 #| eval: false
 data_clean <- data_original |> 
-  mutate(across(x1:x5, ~ as.factor(.x))) |> 
-  mutate(new_var <- if_else(...))
+  mutate(across(x1:x5, ~ as.factor(.x)),
+         new_var = if_else(...))
 ```
 
-3.  If you need subsets, create those from your new "master" data for the specific tasks.
+3.  Create subsets from your cleaned data for specific tasks.
 
 ```{r}
 #| echo: true
@@ -1290,7 +1362,7 @@ demographics_subj <- data_clean |>
   distinct(subj, keep_all = TRUE)
 ```
 
-4.  Output **only** the the information you want to include in your assignment.
+4.  Output **only** the the information you want in your report.
 
 
 ## To do...
@@ -1300,6 +1372,6 @@ demographics_subj <- data_clean |>
 -   **Challenge 4: Avocado Toast Ate My Mortgage**
     -   Due Saturday, 4/29 at 11:59pm
 -   **Read Chapter 5: Special Data Types**
-    -   **Check-ins 5.1 + 5.2 + 5.3** due Monday (5/1) at 10:00am
+    -   **Check-in 5.1 - 5.3** due Monday (5/1) at 10:00am
 -   [**Bonus Challenge: Murder Mystery in SQL City**](https://zoerehnberg.github.io/STAT331-S23/challenges/bCH_murder.html)
     -   Due Monday 5/8 at 11:59pm
