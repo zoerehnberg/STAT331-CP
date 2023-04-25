@@ -58,6 +58,11 @@ Use your cleaned data to answer these next three questions. In other words, `avo
 
 **5. Which metro areas sold the most avocados? Plot side-by-side box-plots of the total volume for only the five metro areas with the highest averages for the `total_volume` variable.**
 
+
+**a) Create and include a game plan.**
+
+**b) Write code to do the desired transformations and create the desired plot.**
+
 ::: callout-tip
 You want each individual observations in your plot, but you will need to somehow identify the average for each metro area.
 

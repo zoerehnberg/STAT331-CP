@@ -2697,6 +2697,8 @@ Note
 <p><strong>3. Which 3 geographical regions (not metro areas) sold the most total organic, small Hass avocados in 2017?</strong></p>
 <p><strong>4. Use the <code>separate()</code> function to split the <code>date</code> variable into month, day, and year. Which month has the highest average volume of avocado sales for metro areas?</strong></p>
 <p><strong>5. Which metro areas sold the most avocados? Plot side-by-side box-plots of the total volume for only the five metro areas with the highest averages for the <code>total_volume</code> variable.</strong></p>
+<p><strong>a) Create and include a game plan.</strong></p>
+<p><strong>b) Write code to do the desired transformations and create the desired plot.</strong></p>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -3024,49 +3026,54 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>**5. Which metro areas sold the most avocados? Plot side-by-side box-plots of the total volume for only the five metro areas with the highest averages for the `total_volume` variable.**</span>
 <span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>You want each individual observations in your plot, but you will need to somehow identify the average for each metro area.</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>**a) Create and include a game plan.**</span>
 <span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>*Hint:* One way you might approach this is by creating a new summarized data set and using <span class="in">`semi_join()`</span>.</span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>**b) Write code to do the desired transformations and create the desired plot.**</span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>You want each individual observations in your plot, but you will need to somehow identify the average for each metro area.</span>
 <span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="fu"># Pivoting</span></span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>The following four California metro areas are in this data set: <span class="in">`&quot;Los Angeles&quot;`</span>, <span class="in">`&quot;San Diego&quot;`</span>, <span class="in">`&quot;Sacramento&quot;`</span>, and <span class="in">`&quot;San Francisco&quot;`</span>. </span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>**6. Starting with your cleaned data, create a dataset with only these California metro areas. Answer the following questions about these California metro areas only.**</span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>**7. In which California metro area is the price of organic vs. conventional avocados most different? Support your answer with a few summary statistics AND a visualization.**</span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>You do not have to, but you may want to transform your data. Sketch out what you want the data to look like before you begin to code! Come up with a game plan to answer this question.</span>
-<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a>**8. The following plot shows, for all four California metro areas, the proportion of the average Hass avocado sales that are small, large, or extra large and conventional vs. organic. Recreate the plot. You do not have to replicate the exact finishing touches - e.g., color, theme - but your plot should resemble the content of this plot.**</span>
-<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>This will require transforming your data! Sketch out what you want the data to look like before you begin to code! I recommend starting with your California data set you create in Q6. </span>
-<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>Helpful functions: <span class="in">`pivot_longer()`</span>, <span class="in">`geom_col()`</span></span>
-<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a><span class="al">![Plot to recreate](https://github.com/earobinson95/stat331-calpoly/blob/master/lab-assignments/lab4/ca-avocado-size-proportions.png?raw=true)</span></span>
-<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------</span>
-<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a><span class="fu"># Challenge: Avocado Toast Ate My Mortgage</span></span>
-<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a>A joke in the media is that millennials can&#39;t afford houses, because they spend all their money buying avocado toast. Let&#39;s use this data set to address that claim.</span>
-<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Find or build a dataset with house prices for these four California metro areas. Join this data with your California avocado data.</span></span>
-<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
-<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Use your new joined data to make an argument about the relationship between house prices and avocado prices/sales.</span></span>
-<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
-<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Support your argument with a plot.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>*Hint:* One way you might approach this is by creating a new summarized data set and using <span class="in">`semi_join()`</span>.</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="fu"># Pivoting</span></span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>The following four California metro areas are in this data set: <span class="in">`&quot;Los Angeles&quot;`</span>, <span class="in">`&quot;San Diego&quot;`</span>, <span class="in">`&quot;Sacramento&quot;`</span>, and <span class="in">`&quot;San Francisco&quot;`</span>. </span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>**6. Starting with your cleaned data, create a dataset with only these California metro areas. Answer the following questions about these California metro areas only.**</span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a>**7. In which California metro area is the price of organic vs. conventional avocados most different? Support your answer with a few summary statistics AND a visualization.**</span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>You do not have to, but you may want to transform your data. Sketch out what you want the data to look like before you begin to code! Come up with a game plan to answer this question.</span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>**8. The following plot shows, for all four California metro areas, the proportion of the average Hass avocado sales that are small, large, or extra large and conventional vs. organic. Recreate the plot. You do not have to replicate the exact finishing touches - e.g., color, theme - but your plot should resemble the content of this plot.**</span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>This will require transforming your data! Sketch out what you want the data to look like before you begin to code! I recommend starting with your California data set you create in Q6. </span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a>Helpful functions: <span class="in">`pivot_longer()`</span>, <span class="in">`geom_col()`</span></span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a><span class="al">![Plot to recreate](https://github.com/earobinson95/stat331-calpoly/blob/master/lab-assignments/lab4/ca-avocado-size-proportions.png?raw=true)</span></span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------</span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a><span class="fu"># Challenge: Avocado Toast Ate My Mortgage</span></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a>A joke in the media is that millennials can&#39;t afford houses, because they spend all their money buying avocado toast. Let&#39;s use this data set to address that claim.</span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Find or build a dataset with house prices for these four California metro areas. Join this data with your California avocado data.</span></span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Use your new joined data to make an argument about the relationship between house prices and avocado prices/sales.</span></span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Support your argument with a plot.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
