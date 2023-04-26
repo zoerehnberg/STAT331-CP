@@ -965,36 +965,6 @@ Today we will...
 -   Challenge 3: Avocado Toast Ate My Mortgage
 
 
- <!--## Getting Help and using ChatGPT
-
-::: columns
-::: column
-![](images/stack_overflow.PNG) <br> ![](images/help.PNG)
-:::
-
-::: column
-
-```{=html}
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8">
-</script>
-```
-
-<blockquote class="twitter-tweet">
-
-<p lang="en" dir="ltr">
-
-My cheating policy this quarter for #ChatGPT: Treat AI like a human tutor. <br><br>Asking a tutor to help explain a homework concept to you or help debug your code? <br>Totally fine! <br><br>Having a tutor do your homework for you? Talking to a tutor during an exam?<br> Not acceptable. <br><br>🤷‍♀️
-
-</p>
-
---- Kelly Bodwin (@KellyBodwin) <a href="https://twitter.com/KellyBodwin/status/1613112086925824000?ref_src=twsrc%5Etfw">January 11, 2023</a>
-
-</blockquote> 
-
-:::
-:::  -->
-
-
 ## Lab 3: Familiarity with AAE
 
 + The [`tidyverse`](https://www.tidyverse.org/packages/) package automatically loads `ggplot2`, `dplyr`, `readr`, etc. -- do not load these twice!
@@ -1002,11 +972,64 @@ My cheating policy this quarter for #ChatGPT: Treat AI like a human tutor. <br><
 + Do not use `mutate()` + `distinct()`, when you can use `summarize()`!
 
 
-## Lab 3: Familiarity with AAE -- Sketch it out!
+## `mutate()` vs `summarise()`
 
-For each demographic group listed below, determine **all** words in this study that were the most **and** least familiar, **on average**.
+::: panel-tabset
+### `mutate()`
+
+![](images/mutate-sketch.JPG)
+
+### `summarise()`
+
+![](images/summarise-sketch.JPG){width=85%}
+:::
+
+
+## Lab 3: Game Plan!
+
+For each demographic group, determine **all** words in this study that were the most **and** least familiar, **on average**.
+
+
+## Lab 3: Game Plan!
 
 ![](https://github.com/earobinson95/stat331-calpoly/blob/master/lab-assignments/Lab3-dplyr/q11-q13-sketch.png?raw=true)
+
+
+## Lab 3: Game Plan!
+
+<center>
+
+![](images/GP1.png){width=70%}
+
+</center>
+
+## Lab 3: Game Plan!
+
+<center>
+
+![](images/GP2.png){width=70%}
+
+</center>
+
+## Lab 3: Game Plan!
+
+</center>
+
+![](images/GP3.png){width=70%}
+
+</center>
+
+## Lab 3: Game Plan!
+
+![](images/GP4.png)
+
+## Lab 3: Game Plan!
+
+</center>
+
+![](images/GP5.png){width=70%}
+
+</center>
 
 
 ## Clean Variable Names with [`janitor`](https://sfirke.github.io/janitor/)
