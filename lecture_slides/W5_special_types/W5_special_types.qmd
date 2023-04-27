@@ -24,7 +24,7 @@ Today we will...
 + New Material
   + Reordering Factor Variables
   + Working with Date & Time Variables
-+ [PA 5.1: Zodiac Killer](https://earobinson95.github.io/stat331-calpoly/practice-activities/PA5_1-zodiac-killer.html)
++ [PA 5.1: Jewel Heist](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA5_1.html)
 
 
 ## Final Project Group Formation
@@ -32,11 +32,11 @@ Today we will...
 You will be completing a final project in teams of four.
 
 + **Group Formation Survey** due **Friday, 5/5 at 11:59pm**
-  + Helps me gather information about your preferences and work style to facilitate team formation.
-  + Your groupmates do not need to be in the same section, but you might find it useful for in-class work time.
+  + Help me gather information about your preferences and work styles to facilitate team formation.
+  + Your team does not all need to be in the same section, but you might find it useful for in-class work time.
 + Group Contracts
 + Project Proposal
-+ Final Project Deliverable
++ Final Deliverable
 
 
 # Factor Variables
@@ -46,9 +46,9 @@ You will be completing a final project in teams of four.
 
 Factors are used for
 
-+ categorical variables with a fixed and known set of possible values.
+1. categorical variables with a fixed and known set of possible values.
   + E.g., `day_born` = Sunday, Monday, Tuesday, ..., Saturday
-+ displaying character vectors in non-alphabetical order.
+2. displaying character vectors in non-alphabetical order.
 
 
 ## Creating a Factor -- Base `R`
@@ -96,7 +96,7 @@ factor(x, levels = c("apple", "banana", "cat",
 ```
 
 
-## `forcats` [cheatsheet](https://posit.co/wp-content/uploads/2022/10/factors-1.pdf)
+## `forcats`
 
 :::: {.columns}
 ::: {.column width="80%"}
@@ -119,7 +119,7 @@ knitr::include_graphics("https://github.com/rstudio/hex-stickers/blob/main/thumb
 ::: callout-note
 The packages `forcats` ("for categoricals") helps wrangle categorical variables.
 
-  + `forcats` loads with the `tidyverse`!
+  + `forcats` loads with `tidyverse`!
 :::
 
 
@@ -154,7 +154,7 @@ You can still **specify the order of the levels** with the `level` argument.
 ```{r}
 #| echo: true
 fct(x, levels = c("apple", "banana", "cat",
-                     "dog", "Queen Elizabeth"))
+                  "dog", "Queen Elizabeth"))
 ```
 
 . . .
@@ -163,10 +163,10 @@ You can also **specify non-present levels**.
 
 ```{r}
 #| echo: true
-x <- fct(x, levels = c("apple", "banana",
-                       "cat", "dog",
-                       "Queen Elizabeth", "King Charles"))
-x
+x |>
+  fct(levels = c("apple", "banana",
+                 "cat", "dog",
+                 "Queen Elizabeth", "King Charles"))
 ```
 
 
@@ -180,16 +180,16 @@ Change the existing levels with the syntax:
 
 ```{r}
 #| echo: true
-x <- fct_recode(x,
-                "fruit" = "apple",
-                "fruit" = "banana",
-                "pet"   = "cat",
-                "pet"   = "dog")
+x <- x |> 
+  fct_recode("fruit" = "apple",
+             "fruit" = "banana",
+             "pet"   = "cat",
+             "pet"   = "dog")
 x
 ```
 
 ::: callout-note
-Queen Elizabeth and King Charles are "remaining" level that were not recoded.
+Queen Elizabeth is a "remaining" level that is not recoded.
 :::
 
 
@@ -295,7 +295,7 @@ x |>
 ```{r}
 #| echo: true
 x |>
-  fct_relevel(c("Queen Elizabeth", "King Charles", "pet", "fruit")) |> 
+  fct_relevel(c("Queen Elizabeth", "pet", "fruit")) |> 
   levels()
 ```
 
@@ -309,7 +309,7 @@ x |>
 ```
 
 
-## Reordering Factors in `ggplot2`
+## Re-ordering Factors in `ggplot2`
 
 ```{r}
 cereal_recode <- cereal |> 
@@ -330,6 +330,7 @@ cereal_recode <- cereal |>
 ```{r}
 #| echo: true
 #| eval: false
+#| code-line-numbers: "4"
 library(ggridges)
 cereal_recode |> 
   ggplot(aes(x = sugars, 
@@ -371,7 +372,9 @@ cereal_recode |>
   theme(legend.position = "none")
 ```
 
-Note: default reordering function is the median.
+We can reorder factor levels based on a summary value.
+
++ Note: default reordering function is the median.
 
 ### Plot
 
@@ -393,7 +396,7 @@ cereal_recode |>
 :::
 
 
-## Reordering Factors in `ggplot2`
+## Re-ordering Factors in `ggplot2`
 
 ::: panel-tabset
 
@@ -409,9 +412,12 @@ cereal_recode |>
   ggplot(aes(x = shelf, 
              y = avg_sugar, 
              color = manuf)) +
-  geom_line() +
-  theme_minimal()
+  geom_line(size = 1.5) +
+  theme_minimal() +
+  labs(color = "Manuf.")
 ```
+
+The order of the legend follows the order of the factor levels.
 
 ### Plot
 
@@ -423,8 +429,9 @@ cereal_recode |>
   ggplot(aes(x = shelf, 
              y = avg_sugar, 
              color = manuf)) +
-  geom_line() +
-  theme_minimal()
+  geom_line(size = 1.5) +
+  theme_minimal() +
+  labs(color = "Manuf.")
 ```
 
 ### `fct_reorder2()`
@@ -439,9 +446,14 @@ cereal_recode |>
   ggplot(aes(x = shelf, 
              y = avg_sugar, 
              color = fct_reorder2(manuf, .x = shelf, .y = avg_sugar))) +
-  geom_line() +
-  theme_minimal()
+  geom_line(size = 1.5) +
+  theme_minimal() +
+  labs(color = "Manuf.")
 ```
+
+We can reorder factor levels based on the y values associated with the largest x values.
+
++ The legend order will match the line order on the far right.
 
 ### Plot
 
@@ -453,8 +465,9 @@ cereal_recode |>
   ggplot(aes(x = shelf, 
              y = avg_sugar, 
              color = fct_reorder2(manuf, .x = shelf, .y = avg_sugar))) +
-  geom_line() +
-  theme_minimal()
+  geom_line(size = 1.5) +
+  theme_minimal() +
+  labs(color = "Manuf.")
 ```
 
 ::: 
@@ -462,12 +475,10 @@ cereal_recode |>
 
 ## [Lab 5: Factors in Data Visualizations](https://earobinson95.github.io/stat331-calpoly/lab-assignments/lab5/lab5-factors-in-visualizations.html)
 
-+ We will be working with the `survey.csv data` from *Lab 2: Exploring Rodents with ggplot2* to improve our plots!
++ We will be working with the data from *Lab 2: Exploring Rodents with ggplot2* to improve our plots!
 
 + See [Will Chase's 2020 RStudio Conference Presentation - Glamour of Graphics](https://www.youtube.com/watch?v=h5cTacaWE6I&ab_channel=PositPBC)
   + [slides](https://www.williamrchase.com/slides/assets/player/KeynoteDHTMLPlayer.html#0)
-
-+ You will be asked to "sketch your game plan" with [https://excalidraw.com/](https://excalidraw.com/).
 
 ::: callout-caution
 
@@ -479,33 +490,42 @@ You will be **required** to use functions from the {forcats} package! e.g. `reor
 # Date + Time Variables
 
 
-# `library(lubridate)`
+## Why are dates and times tricky?
 
-:::: columns
-::: column
+When parsing dates and times, we have to consider complicating factors like...
+
++ Daylight Savings Time.
+  + One day a year is 23 hours; one day a year is 25 hours.
+  + Some places use it, some don't.
++ Leap years -- most years have 365 days, some have 366.
++ Time zones.
+
+
+## `lubridate`
+
+:::: {.columns}
+::: {.column width="80%"}
 **Common Tasks**
 
-+ Convert a date-like variable ("May 8, 1995") to a special DateTime Object.
++ Convert a date-like variable ("May 8, 1995") to a date or date-time object.
 
-+ Find the weekday, month, year, etc from a DateTime object
++ Find the weekday, month, year, etc from a date-time object.
 
-+ Convert between timezones
++ Convert between time zones.
 
 :::
-::: column
+::: {.column width="20%"}
+
 ```{r}
 #| fig-align: center
-#| out-width: 50%
 knitr::include_graphics("https://github.com/rstudio/hex-stickers/blob/main/thumbs/lubridate.png?raw=true")
 ```
+
 :::
 ::::
 
 ::: callout-note
-The package `lubridate` is AMAZING for this. 
-
-+ `lubridate` does not **load** with the `tidyverse` but it does **install**
-  with it.
+The `lubridate` package  **installs** with `tidyverse`, but does not **load**.
   
 ```{r}
 #| echo: true
@@ -514,66 +534,66 @@ library(lubridate)
 :::
 
 
-## `datetime` Objects
+## `date-time` Objects
 
-There are actually three data types (classes) in R for dates and datetimes.
-
-+ Date (duh)
-
-+ POSIXlt (???)
-
-+ and POSIXct (???)
+There are multiple **data types** for dates and times.
 
 
-## History of `POSIXlt` and `POSIXct`
-
-:::: columns
-::: column
-- `POSIXct` -- stores date/time values as the number of seconds since
-January 1, 1970 ("Unix Epoch")
-
-- `POSIXlt` -- stores date/time values as a list with elements for second,
-minute, hour, day, month, and year, among others. 
-:::
-::: column
-In the "old days", to make a Date or Datetime object, you'd have to get the
-format *just right*.
-
-```{r}
-#| echo: true
-as.Date("1995-05-08") |>  str()
-as_datetime("1995-05-08") |>  str()
-```
-:::
-::::
++ A date:
+  + `date` or `Date`
++ A date and a time (identifies a unique instant in time):
+  + `dtm`
+  + `POSIXlt` -- stores date-times as the number of seconds since January 1, 1970 ("Unix Epoch")
+  + `POSIXct` -- stores date-times as a list with elements for second, minute, hour, day, month, year, etc.
 
 
-## Enter `lubridate`!
+## Creating `date-time` Objects
 
-:::: columns
-::: column
+Create a date from individual components:
+
 ```{r}
 #| echo: true
 make_date(year = 1995, month = 05, day = 08)
-mdy("May 8, 1995")
-dmy("8-May-1995", tz = "America/Chicago")
 ```
-:::
-::: column
+
+. . .
+
+Create a date from a string:
+
 ```{r}
 #| echo: true
-parse_datetime("05/8/1995", format = "mdy")
-
-parse_datetime("5/8/1995", format = "%m/%d/%Y")
-
+mdy("May 8, 1995")
 ```
-:::
-::::
+
+```{r}
+#| echo: true
+dmy("8-May-1995", tz = "America/Chicago")
+```
+
+```{r}
+#| echo: true
+dmy_hms("8-May-1995 9:32:12", tz = "America/Chicago")
+```
+
+```{r}
+#| echo: true
+as_datetime("95-05-08", format = "%y-%m-%d")
+```
+
+```{r}
+#| echo: true
+parse_datetime("5/8/1995", format = "%m/%d/%Y")
+```
 
 
-## Common mistake with dates
+## Creating `date-time` Objects
 
-*What is wrong with these two code chunks?*
+![](images/date_symbols.png){width=80%}
+
+
+## Common Mistake with Dates
+
+*What's wrong here?*
 
 ```{r}
 #| echo: true
@@ -588,12 +608,20 @@ my_date <- 2023-02-6
 my_date
 ```
 
+<br>
 
-## Components of dates
+. . .
+
+Make sure you use quotes!
+
++ 2,015 seconds $\approx$ 33.5 minutes
+
+
+## Extracting `date-time` Components
 
 ```{r}
 #| echo: true
-bday <- ymd_hms("1995-05-8 6:32:12", tz = "America/Chicago")
+bday <- ymd_hms("1993-11-20 9:32:12", tz = "America/New_York")
 bday
 ```
 
@@ -612,49 +640,177 @@ day(bday)
 ```{r}
 #| echo: true
 wday(bday)
-
-wday(bday, label = TRUE)
-
-wday(bday, label = TRUE)
+wday(bday, label = TRUE, abbr = FALSE)
 ```
 :::
 ::::
 
 
-## When is my ______ birthday?
+## Subtraction with  `date-time` Objects
 
-<br>
+Doing subtraction gives you a `difftime` object.
 
-next birthday...
++ `difftime` objects do not always have the same units -- it depends on the scale of the objects you are working with.
 
-```{r}
-#| echo: true
-(bday + years(28)) |>  
-  wday(label = TRUE, abbr = FALSE)
-```
-
-<br>
-
-hundredth...
+How old am I?
 
 ```{r}
 #| echo: true
-bday + years(100)
+today() - mdy(11201993)
+```
+
+How long did it take me to finish a typing challenge?
+
+```{r}
+#| echo: true
+begin <- mdy_hms("3/1/2023 13:04:34")
+finish <- mdy_hms("3/1/2023 13:06:11")
+finish - begin
 ```
 
 
-## [PA 5.1: Zodiac Killer](https://earobinson95.github.io/stat331-calpoly/practice-activities/PA5_1-zodiac-killer.html)
+## Durations and Periods
 
-One of the most famous mysteries in California history is the identity of the so-called “Zodiac Killer”, who murdered 7 people in Northern California between 1968 and 1969. A new murder was committed last year in California, suspected to be the work of a new Zodiac Killer on the loose.
+**Durations** will always give the time span in an **exact number of seconds**.
 
-Unfortunately, the date and time of the murder is not known. You have been hired to crack the case. Use the clues below to discover the murderer’s identity.
+```{r}
+#| echo: true
+as.duration(today() - mdy(11201993))
+```
 
-> Submit the name of the killer to the Canvas Quiz.
+```{r}
+#| echo: true
+as.duration(finish - begin)
+```
 
+. . .
+
+**Periods** will give the time span in more approximate, but **human readable times**.
+
+```{r}
+#| echo: true
+as.period(today() - mdy(11201993))
+```
+
+```{r}
+#| echo: true
+as.period(finish - begin)
+```
+
+
+## Durations and Periods
+
+We can also **add** time:
+
++ `days()`, `years()`, etc. will add a **period** of time.
++ `ddays()`, `dyears()`, etc. will add a **duration** of time.
+
+. . .
+
+Because durations use the **exact** number of seconds to represent days and years, you might get unexpected results:
+
+When is is my 99th birthday?
+
+```{r}
+#| echo: true
+mdy(11201993) + years(99)
+```
+
+```{r}
+#| echo: true
+mdy(11201993) + dyears(99)
+```
+
+
+## Time Zones
+
+**Time zones are complicated!**
+
+Specify time zones in the form:
+
++ {continent}/{city} -- “America/New_York”, “Africa/Nairobi”
++ {ocean}/{city} -- “Pacific/Auckland”
+
+. . .
+
+What time zone does R think I'm in?
+
+```{r}
+#| echo: true
+Sys.timezone()
+```
+
+
+## Time Zones
+
+You can change the time zone of a date in two ways:
+
+```{r}
+#| echo: true
+x <- ymd_hms("2024-06-01 18:00:00", tz = "Europe/Copenhagen")
+```
+
+:::panel-tabset
+
+### `with_tz()`
+
+Keeps the instant in time the same, but changes the visual representation.
+
+```{r}
+#| echo: true
+x |> 
+  with_tz()
+x |> 
+  with_tz(tzone = "Asia/Kolkata")
+```
+
+### `force_tz()`
+
+Changes the instant in time by forcing a time zone change.
+
+```{r}
+#| echo: true
+x |> 
+  force_tz()
+x |> 
+  force_tz(tzone = "Asia/Kolkata")
+```
+
+:::
+
+
+## Common Mistake with Dates
+
+When you read data in or create a new date-time object, the default time zone (if not specified) is UTC.
+
++ UTC (Universal Time Coordinated) is the same as GMT (Greenwich Mean Time).
+
+Make sure you specify your desired time zone!
+
+```{r}
+#| echo: true
+x <- mdy("11/20/1993")
+tz(x)
+```
+
+```{r}
+#| echo: true
+x <- mdy("11/20/1993", tz = "America/New_York")
+tz(x)
+```
+
+
+## [PA 5.1: Jewel Heist](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA5_1.html)
+
+Just down the road in Montecito, CA several rare jewels went missing last fall. The jewels were stolen and replaced with fakes, but detectives have not been able to solve the case. They are now calling in a data scientist to help parse their clues.
+
+Unfortunately, the date and time of the jewel heist is not known. You have been hired to crack the case. Use the clues below to discover the thief's identity.
+
+> Submit the name of the thief to the Canvas Quiz.
 
 ## To do...
 
-+ **PA 5.1: Zodiac Killer**
++ **PA 5.1: Jewel Heist**
   + Due Wednesday, 5/3 at 10:00am
 
 + **Lab 5: Factors in Data Visualization**
@@ -669,7 +825,7 @@ Unfortunately, the date and time of the murder is not known. You have been hired
 Today we will...
 
 + Review Lab 4
-+ Review PA 5.1: Zodiac Killer
++ Review PA 5.1: Jewel Heist
 + Bonus Challenge: Save the Date
 + Midterm Exam 2/15: What to Expect
   + Example Game Plans
