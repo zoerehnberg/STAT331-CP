@@ -481,7 +481,7 @@ cereal_recode |>
 
 ::: callout-caution
 
-You will be **required** to use functions from the {forcats} package! e.g. `reorder()` is a no go, use `fct_reorder` instead!
+You will be **required** to use functions from the `forcats` package! e.g. `reorder()` is a no go, use `fct_reorder` instead!
 
 :::
 
