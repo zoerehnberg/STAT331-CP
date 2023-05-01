@@ -473,12 +473,11 @@ cereal_recode |>
 ::: 
 
 
-## [Lab 5: Factors in Data Visualizations](https://earobinson95.github.io/stat331-calpoly/lab-assignments/lab5/lab5-factors-in-visualizations.html)
+## [Lab 5: Factors in Data Visualizations](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab5/LA5_factors.html)
 
 + We will be working with the data from *Lab 2: Exploring Rodents with ggplot2* to improve our plots!
 
 + See [Will Chase's 2020 RStudio Conference Presentation - Glamour of Graphics](https://www.youtube.com/watch?v=h5cTacaWE6I&ab_channel=PositPBC)
-  + [slides](https://www.williamrchase.com/slides/assets/player/KeynoteDHTMLPlayer.html#0)
 
 ::: callout-caution
 
@@ -825,281 +824,249 @@ Unfortunately, the date and time of the jewel heist is not known. You have been 
 Today we will...
 
 + Review Lab 4
-+ Review PA 5.1: Jewel Heist
-+ Bonus Challenge: Save the Date
-+ Midterm Exam 2/15: What to Expect
-  + Example Game Plans
-  + Example Open-ended Analysis
-+ Mini lecture on text material
++ Midterm Exam 5/10: What to Expect
++ New Material
   + Strings
   + Regular Expressions
-+ Example: "Messy" Covid Variants
-+ [PA 5.2: Scrambled Message](https://earobinson95.github.io/stat331-calpoly/practice-activities/PA5_2-scrambled-message-regex.html)
++ [PA 5.2: Scrambled Message](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA5_2.html)
 
 
-## [Bonus Challenge: Save the Date](https://earobinson95.github.io/stat331-calpoly/bonus-challenges/bonus-challenge-data-mishaps-night.html)
+<!-- ## [Midterm Exam]() -- Wednesday, 5/10 -->
 
-:::: {.columns}
-:::{.column  width="55%"}
-**What** [Data Mishaps Night](https://datamishapsnight.com/)
+<!-- + You will have one hour and 50 minutes to complete the exam on your own computer. -->
+<!-- + The exam is worth a total of 100 points and consists of 3 sections: General Questions, Short Answer, and Open-Ended Analysis. -->
+<!-- + I will bring paper copies of the exam questions  -->
+<!-- + A `.qmd` starter file for the short answer will be unlocked at the start of each sections class. -->
+<!-- + You will be creating your own `.qmd` file for the open-ended analysis. You may bring one already created on your computer. -->
 
-**When** Thursday, February 23rd at 5pm PST
+<!-- ::: callout-caution -->
+<!-- While this is an open resource exam, you will likely get caught running out of time if you have to look everything up. Know what functions you might need to approach the problem and where to find documentation for implementing these functions. -->
+<!-- ::: -->
 
-**Where** Zoom!
-:::
-:::{.column  width="45%"}
-```{r}
-#| out-width: 70%
-#| fig-align: center
-knitr::include_graphics("https://datamishapsnight.files.wordpress.com/2021/01/data-mishaps_main_withtext-4.png?w=768")
-```
-:::
-::::
 
-::: callout-caution
-You must register for **free** [here](https://datamishapsnight.com/) to receive the link!
-:::
+<!-- ## Lab 4: Tips -->
 
-+ Submit to canvas a "reflection" for each of the keynote and/or theme sessions you attend. 
-+ Each "reflection" gets you +2 challenge points (that is up to +8 for the whole night!)
+<!-- **Don't include pages of output!** -->
 
+<!-- + Look at your rendered report before you submit it. -->
 
-## [Midterm Exam](https://earobinson95.github.io/stat331-calpoly/midterm-exam/what-to-expect-midterm-exam.html) -- In-class Wednesday 2/15
+<!-- **Data Description Components** -->
 
-+ You will have one hour and 50 minutes to complete the exam on your own computer.
-+ The exam is worth a total of 100 points and consists of 3 sections: General Questions, Short Answer, and Open-Ended Analysis.
-+ I will bring paper copies of the exam questions 
-+ A `.qmd` starter file for the short answer will be unlocked at the start of each sections class.
-+ You will be creating your own `.qmd` file for the open-ended analysis. You may bring one already created on your computer.
+<!-- + When describing the data, include **context** as well as the data characteristics.  -->
+<!--   + Where did the data come from? What years? Location? -->
+<!--   + What is the data being used for?  -->
+<!--   + What are the variables (in context) and observations (in context)? -->
 
-::: callout-caution
-While this is an open resource exam, you will likely get caught running out of time if you have to look everything up. Know what functions you might need to approach the problem and where to find documentation for implementing these functions.
-:::
 
+<!-- ## Lab 4: Tips -->
 
-## Lab 4: Tips
+<!-- :::: {.columns} -->
+<!-- ::: {.column width="40%"} -->
 
-**Don't include pages of output**
+<!-- **Read** -->
 
-Use the code chunk options
+<!-- --------- -->
+<!-- Average -->
 
-`#| output: false`
+<!-- Total -->
 
-`#| results: false`
+<!-- Which or For Each -->
 
-**Data Description Components**
+<!-- Minimum -->
 
-Make sure to include context when describing the data set as well as the data characteristics. 
+<!-- Maximum -->
 
-+ Where did the data come from? What years? Location? Source?
-+ What is the data being used for? 
-+ What are the variables (in context) and observations (in context)?
+<!-- Minimum + Maximum -->
 
+<!-- ::: -->
+<!-- ::: {.column width="60%"} -->
 
+<!-- **Think** -->
 
-## Lab 4: Game Plans!
+<!-- --------- -->
 
-:::: columns
-::: column
+<!-- `summarize(avg = mean())` -->
 
-**Read**
+<!-- `summarize(total = sum())` -->
 
-Average
+<!-- `group_by()` -->
 
-Total
+<!-- `slice_min()` -->
 
-Which or For Each
+<!-- `slice_max()` -->
 
-Minimum
+<!-- `arrange() |> slice(1,n())` -->
 
-Maximum
+<!-- ::: -->
+<!-- :::: -->
 
-Minimum and Maximum
 
-:::
-::: column
+<!-- ## Lab 4: Better alternatives to bar plots -->
 
-**Think**
+<!-- ```{r} -->
+<!-- library(tidyverse) -->
+<!-- avocado <- read_csv("../../lab_assignments/lab4/avocado.csv") -->
 
-`summarize(avg_var = mean())`
+<!-- major_region <- c("California", "West", "South Central", "Great Lakes", "Midsouth", "Southeast", "Northeast", "Plains", "Total U.S.") -->
 
-`summarize(total = sum())`
+<!-- avocado_clean <- avocado |>  -->
+<!--   #rename PLU codes and tidy up data -->
+<!--   rename(small_hass = "4046",  -->
+<!--          large_hass = "4225",  -->
+<!--          xlarge_hass = "4770") |>  -->
+<!--   mutate(geography_type = if_else(geography %in% major_region, "Major", "Metro"), -->
+<!--          across(c(type:geography_type), as.factor) -->
+<!--          ) -->
 
-`group_by()`
+<!-- avocado_california <- avocado_clean |>  -->
+<!--   filter(geography %in% c("Los Angeles", "San Diego", "Sacramento", "San Francisco")) -->
 
-`slice_min()`
+<!-- organic_price_diff <- avocado_california |>  -->
+<!--   pivot_wider(id_cols = c(date, year, geography, geography_type), -->
+<!--               names_from = type, -->
+<!--               values_from = average_price -->
+<!--               ) |>  -->
+<!--   mutate(price_diff = organic - conventional)  -->
 
-`slice_max()`
-
-`arrange() |> slice(1,n())`
-
-:::
-::::
-
-
-## Lab 4: Better alternatives to bar plots
-
-```{r}
-library(tidyverse)
-avocado <- read_csv("../../lab_assignments/lab4/avocado.csv")
-
-major_region <- c("California", "West", "South Central", "Great Lakes", "Midsouth", "Southeast", "Northeast", "Plains", "Total U.S.")
-
-avocado_clean <- avocado |> 
-  #rename PLU codes and tidy up data
-  rename(small_hass = "4046", 
-         large_hass = "4225", 
-         xlarge_hass = "4770") |> 
-  mutate(geography_type = if_else(geography %in% major_region, "Major", "Metro"),
-         across(c(type:geography_type), as.factor)
-         )
-
-avocado_california <- avocado_clean |> 
-  filter(geography %in% c("Los Angeles", "San Diego", "Sacramento", "San Francisco"))
-
-organic_price_diff <- avocado_california |> 
-  pivot_wider(id_cols = c(date, year, geography, geography_type),
-              names_from = type,
-              values_from = average_price
-              ) |> 
-  mutate(price_diff = organic - conventional) 
-
-# organic_price_diff |> 
-#   ggplot(aes(x = price_diff, 
-#              y = geography, 
-#              color = geography, 
-#              fill = geography,
-#              shape = geography)) +
-#   geom_jitter(alpha = 0.3, show.legend = F) +
-#   geom_boxplot(alpha = 0.5, show.legend = F) +
-#   geom_vline(xintercept = 0, linetype = "dashed") +
-#   theme_bw() +
-#   theme(legend.position = "none",
-#         axis.title.y = element_blank()) +
-#   labs(subtitle = "Year",
-#        x = "Difference in Price ($)\nOrganic - Conventional")
-```
-
-*Bar plots are typically reserved for displaying frequencies*
-
-::: panel-tabset
-
-### Summary Data
-```{r}
-diff_summary <- organic_price_diff |> 
-  group_by(geography) |> 
-  summarise(mean_price_diff = mean(price_diff),
-            sd_price_diff = sd(price_diff)
-            ) |> 
-  arrange(desc(mean_price_diff))
-diff_summary 
-```
-
-### Bar plots
-
-```{r}
-#| echo: true
-#| code-fold: true
-#| fig-height: 4
-#| fig-width: 6
-#| fig-align: center
-diff_summary  |> 
-  ggplot(aes(x = mean_price_diff, 
-             y = geography,
-             fill = geography)
-         ) +
-  geom_bar(stat = "identity") +
-  labs(subtitle = "Geography",
-       x = "Difference in Price ($)\nOrganic - Conventional",
-       y = "") +
-  theme_minimal() +
-  theme(legend.position = "none") +
-  scale_fill_brewer(palette = "Dark2")
-```
-
-### Cleveland Dot Plots
-
-Read more about [Cleveland Dot Plots](https://uc-r.github.io/cleveland-dot-plots)
-
-```{r}
-#| echo: true
-#| code-fold: true
-#| fig-height: 4
-#| fig-width: 6
-#| fig-align: center
-diff_summary |> 
-  arrange(desc(mean_price_diff)) |> 
-  ggplot(aes(x = mean_price_diff, 
-             y = geography,
-             fill = geography)
-         ) +
-  geom_segment(aes(xend = 0,
-                   yend = geography)
-  ) +
-  geom_point() +
-  labs(subtitle = "Geography",
-       x = "Difference in Price ($)\nOrganic - Conventional",
-       y = "") +
-  theme_minimal() +
-  theme(legend.position = "none") +
-  scale_fill_brewer(palette = "Dark2")
-```
-:::
-
-
-
-## Lab 4: Game Plans!
-
-Q2: Clean the data in any way you see fit.
-
-::: panel-tabset
-### version 1
-![](images/q1-game-plan-sketch.JPG)
-
-### 2
-![](images/q1-game-plan-sketch2.JPG)
-
-### 3
-![](images/q1-game-plan-sketch3.JPG)
-:::
-
-
-## Lab 4: Game Plans!
-
-Q3: Which major geographical region sold the most total organic, small Hass avocados in 2017?
-
-![](images/q3-game-plan-sketch.JPG)
-
-
-## Lab 4: Game Plans!
-
-Q8: The following plot shows, for all four California regions, the proportion of the average Hass avocado sales that are small, large, or extra large; conventional vs. organic. Recreate the plot.
-
-::: panel-tabset
-### version 1
-
-![](images/q8-game-plan-sketch-v2.JPG)
-
-### 2
-![](images/q8-game-plan-sketch-v1.JPG)
-
-
-### 3
-![](images/q8-game-plan-sketch-v3.JPG)
-
-:::
-
-
-# `stringr`
-
-
-## strings
+<!-- # organic_price_diff |>  -->
+<!-- #   ggplot(aes(x = price_diff,  -->
+<!-- #              y = geography,  -->
+<!-- #              color = geography,  -->
+<!-- #              fill = geography, -->
+<!-- #              shape = geography)) + -->
+<!-- #   geom_jitter(alpha = 0.3, show.legend = F) + -->
+<!-- #   geom_boxplot(alpha = 0.5, show.legend = F) + -->
+<!-- #   geom_vline(xintercept = 0, linetype = "dashed") + -->
+<!-- #   theme_bw() + -->
+<!-- #   theme(legend.position = "none", -->
+<!-- #         axis.title.y = element_blank()) + -->
+<!-- #   labs(subtitle = "Year", -->
+<!-- #        x = "Difference in Price ($)\nOrganic - Conventional") -->
+<!-- ``` -->
+
+<!-- *Bar plots are typically reserved for displaying frequencies.* -->
+
+<!-- ::: panel-tabset -->
+
+<!-- ### Summary Data -->
+<!-- ```{r} -->
+<!-- diff_summary <- organic_price_diff |>  -->
+<!--   group_by(geography) |>  -->
+<!--   summarise(mean_price_diff = mean(price_diff), -->
+<!--             sd_price_diff = sd(price_diff) -->
+<!--             ) |>  -->
+<!--   arrange(desc(mean_price_diff)) -->
+<!-- diff_summary  -->
+<!-- ``` -->
+
+<!-- ### Bar plots -->
+
+<!-- ```{r} -->
+<!-- #| echo: true -->
+<!-- #| code-fold: true -->
+<!-- #| fig-height: 4 -->
+<!-- #| fig-width: 6 -->
+<!-- #| fig-align: center -->
+<!-- diff_summary  |>  -->
+<!--   ggplot(aes(x = mean_price_diff,  -->
+<!--              y = geography, -->
+<!--              fill = geography)) + -->
+<!--   geom_bar(stat = "identity") + -->
+<!--   labs(subtitle = "Geography", -->
+<!--        x = "Difference in Price ($)\nOrganic - Conventional", -->
+<!--        y = "") + -->
+<!--   theme_minimal() + -->
+<!--   theme(legend.position = "none") + -->
+<!--   scale_fill_brewer(palette = "Dark2") -->
+<!-- ``` -->
+
+<!-- ### Cleveland Dot Plots -->
+
+<!-- Read more about [Cleveland Dot Plots](https://uc-r.github.io/cleveland-dot-plots) -->
+
+<!-- ```{r} -->
+<!-- #| echo: true -->
+<!-- #| code-fold: true -->
+<!-- #| fig-height: 4 -->
+<!-- #| fig-width: 6 -->
+<!-- #| fig-align: center -->
+<!-- diff_summary |>  -->
+<!--   arrange(desc(mean_price_diff)) |>  -->
+<!--   ggplot(aes(x = mean_price_diff,  -->
+<!--              y = geography, -->
+<!--              fill = geography)) + -->
+<!--   geom_segment(aes(xend = 0, -->
+<!--                    yend = geography)) + -->
+<!--   geom_point() + -->
+<!--   labs(subtitle = "Geography", -->
+<!--        x = "Difference in Price ($)\nOrganic - Conventional", -->
+<!--        y = "") + -->
+<!--   theme_minimal() + -->
+<!--   theme(legend.position = "none") + -->
+<!--   scale_fill_brewer(palette = "Dark2") -->
+<!-- ``` -->
+<!-- ::: -->
+
+
+
+<!-- ## Lab 4: Game Plans! -->
+
+<!-- ::: panel-tabset -->
+<!-- ### version 1 -->
+<!-- ![](images/q1-game-plan-sketch.JPG) -->
+
+<!-- ### 2 -->
+<!-- ![](images/q1-game-plan-sketch2.JPG) -->
+
+<!-- ### 3 -->
+<!-- ![](images/q1-game-plan-sketch3.JPG) -->
+<!-- ::: -->
+
+
+<!-- ## Lab 4: Game Plans! -->
+
+<!-- Which geographic region sold the most total organic, small Hass avocados in 2017? -->
+
+<!-- ![](images/q3-game-plan-sketch.JPG) -->
+
+
+<!-- ## Lab 4: Game Plans! -->
+
+<!-- For all four California regions, plot the proportion of the average Hass avocado sales that are small, large, or extra large and conventional vs. organic. -->
+
+<!-- ::: panel-tabset -->
+<!-- ### version 1 -->
+
+<!-- ![](images/q8-game-plan-sketch-v2.JPG) -->
+
+<!-- ### 2 -->
+<!-- ![](images/q8-game-plan-sketch-v1.JPG) -->
+
+
+<!-- ### 3 -->
+<!-- ![](images/q8-game-plan-sketch-v3.JPG) -->
+
+<!-- ::: -->
+
+
+# String Variables
+
+
+## What is a string?
 
 A **string** is a bunch of **characters**.
 
-Don't confuse a **string** (many characters, one object) with a **character vector** (vector of strings).
+There is a difference between...
 
-<br>
+<center>
+
+...a **string** (many characters, one object)...
+
+and
+
+...a **character vector** (vector of strings).
+
+</center>
 
 ```{r}
 #| echo: true
@@ -1107,14 +1074,12 @@ my_string <- "Hi, my name is Bond!"
 my_vector <- c("Hi", "my", "name", "is", "Bond")
 ```
 
-<br>
+. . .
 
 ```{r}
 #| echo: true
 my_string
 ```
-
-<br>
 
 ```{r}
 #| echo: true
@@ -1122,39 +1087,37 @@ my_vector
 ```
 
 
-# `stringr`
+## `stringr`
 
-:::: columns
-::: column
+:::: {.columns}
+::: {.column width="80%"}
 **Common tasks**
 
-+ Find which strings contain a particular pattern
++ Identify strings containing a particular pattern.
++ Remove or replace a pattern.
++ Edit a string (e.g., make it lowercase).
 
-+ Remove or replace a pattern
-
-+ Edit a string (for example, make it lowercase)
 :::
-::: column
+::: {.column width="20%"}
+
 ```{r}
 #| fig-align: center
-#| out-width: 40%
 knitr::include_graphics("https://github.com/rstudio/hex-stickers/blob/main/PNG/stringr.png?raw=true")
 ```
 :::
 ::::
 
 ::: callout-note 
-The package `stringr` is very useful for strings!  
-
-+ `stringr` loads with the `tidyverse`.
-
-+ all the functions are `str_xxx()`.
++ The `stringr` package loads with `tidyverse`.
++ All functions are  of the form`str_xxx()`.
 :::
 
 
 ## `pattern = `
 
-The **pattern argument** in all of the `stringr` functions ...
+The **pattern argument** appears in many `stringr` functions .
+
++ The pattern **must** be supplied inside quotes.
 
 ```{r}
 #| eval: false
@@ -1165,21 +1128,19 @@ str_detect(my_vector, pattern = "Bond")
 str_locate(my_vector, pattern = "Bond")
 str_match(my_vector, pattern = "Bond")
 str_extract(my_vector, pattern = "Bond")
-str_subset(my_vector, "pattern = Bond")
+str_subset(my_vector, pattern = "Bond")
 ```
 
-::: callout-note
-Discuss with a neighbor. For each of these functions, give:
+<br>
 
-+ The **object structure** of the output.
-+ The **data type** of the output.
-+ A brief explanation of what they do.
-::::
+. . .
+
+Let's explore these functions!
 
 
 ## `str_detect()`
 
-Returns **logical vector** `TRUE/FALSE` indicating if the pattern was found in that element of the original vector
+Returns a **logical vector** indicating whether the pattern was found in each element of the supplied vector.
 
 ```{r}
 #| echo: true
@@ -1187,20 +1148,24 @@ my_vector <- c("Hello,", "my name is", "Bond", "James Bond")
 str_detect(my_vector, pattern = "Bond")
 ```
 
-+ Pairs well with `filter()`
-+ Could be used with `summarise()` and `sum` or `mean`
+. . .
+
++ Pairs well with `filter()`.
++ Works with `summarise()` + `sum` or `mean`.
+
+. . .
 
 ::: {.callout-note collapse="true"}
 ### Related functions 
-`str_subset()` returns just the strings that contain the match
+`str_subset()` returns a vector of the strings that contain a match.
 
-`str_which()` returns the indexes of strings that have a match
+`str_which()` returns the indexes of the strings that contain a match.
 :::
 
 
 ## `str_match()` 
 
-Returns **character matrix** with either `NA` or the pattern, depending on if the pattern was found.
+Returns a **character matrix** containing either `NA` or the pattern, depending on if the pattern was found.
 
 ```{r}
 #| echo: true
@@ -1208,16 +1173,28 @@ my_vector <- c("Hello,", "my name is", "Bond", "James Bond")
 str_match(my_vector, pattern = "Bond")
 ```
 
+. . .
+
+The matrix will have more columns if you use regex groups.
+
+```{r}
+#| echo: true
+my_vector <- c("Hello,", "my name is", "Bond", "James Bond")
+str_match(my_vector, pattern = "(.)o(.)")
+```
+
 
 ## `str_extract()` 
 
-Returns **character vector** with either `NA` or the pattern, depending on if the pattern was found.
+Returns a **character vector** with either `NA` or the pattern, depending on if the pattern was found.
 
 ```{r}
 #| echo: true
 my_vector <- c("Hello,", "my name is", "Bond", "James Bond")
 str_extract(my_vector, pattern = "Bond")
 ```
+
+. . .
 
 ::: callout-warning
 `str_extract()` only returns the **first** pattern match.
@@ -1228,7 +1205,9 @@ Use `str_extract_all()` to return **every** pattern match.
 
 ## `str_locate()` 
 
-Returns a **date frame** with two **numeric variables** for the starting and ending location, giving either `NA` or the start and end position of the pattern.
+Returns a **dateframe** with two **numeric variables** -- the starting and ending location of the pattern.
+
++ The values are `NA` if the pattern is not found.
 
 ```{r}
 #| echo: true
@@ -1236,10 +1215,18 @@ my_vector <- c("Hello,", "my name is", "Bond", "James Bond")
 str_locate(my_vector, pattern = "Bond")
 ```
 
+. . .
+
+::: callout-note
+### Related Functions
+
+`str_sub()` extracts values based on a starting and ending location.
+:::
+
 
 ## `str_subset()`
 
-Returns a **character vector** with a subset of the original **character vector** with elements where the pattern occurs.
+Returns a **character vector** containing a subset of the original **character vector** consisting of the elements where the pattern was found.
 
 ```{r}
 #| echo: true
@@ -1247,34 +1234,56 @@ my_vector <- c("Hello,", "my name is", "Bond", "James Bond")
 str_subset(my_vector, pattern = "Bond")
 ```
 
+
+
+## Try it out!
+
+```{r}
+#| eval: false
+#| echo: true
+my_vector <- c("I scream,", "you scream", "we all",
+               "scream","for","ice cream")
+
+str_detect(my_vector, pattern = "cream")
+str_locate(my_vector, pattern = "cream")
+str_match(my_vector, pattern = "cream")
+str_extract(my_vector, pattern = "cream")
+str_subset(my_vector, pattern = "cream")
+```
+
 ::: callout-note
-### Related Functions
+For each of these functions, write down:
 
-`str_sub()` extracts values based on location.
-:::
++ the **object structure** of the output.
++ the **data type** of the output.
++ a brief explanation of what they do.
+::::
 
 
-## Replace / Remove patterns
+## Replace / Remove Patterns
 
 ::: panel-tabset
 
 ### `str_replace()`
 
-replaces the **first** matched pattern
+Replace the **first** matched pattern in each string.
 
-+ Pairs well with `mutate()`
++ Pairs well with `mutate()`.
 
 ```{r}
 #| echo: true
 str_replace(my_vector, pattern = "Bond", replace = "Franco")
 ```
 
+::: {.callout-note collapse="true"}
+### Related functions 
+
+`str_replace_all()` replaces **all** matched patterns in each string.
+:::
 
 ### `str_remove()`
 
-Removes the **first** matched pattern
-
-Special case -- `str_replace(x, pattern, replace = "")`
+Remove the **first** matched pattern in each string.
 
 ```{r}
 #| echo: true
@@ -1282,26 +1291,25 @@ my_vector <- c("Hello,", "my name is", "Bond", "James Bond")
 str_remove(my_vector, pattern = "Bond")
 ```
 
-:::
-
 ::: {.callout-note collapse="true"}
 ### Related functions 
+This is a special case of  `str_replace(x, pattern, replace = "")`.
 
-`str_replace_all()` replaces **all** matched patterns
+`str_remove_all()` removes **all** matched patterns in each string.
+:::
 
-`str_remove_all()` removes **all** matched patterns
 :::
 
 
-## Make edits
+## Edit Strings
 
-Convert letters in the string to a specific capitalization format.
+Convert letters in a string to a specific capitalization format.
 
 ::: panel-tabset
 
-### `str_to_lower()` 
+### lower
 
-converts all letters in the strings to lowercase
+`str_to_lower()` converts all letters in a string to lowercase.
 
 <br>
 
@@ -1311,9 +1319,9 @@ my_vector <- c("Hello,", "my name is", "Bond", "James Bond")
 str_to_lower(my_vector)
 ```
 
-### `str_to_upper()` 
+### UPPER
 
-converts all letters in the strings to uppercase
+`str_to_upper()` converts all letters in a string to uppercase.
 
 <br>
 
@@ -1322,9 +1330,9 @@ converts all letters in the strings to uppercase
 str_to_upper(my_vector)
 ```
 
-### `str_to_title()` 
+### Title
 
-converts the first letter of the strings to uppercase
+`str_to_title()` converts the first letter of each word to uppercase.
 
 <br>
 
@@ -1336,19 +1344,12 @@ str_to_title(my_vector)
 :::
 
 
-<!-- ## `separate_xxx_delim()` -->
-
-<!-- `separate_longer_delim()` -->
-
-<!-- `separate_wider_delim()` -->
-
-
 ## Combine Strings
 
 ::: panel-tabset
 ### `str_c()`
 
-Joins multiple strings into a single string.
+Join multiple strings into a single string.
 
 ```{r}
 #| echo: true
@@ -1359,12 +1360,12 @@ str_c(prompt, last, ",", first, last, sep = " ")
 ```
 
 ::: callout-note
-Similar to `paste()` and `paste0()`
+Similar to `paste()` and `paste0()`.
 :::
 
 ### `str_flatten()`
 
-Combines into a single string.
+Combine a vector of strings into a single string.
 
 ```{r}
 #| echo: true
@@ -1373,12 +1374,12 @@ str_flatten(my_vector, collapse = " ")
 ```
 
 ::: callout-note
-`str_c()` will do the same thing, but it it is encouraged to use `str_flatten()` instead.
+`str_c()` will do the same thing, but you should use `str_flatten()` instead!
 :::
 
 ### `str_glue()`
 
-Uses environment to create a string and evaluates {expressions}.
+Use variables in the environment to create a string based on {expressions}.
 
 ```{r}
 #| echo: true
@@ -1394,25 +1395,38 @@ See the R package [`glue`](https://glue.tidyverse.org/)!
 :::
 
 
-## Hints and Tips for Success
+## Tips for String Success
 
 + Refer to the [`stringr` cheatsheet](https://posit.co/wp-content/uploads/2022/10/strings-1.pdf)
 
-+ Remember that `str_xxx` functions need the first argument to be a **vector of strings**, not a **data set**.
-  + You might want to use them *inside* functions like `filter()` or `mutate()`.
++ Remember that `str_xxx` functions need the first argument to be a **vector of strings**, not a **data set**!
+  + You will use these functions *inside* `dplyr` verbs like `filter()` or `mutate()`.
 
 ```{r}
 #| echo: true
-#| code-line-numbers: "3"
+#| code-line-numbers: "2"
+#| eval: false
 cereal |> 
-  mutate(
-    is_bran = str_detect(name, "Bran"), 
-    .after = name
-  )
+  mutate(is_bran = str_detect(name, "Bran"), 
+         .after = name)
 ```
 
 
-# regex
+```{r}
+#| eval: true
+#| echo: false
+cereal |> 
+  mutate(is_bran = str_detect(name, "Bran"), 
+         .after = name) |> 
+  knitr::kable() |> 
+  kableExtra::scroll_box(height = "200px") |> 
+  kableExtra::kable_styling(font_size = 30)
+```
+
+
+## Tips for String Success
+
+The real power of these `str_xxx` functions comes when you specify the `pattern` using **regular expressions**!
 
 ```{r}
 #| fig-align: center
@@ -1421,343 +1435,400 @@ knitr::include_graphics("images/regular_expressions.png")
 ```
 
 
+# regex
+
+
+
 ## Regular Expressions
 
-> "Regexps are a very terse language that allow you to describe patterns in 
-> strings."
+> "Regexps are a very terse language that allow you to describe patterns in strings."
 >
 > *R for Data Science*
 
-R uses "extended" regular expressions, which are common.
+. . .
+
+Use `str_xxx` functions + **regular expressions**!
 
 ```{r}
 #| echo: true
 #| eval: false
 #| code-line-numbers: "2"
-str_detect(string  = my_string_vector, 
-           pattern = "REGULAR EXPRESSION"
-           )
+str_detect(string  = my_string_vector,
+           pattern = "p[ei]ck[a-z]")
 ```
 
-[Web app to test R regular expressions](https://spannbaueradam.shinyapps.io/r_regex_tester/)
+. . .
 
 ::: callout-tip
-Regular expressions are a reason to use `stringr`!
-
 You might encounter `gsub()`, `grep()`, etc. from Base R.
 :::
 
 
-## Meta Characters `.` `^`  `$` `\`  `|` `*` `+` `?` `{` `}` `[` `]` `(` `)`
+## Regular Expressions
 
-::: panel-tabset
+**Regular expressions are tricky!**
 
-### Wild card `.`
-
-```{r}
-#| echo: true
-toung_twister <- c("She", "sells", "seashells", "by", "the", "seashore!")
-toung_twister
-```
-<br>
-`.` Represents any character
-
-```{r}
-#| echo: true
-str_subset(toung_twister, pattern = ".ells")
-```
-
-### Anchoring `^ $`
-
-```{r}
-#| echo: true
-toung_twister <- c("She", "sells", "seashells", "by", "the", "seashore!")
-toung_twister
-```
++ There are lots of new symbols to keep straight.
++ There are a lot of cases to think through.
 
 <br>
 
-`^` Looks at the beginning  
+This [web app](https://spannbaueradam.shinyapps.io/r_regex_tester/) for testing R regular expressions might be handy!
+
+
+## Special Characters
+
+There are a set of characters that have a specific meaning when using regex.
+
++ The `stringr` package **does not** read these as normal characters.
++ These characters are:
+
+<center>
+
+`.` `^`  `$` `\`  `|` `*` `+` `?` `{` `}` `[` `]` `(` `)`
+
+</center>
+
+
+## Wild Card Character: `.`
+
+`.` -- matches **any** character.
 
 ```{r}
 #| echo: true
-str_subset(toung_twister, pattern = "^s")
-```
-
-`$` Looks at the end  
-
-```{r}
-#| echo: true
-str_subset(toung_twister, pattern = "s$")
-```
-
-### Quantifiers `? + *`
-
-```{r}
-#| echo: true
-shells_str <- c("shes", "shels", "shells", "shellls", "shelllls")
-shells_str
+x <- c("She", "sells", "seashells", "by", "the", "seashore!")
+str_subset(x, pattern = ".ells")
 ```
 
 <br>
 
-`?` Occurs 0 or 1 times  
+This matches strings that contain any character followed by "ells".
+
+
+## Anchor Characters: `^ $`
+
+`^` -- looks at the beginning of a string.
 
 ```{r}
 #| echo: true
-str_subset(shells_str, pattern = "shel?s")
+x <- c("She", "sells", "seashells", "by", "the", "seashore!")
+str_subset(x, pattern = "^s")
 ```
 
-`+` Occurs 1 or more times
+This matches strings that start with "s".
+
+. . .
+
+`$` -- looks at the end of a string.
 
 ```{r}
 #| echo: true
-str_subset(shells_str, pattern = "shel+s")
+str_subset(x, pattern = "s$")
 ```
 
-`*` Occurs 0 or more times
+This matches strings that end with "s".
+
+
+## Quantifier Charaacters: `? + *`
+
+`?`  -- matches when the preceding character occurs 0 or 1 times in a row.
 
 ```{r}
 #| echo: true
-str_subset(shells_str, pattern = "shel*s")
-```
-
-### More Quantifiers `{}`
-
-```{r}
-#| echo: true
-shells_str <- c("shes", "shels", "shells", "shellls", "shelllls")
-shells_str
-```
-
-<br>
-
-`{n}` matches exactly n times.
-
-```{r}
-#| echo: true
-str_subset(shells_str, pattern = "shel{2}s")
-```
-
-`{n,}` matches at least n times.
-
-```{r}
-#| echo: true
-str_subset(shells_str, pattern = "shel{2,}s")
-```
-
-`{n,m}` matches between n and m times.
-
-```{r}
-#| echo: true
-str_subset(shells_str, pattern = "shel{1,3}s")
-```
-:::
-
-
-## Groups `()`
-
-Groups can be created with `( )`
-
-`|` -- "either" / "or"
-
-<br>
-```{r}
-#| echo: true
-toung_twister2 <- c("Peter", "Piper", "picked", "a", "peck", "of", "pickled", "peppers!")
-toung_twister2
-```
-
-<br>
-
-```{r}
-#| echo: true
-str_subset(toung_twister2, pattern = "p(e|i)ck")
-```
-
-
-## Character Classes `[]`
-
-```{r}
-#| echo: true
-toung_twister2 <- c("Peter", "Piper", "picked", "a", "peck", "of", "pickled", "peppers!")
+x <- c("shes", "shels", "shells", "shellls", "shelllls")
+str_subset(x, pattern = "shel?s")
 ```
 
 . . .
 
-```{r}
-#| echo: true
-str_subset(toung_twister2, pattern = "p[ei]ck")
-```
-. . .
-
-`[^ ]` except - think "not"
+`+` -- ... occurs 1 or more times in a row.
 
 ```{r}
 #| echo: true
-str_subset(toung_twister2, pattern = "p[^i]ck")
+str_subset(x, pattern = "shel+s")
 ```
 
 . . .
 
-`[ - ]` range
+`*` -- ... occurs 0 or more times in a row.
 
 ```{r}
 #| echo: true
-str_subset(toung_twister2, pattern = "p[ei]ck[a-z]")
+str_subset(x, pattern = "shel*s")
+```
+
+
+## Quantifier Characterss: `{}`
+
+`{n}` -- matches when the preceding character occurs exactly n times in a row.
+
+```{r}
+#| echo: true
+x <- c("shes", "shels", "shells", "shellls", "shelllls")
+str_subset(x, pattern = "shel{2}s")
 ```
 
 . . .
 
-`[Pp]` Capitalization matters
+`{n,}` -- ... occures at least n times in a row.
 
 ```{r}
 #| echo: true
-str_subset(toung_twister2, pattern = "^p")
+str_subset(x, pattern = "shel{2,}s")
+```
+
+. . .
+
+`{n,m}` -- ... occurs between n and m times in a row.
+
+```{r}
+#| echo: true
+str_subset(x, pattern = "shel{1,3}s")
+```
+
+
+## Character Groups: `()`
+
+Groups are created with `( )`.
+
++ We can specify "either" / "or" within a group using `|`.
+
+```{r}
+#| echo: true
+x <- c("Peter", "Piper", "picked", "a", "peck", "of", "pickled", "peppers!")
+str_subset(x, pattern = "p(e|i)ck")
+```
+
+<br>
+
+This matches strings that contain **either** "peck"
+ **or** "pick".
+ 
+
+## Character Classes: `[]`
+
+Character classes let you specify multiple possible characters to match on.
+
+```{r}
+#| echo: true
+x <- c("Peter", "Piper", "picked", "a", "peck", "of", "pickled", "peppers!")
+str_subset(x, pattern = "p[ei]ck")
+```
+
+. . .
+
+`[^ ]`  -- specifies characters **not** to match on (think **except**)
+
+```{r}
+#| echo: true
+str_subset(x, pattern = "p[^i]ck")
+```
+
+. . .
+
+`[Pp]` -- capitalization matters!
+
+```{r}
+#| echo: true
+str_subset(x, pattern = "^p")
 ```
 
 ```{r}
 #| echo: true
-str_subset(toung_twister2, pattern = "^[Pp]")
+str_subset(x, pattern = "^[Pp]")
 ```
 
 
-## `[]` Character Classes
+## Character Classes: `[]`
 
-::: panel-tabset
-### Shortcuts
+`[ - ]`  -- specifies a range of characters.
+
+```{r}
+#| echo: true
+x <- c("Peter", "Piper", "picked", "a", "peck", "of", "pickled", "peppers!")
+str_subset(x, pattern = "p[ei]ck[a-z]")
+```
+
+. . .
+
 + [A-Z] matches any capital letter.
 + [a-z] matches any lowercase letter.
 + [A-z] or [:alpha:] matches any letter
 + [0-9] or [:digit:] matches any number
 + See the stringr cheatsheet for more shortcuts, like [:punct:]
 
-### More Shortcuts
-`\w` Looks for any **"word"**  (conversely "not" "word" `\W`) 
 
-`\d` Looks for any **digit** (conversely "not" digit `\D`) 
+## Shortcuts
 
-`\s` Looks for any **whitespace** (conversely "not" whitespace `\S`) 
-:::
+`\\w` -- matches any **"word"**  (`\\W` matches any **not** "word") 
 
+`\\d` -- matches any **digit** (`\\D` matches any **not** digit) 
 
-## Let's try it out!
+`\\s` -- matches any **whitespace** (`\\S` matches any **not** whitespace) 
 
-Discuss with a neighbor which regular expressions would search for words that do the following:
-
-+ end with a vowel
-+ start with x, y, or z
-+ *do not* contain x, y, or z
-+ contain [British spelling](https://www.oxfordinternationalenglish.com/differences-in-british-and-american-spelling/)
-
-Test your answers out on
+. . .
 
 ```{r}
 #| echo: true
-test_vec <- c("zebra", "xray", "apple", "yellow", "color", "colour", "summarize", "summarise")
+x <- "phone number: 1234567899"
+str_extract(x, pattern = "\\d+")
+str_extract_all(x, pattern = "\\S+")
 ```
 
 
-## Escape `\`
+## Try it out!
 
-In order to match a special character you need to "escape" first
+What regular expressions would match words that...
 
-::: callout-warning
-In general, look at punctuation characters with suspicion.
-:::
++ end with a vowel?
++ start with x, y, or z?
++ *do not* contain x, y, or z?
++ contain [British spelling](https://www.oxfordinternationalenglish.com/differences-in-british-and-american-spelling/)?
 
 ```{r}
-toung_twister3 <- c("How", "much", "wood", "could", "a", "woodchuck", "chuck", "if", "a", "woodchuck", "could", "chuck", "wood?")
-toung_twister3 
+#| echo: true
+x <- c("zebra", "xray", "apple", "yellow",
+       "color", "colour", "summarize", "summarise")
 ```
+
+```{r}
+#| echo: true
+#| code-fold: true
+#| eval: false
+str_subset(x, "[aeiouy]$")
+str_subset(x, "^[xyz]")
+str_subset(x, "^[^xyz]+$")
+str_subset(x, "(our)|(i[sz]e)")
+```
+
+
+## Escape: `\\`
+
+To match a *special character*, you need to **escape** it.
+
 ```{r}
 #| echo: true
 #| error: true
-str_subset(toung_twister3, pattern = "?")
+x <- c("How", "much", "wood", "could", "a", "woodchuck", "chuck",
+       "if", "a", "woodchuck", "could", "chuck","wood?")
+str_subset(x, pattern = "?")
 ```
+
+. . .
+
+Use `\\` to escape the `?` -- it is now read as a normal character.
 
 ```{r}
 #| echo: true
-#| error: true
-str_subset(toung_twister3, pattern = "\\?")
+str_subset(x, pattern = "\\?")
 ```
+
+. . .
 
 ::: callout-note
-Could also use `[]` character class
+Alternatively, you could use `[]`:
 
 ```{r}
 #| echo: true
-#| error: true
-str_subset(toung_twister3, pattern = "[?]")
+str_subset(x, pattern = "[?]")
 ```
 :::
 
 
 ## When in Doubt
 <br>
-<br>
 ```{r}
 #| fig-align: center
 #| out-width: 80%
 knitr::include_graphics("images/backslashes.png")
 ```
-Use the [web app to test R regular expressions](https://spannbaueradam.shinyapps.io/r_regex_tester/)
+Use the [web app](https://spannbaueradam.shinyapps.io/r_regex_tester/) to test R regular expressions.
 
 
 ## Tips for working with regex
 
-+ Read the regular expressions out loud like a "request"
++ Read the regular expressions out loud like a request.
 
 . . .
 
-+ Test out your expressions on small examples first
-  + [Web app to test R regular expressions](https://spannbaueradam.shinyapps.io/r_regex_tester/)
-  + `str_view()` and `str_view_all()`
++ Test out your expressions on small examples first.
 
 ::: {.callout-note collapse="true"}  
-### `str_view()` and `str_view_all()`
+### `str_view()`
 ```{r}
 #| echo: true
-shells_str
-str_view(shells_str, "l+")
-str_view_all(shells_str, "l+")
+str_view(c("shes", "shels", "shells", "shellls", "shelllls"), "l+")
 ```
 :::
 
+. . .
 
-## Tips for working with regex
-
-+ Read the regular expressions out loud like a "request"
-
-+ Test out your expressions on small examples first
-  + [Web app to test R regular expressions](https://spannbaueradam.shinyapps.io/r_regex_tester/)
-  + `str_view()` and `str_view_all()`
-
-+ I use the [`stringr` cheatsheet](https://posit.co/wp-content/uploads/2022/10/strings-1.pdf) more than any other package cheatsheet!
++ Use the `stringr` [cheatsheet](https://posit.co/wp-content/uploads/2022/10/strings-1.pdf).
 
 . . .
 
-+ Everyone has a love-hate relationship with regular expressions. Be kind to yourself.
++ Be kind to yourself when working with regular expressions!
 
 
-# strings in the `tidyverse`
+# Strings in the `tidyverse`
+
+
+## `stringr` functions + `dplyr` verbs!
+
 
 ```{r}
 #| include: false
-library(readxl)
 library(tidyverse)
+avocado <- read_csv("../../lab_assignments/lab4/avocado.csv")
+
+library(readxl)
 military <- read_xlsx("../../practice_activities/gov_spending_per_capita.xlsx",
                       sheet = "Share of Govt. spending", 
                       skip  = 7, 
                       n_max  = 191)
 ```
 
+Find combined geographic regions:
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "2"
+avocado |> 
+  filter(str_detect(geography, "/")) |> 
+  distinct(geography)
+```
+
+```{r}
+#| eval: true
+#| echo: false
+avocado |> 
+  filter(str_detect(geography, "/")) |> 
+  distinct(geography) |> 
+  knitr::kable() |> 
+  kableExtra::scroll_box(height = "125px") |> 
+  kableExtra::kable_styling(font_size = 30)
+```
+
+. . .
+
+Find the proportion of regions containing a compass direction:
+
+```{r}
+#| echo: true
+#| code-line-numbers: "3-4"
+avocado |> 
+  distinct(geography) |> 
+  summarize(prop = mean(str_detect(geography,
+                                   "[Nn]orth|[Ss]outh|[Ee]ast|[Ww]est")))
+```
+
 
 ## `matches(pattern)`
 
-Selects all variables with a name that matches the supplied pattern
+Slect all variables with a name that matches the supplied pattern.
 
-+ pairs well with `select()`, `rename_with()`, and `across()`
++ Pairs well with `select()`, `rename_with()`, and `across()`.
 
 ::: panel-tabset
 
@@ -1766,91 +1837,87 @@ Selects all variables with a name that matches the supplied pattern
 #| echo: true
 military_clean <- military |> 
   mutate(across(`1988`:`2019`, 
-                ~ na_if(.x, y = ". .")
-                ),
+                ~ na_if(.x, y = ". .")),
          across(`1988`:`2019`, 
-                ~ na_if(.x, y = "xxx")
-                )
-         )
+                ~ na_if(.x, y = "xxx")))
 ```
 
 ### With regex
 ```{r}
 #| echo: true
-#| code-line-numbers: "3, 6" 
 military_clean <- military |> 
-  mutate(
-         across(matches("[1-9][1-9][1-9][1-9]"), 
-                ~ na_if(.x, y = ". .")
-                ),
-         across(matches("[1-9][1-9][1-9][1-9]"), 
-                ~ na_if(.x, y = "xxx")
-                )
-         )
+  mutate(across(matches("[1-9]{4}"), 
+                ~ na_if(.x, y = ". .")),
+         across(matches("[1-9]{4}"), 
+                ~ na_if(.x, y = "xxx")))
 ```
 
 :::
 
 
-## "Messy" Covid Variants
-
-I received this data from a grad school colleague the other day who asked if I knew how to "clean" it.
+## Messy Covid Variants!
 
 ![](images/covid-data-snip.JPG)
 
-What is that column?!
+What is that variable?!
+
+<font size = 4>
 
 `[{'variant': 'Other', 'cumWeeklySequenced': 2366843.0, 'newWeeklyPercentage': 4.59}, {'variant': 'V-20DEC-01 (Alpha)', 'cumWeeklySequenced': 0.0, 'newWeeklyPercentage': 0.0}, {'variant': 'V-21APR-02 (Delta B.1.617.2)', 'cumWeeklySequenced': 0.0, 'newWeeklyPercentage': 0.0}, {'variant': 'V-21OCT-01 (Delta AY 4.2)', 'cumWeeklySequenced': 0.0, 'newWeeklyPercentage': 0.0}, {'variant': 'V-22DEC-01 (Omicron CH.1.1)', 'cumWeeklySequenced': 2366843.0, 'newWeeklyPercentage': 24.56}, {'variant': 'V-22JUL-01 (Omicron BA.2.75)', 'cumWeeklySequenced': 2366843.0, 'newWeeklyPercentage': 8.93}, {'variant': 'V-22OCT-01 (Omicron BQ.1)', 'cumWeeklySequenced': 2366843.0, 'newWeeklyPercentage': 49.57}, {'variant': 'VOC-21NOV-01 (Omicron BA.1)', 'cumWeeklySequenced': 2366843.0, 'newWeeklyPercentage': 0.02}, {'variant': 'VOC-22APR-03 (Omicron BA.4)', 'cumWeeklySequenced': 2366843.0, 'newWeeklyPercentage': 0.08}, {'variant': 'VOC-22APR-04 (Omicron BA.5)', 'cumWeeklySequenced': 2366843.0, 'newWeeklyPercentage': 5.59}, {'variant': 'VOC-22JAN-01 (Omicron BA.2)', 'cumWeeklySequenced': 2366843.0, 'newWeeklyPercentage': 1.41}, {'variant': 'unclassified_variant', 'cumWeeklySequenced': 2366843.0, 'newWeeklyPercentage': 5.26}]`
 
-
-## Enter `stringr`!
-
-Let's see how this works.
+</font>
 
 
-## [PA 5.2: Scrambled Message](https://earobinson95.github.io/stat331-calpoly/practice-activities/PA5_2-scrambled-message-regex.html)
+## [PA 5.2: Scrambled Message](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA5_2.html)
 
-In this activity, you will be using regular expressions to decode a message.
+In this activity, you will use regex to decode a message.
 
-+ Remember, the `stringr` functions go *inside* `dplyr` verbs like `mutate()` and `filter()`. Think of them as you would `as.factor()`
++ Remember: `stringr` functions go *inside* `dplyr` verbs like `mutate()` and `filter()` -- use them like `as.factor`.
 
-+ [Reminder about Indexing Vectors](https://earobinson95.github.io/stat331-calpoly-text/00-prereading.html#indexing-by-location)
+. . .
 
-```{r}
-#| echo: true
-toung_twister3
-```
-
-  + You can grab the elements out of a vector with [] -- read "where"
++ Reminder about [indexing vectors](https://earobinson95.github.io/stat331-calpoly-text/00-prereading.html#indexing-by-location):
 
 ```{r}
 #| echo: true
-toung_twister3[c(3,6, 10,13)]
+x <- c("She", "sells", "seashells", "by", "the", "seashore!")
 ```
 
-  + If you want to replace those elements or change those elements use the assignment arrow!
+:::: {.columns}
+::: {.column width="50%"}
+
+  + Grab elements out of a vector with `[]`.
 
 ```{r}
 #| echo: true
-toung_twister3[c(3,6, 10,13)] <- "WOOD!"
+x[c(1,4,5)]
 ```
+
+:::
+::: {.column width="50%"}
+
+  + To replace those elements, use `<-` to assign new values.
+
+```{r}
+#| echo: true
+x[c(1,4,5)] <- ""
+```
+
+:::
+::::
 
 
 ## To do...
 
-+ **PA 5.2: Scrambled Message**
-  + Due Friday, 2/10 at 8:00am
++ **PA 5.2: Scrambled Message** -- due Friday, 5/5 at 10:00am.
 
-+ **Lab 5: Factors in Data Visualization**
-  + Due Friday, 2/10 at 11:59pm
++ **Lab 5: Factors in Data Visualization** -- due Friday, 5/5 at 11:59pm.
 
-+ **Final Project Group Formation Survey**
-  + Due Friday, 2/10 at 11:59pm
++ **Final Project Group Formation Survey** -- due Friday, 5/5 at 11:59pm.
 
-+ [**Bonus Challenge: Murder Mystery in SQL City**](https://earobinson95.github.io/stat331-calpoly/bonus-challenges/bonus-challenge-murder-in-sql-city.html)
-  + Due Sunday 2/12 at 11:59pm
++ [**Bonus Challenge: Murder in SQL City**](https://zoerehnberg.github.io/STAT331-S23/challenges/bCH_murder.html) -- due Monday, 5/8 at 11:59pm.
   
 + **Read Chapter 6: Version Control**
-  + **Concept Check 6.1 + 6.2** due Monday (2/13) at 8:00am
+  + **Check-ins 6.1 + 6.2** due Monday 5/8, at 10:00am
 
   
