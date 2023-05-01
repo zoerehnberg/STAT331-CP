@@ -25,7 +25,7 @@ Today we will...
   + Reordering Factor Variables
   + Working with Date & Time Variables
 + [PA 5.1: Jewel Heist](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA5_1.html)
-
++ [Lab 5: Factors in Data Visualizations](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab5/LA5_factors.html)
 
 ## Final Project Group Formation
 
