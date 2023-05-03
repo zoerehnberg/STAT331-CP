@@ -823,6 +823,7 @@ Unfortunately, the date and time of the jewel heist is not known. You have been 
 
 Today we will...
 
++ **Everyone gets points for PA 5.1 -- big apologies!**
 + Review Lab 4
 + Midterm Exam 5/10: What to Expect
 + New Material
@@ -831,222 +832,133 @@ Today we will...
 + [PA 5.2: Scrambled Message](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA5_2.html)
 
 
-<!-- ## [Midterm Exam]() -- Wednesday, 5/10 -->
+## Lab 4: Avocados
 
-<!-- + You will have one hour and 50 minutes to complete the exam on your own computer. -->
-<!-- + The exam is worth a total of 100 points and consists of 3 sections: General Questions, Short Answer, and Open-Ended Analysis. -->
-<!-- + I will bring paper copies of the exam questions  -->
-<!-- + A `.qmd` starter file for the short answer will be unlocked at the start of each sections class. -->
-<!-- + You will be creating your own `.qmd` file for the open-ended analysis. You may bring one already created on your computer. -->
+When *describing data*, include **context** as well as the data characteristics.
 
-<!-- ::: callout-caution -->
-<!-- While this is an open resource exam, you will likely get caught running out of time if you have to look everything up. Know what functions you might need to approach the problem and where to find documentation for implementing these functions. -->
-<!-- ::: -->
++ Where did the data come from? What years? Location? Source?
++ What is the data being used for?
++ What are the variables (in context) and observations (in context)?
 
 
-<!-- ## Lab 4: Tips -->
+## Lab 4: Avocados
 
-<!-- **Don't include pages of output!** -->
+When you are asked to give statistical summaries, give **both**:
 
-<!-- + Look at your rendered report before you submit it. -->
++ a measure of center (mean, median) **and**
++ a measure of spread (standard deviation, inter-quartile range, range).
 
-<!-- **Data Description Components** -->
+. . .
 
-<!-- + When describing the data, include **context** as well as the data characteristics.  -->
-<!--   + Where did the data come from? What years? Location? -->
-<!--   + What is the data being used for?  -->
-<!--   + What are the variables (in context) and observations (in context)? -->
+**Bar plots are typically reserved for displaying frequencies!**
 
 
-<!-- ## Lab 4: Tips -->
+## Lab 4: Avocados
 
-<!-- :::: {.columns} -->
-<!-- ::: {.column width="40%"} -->
+:::: {.columns}
+::: {.column width="40%"}
 
-<!-- **Read** -->
+**Read**
 
-<!-- --------- -->
-<!-- Average -->
+---------
+Average
 
-<!-- Total -->
+Total
 
-<!-- Which or For Each -->
+Which or For Each
 
-<!-- Minimum -->
+Minimum
 
-<!-- Maximum -->
+Maximum
 
-<!-- Minimum + Maximum -->
+Minimum + Maximum
 
-<!-- ::: -->
-<!-- ::: {.column width="60%"} -->
+:::
+::: {.column width="60%"}
 
-<!-- **Think** -->
+**Think**
 
-<!-- --------- -->
+---------
 
-<!-- `summarize(avg = mean())` -->
+`summarize(avg = mean())`
 
-<!-- `summarize(total = sum())` -->
+`summarize(total = sum())`
 
-<!-- `group_by()` -->
+`group_by()`
 
-<!-- `slice_min()` -->
+`slice_min()`
 
-<!-- `slice_max()` -->
+`slice_max()`
 
-<!-- `arrange() |> slice(1,n())` -->
+`arrange() |> slice(1,n())`
 
-<!-- ::: -->
-<!-- :::: -->
-
-
-<!-- ## Lab 4: Better alternatives to bar plots -->
-
-<!-- ```{r} -->
-<!-- library(tidyverse) -->
-<!-- avocado <- read_csv("../../lab_assignments/lab4/avocado.csv") -->
-
-<!-- major_region <- c("California", "West", "South Central", "Great Lakes", "Midsouth", "Southeast", "Northeast", "Plains", "Total U.S.") -->
-
-<!-- avocado_clean <- avocado |>  -->
-<!--   #rename PLU codes and tidy up data -->
-<!--   rename(small_hass = "4046",  -->
-<!--          large_hass = "4225",  -->
-<!--          xlarge_hass = "4770") |>  -->
-<!--   mutate(geography_type = if_else(geography %in% major_region, "Major", "Metro"), -->
-<!--          across(c(type:geography_type), as.factor) -->
-<!--          ) -->
-
-<!-- avocado_california <- avocado_clean |>  -->
-<!--   filter(geography %in% c("Los Angeles", "San Diego", "Sacramento", "San Francisco")) -->
-
-<!-- organic_price_diff <- avocado_california |>  -->
-<!--   pivot_wider(id_cols = c(date, year, geography, geography_type), -->
-<!--               names_from = type, -->
-<!--               values_from = average_price -->
-<!--               ) |>  -->
-<!--   mutate(price_diff = organic - conventional)  -->
-
-<!-- # organic_price_diff |>  -->
-<!-- #   ggplot(aes(x = price_diff,  -->
-<!-- #              y = geography,  -->
-<!-- #              color = geography,  -->
-<!-- #              fill = geography, -->
-<!-- #              shape = geography)) + -->
-<!-- #   geom_jitter(alpha = 0.3, show.legend = F) + -->
-<!-- #   geom_boxplot(alpha = 0.5, show.legend = F) + -->
-<!-- #   geom_vline(xintercept = 0, linetype = "dashed") + -->
-<!-- #   theme_bw() + -->
-<!-- #   theme(legend.position = "none", -->
-<!-- #         axis.title.y = element_blank()) + -->
-<!-- #   labs(subtitle = "Year", -->
-<!-- #        x = "Difference in Price ($)\nOrganic - Conventional") -->
-<!-- ``` -->
-
-<!-- *Bar plots are typically reserved for displaying frequencies.* -->
-
-<!-- ::: panel-tabset -->
-
-<!-- ### Summary Data -->
-<!-- ```{r} -->
-<!-- diff_summary <- organic_price_diff |>  -->
-<!--   group_by(geography) |>  -->
-<!--   summarise(mean_price_diff = mean(price_diff), -->
-<!--             sd_price_diff = sd(price_diff) -->
-<!--             ) |>  -->
-<!--   arrange(desc(mean_price_diff)) -->
-<!-- diff_summary  -->
-<!-- ``` -->
-
-<!-- ### Bar plots -->
-
-<!-- ```{r} -->
-<!-- #| echo: true -->
-<!-- #| code-fold: true -->
-<!-- #| fig-height: 4 -->
-<!-- #| fig-width: 6 -->
-<!-- #| fig-align: center -->
-<!-- diff_summary  |>  -->
-<!--   ggplot(aes(x = mean_price_diff,  -->
-<!--              y = geography, -->
-<!--              fill = geography)) + -->
-<!--   geom_bar(stat = "identity") + -->
-<!--   labs(subtitle = "Geography", -->
-<!--        x = "Difference in Price ($)\nOrganic - Conventional", -->
-<!--        y = "") + -->
-<!--   theme_minimal() + -->
-<!--   theme(legend.position = "none") + -->
-<!--   scale_fill_brewer(palette = "Dark2") -->
-<!-- ``` -->
-
-<!-- ### Cleveland Dot Plots -->
-
-<!-- Read more about [Cleveland Dot Plots](https://uc-r.github.io/cleveland-dot-plots) -->
-
-<!-- ```{r} -->
-<!-- #| echo: true -->
-<!-- #| code-fold: true -->
-<!-- #| fig-height: 4 -->
-<!-- #| fig-width: 6 -->
-<!-- #| fig-align: center -->
-<!-- diff_summary |>  -->
-<!--   arrange(desc(mean_price_diff)) |>  -->
-<!--   ggplot(aes(x = mean_price_diff,  -->
-<!--              y = geography, -->
-<!--              fill = geography)) + -->
-<!--   geom_segment(aes(xend = 0, -->
-<!--                    yend = geography)) + -->
-<!--   geom_point() + -->
-<!--   labs(subtitle = "Geography", -->
-<!--        x = "Difference in Price ($)\nOrganic - Conventional", -->
-<!--        y = "") + -->
-<!--   theme_minimal() + -->
-<!--   theme(legend.position = "none") + -->
-<!--   scale_fill_brewer(palette = "Dark2") -->
-<!-- ``` -->
-<!-- ::: -->
+:::
+::::
 
 
+## Lab 4: Game Plans!
 
-<!-- ## Lab 4: Game Plans! -->
-
-<!-- ::: panel-tabset -->
-<!-- ### version 1 -->
-<!-- ![](images/q1-game-plan-sketch.JPG) -->
-
-<!-- ### 2 -->
-<!-- ![](images/q1-game-plan-sketch2.JPG) -->
-
-<!-- ### 3 -->
-<!-- ![](images/q1-game-plan-sketch3.JPG) -->
-<!-- ::: -->
+Which metro areas sold the most avocados? Plot side-by-side box-plots of the total volume for only the five metro areas with the highest averages for the total_volume variable.
 
 
-<!-- ## Lab 4: Game Plans! -->
+##
 
-<!-- Which geographic region sold the most total organic, small Hass avocados in 2017? -->
+<center>
+![](images/GP1.png)
+</center>
 
-<!-- ![](images/q3-game-plan-sketch.JPG) -->
+##
+
+<center>
+![](images/GP2.png){width=80%}
+</center>
+
+##
+
+<center>
+![](images/GP3.png)
+</center>
+
+##
+
+<center>
+![](images/GP4.png){width=65%}
+</center>
+
+##
+
+<center>
+![](images/GP5.png)
+</center>
+
+##
+
+<center>
+![](images/GP6.png)
+</center>
 
 
-<!-- ## Lab 4: Game Plans! -->
+## [Midterm Exam](https://canvas.calpoly.edu/courses/98835/pages/midterm-exam-what-to-expect) -- Wednesday, 5/10
 
-<!-- For all four California regions, plot the proportion of the average Hass avocado sales that are small, large, or extra large and conventional vs. organic. -->
-
-<!-- ::: panel-tabset -->
-<!-- ### version 1 -->
-
-<!-- ![](images/q8-game-plan-sketch-v2.JPG) -->
-
-<!-- ### 2 -->
-<!-- ![](images/q8-game-plan-sketch-v1.JPG) -->
++ This is a three-part exam:
+  1. You will first complete a **General Questions** section on paper and **without your computer**.
+  2. After you turn that in, you will complete a **Short Answer** section **with your computer**.
+    + *You will have the one hour and 50 minute class period to complete the first two sections.*
+  3. The third section, **Open-Ended Analysis**, will be started in class and due **24 hours** after the end of class.
 
 
-<!-- ### 3 -->
-<!-- ![](images/q8-game-plan-sketch-v3.JPG) -->
+## [Midterm Exam](https://canvas.calpoly.edu/courses/98835/pages/midterm-exam-what-to-expect) -- Wednesday, 5/10
 
-<!-- ::: -->
++ The exam is worth a total of 100 points.
+  + Approx. 20 pts, 30 pts, and 50 pts for the three sections.
++ I will provide a `.qmd` template for the Short Answer.
++ You will create your own `.qmd` for the Open-Ended Analysis. **You are encouraged to create this ahead of time.**
+
+::: callout-caution
+While the coding tasks are open-resource, you will likely run out of time if you have to look everything up. Know what functions you might need and where to find documentation for implementing these functions.
+:::
+
+
 
 
 # String Variables
@@ -1068,13 +980,13 @@ and
 
 </center>
 
+. . .
+
 ```{r}
 #| echo: true
 my_string <- "Hi, my name is Bond!"
 my_vector <- c("Hi", "my", "name", "is", "Bond")
 ```
-
-. . .
 
 ```{r}
 #| echo: true
@@ -1529,7 +1441,7 @@ str_subset(x, pattern = "s$")
 This matches strings that end with "s".
 
 
-## Quantifier Charaacters: `? + *`
+## Quantifier Characters: `? + *`
 
 `?`  -- matches when the preceding character occurs 0 or 1 times in a row.
 
@@ -1558,7 +1470,7 @@ str_subset(x, pattern = "shel*s")
 ```
 
 
-## Quantifier Characterss: `{}`
+## Quantifier Characters: `{}`
 
 `{n}` -- matches when the preceding character occurs exactly n times in a row.
 
@@ -1660,11 +1572,15 @@ str_subset(x, pattern = "p[ei]ck[a-z]")
 
 ## Shortcuts
 
-`\\w` -- matches any **"word"**  (`\\W` matches any **not** "word") 
+`\\w` -- matches any **"word"**  (`\\W` matches **not** "word") 
 
-`\\d` -- matches any **digit** (`\\D` matches any **not** digit) 
++ A "word" contains any letters and numbers.
 
-`\\s` -- matches any **whitespace** (`\\S` matches any **not** whitespace) 
+`\\d` -- matches any **digit** (`\\D` matches **not** digit) 
+
+`\\s` -- matches any **whitespace** (`\\S` matches **not** whitespace) 
+
++ Whitespace includes spaces, tabs, newlines, etc.
 
 . . .
 
