@@ -1,5 +1,6 @@
 ---
 title: "Version Control"
+subtitle: "(please sit in your project groups!)"
 format: 
   revealjs:
     theme: default
@@ -14,83 +15,140 @@ self-contained: true
 library(tidyverse)
 ```
 
-## Monday, May 1
+## Monday, May 8
 
 Today we will...
 
-+ Review PA 5.1: Jewel Heist
-+ Questions on PA 5.2: Scrambled Message
-+ Questions on Lab 5: Factors in Data Visualization
++ Questions about PA 5.1, PA 5.2 or Lab 5?
 + New Material
   + git/GitHub
-+ Connect GitHub to RStudio
+  + Connect GitHub to RStudio
 + PA 6: Merge Conflicts -- Collaborating within a GitHub Repo
 + Discuss Group Contract
-+ Any lingering questions about Midterm
++ Questions about Midterm?
+
+
+## What is version control?
+
+<br>
+
+A process of tracking changes to a file or set of files over time so that you can recall specific versions later.
+
 
 # git/GitHub Basics
+
 
 ## Git vs GitHub
 
 :::: columns
 ::: column
-<br>
+
 ```{r}
 #| fig-align: center
 #| out-width: 50%
 knitr::include_graphics("https://bornsql.ca/wp-content/uploads/2022/03/Git-Logo-2Color.png") 
 ```
 
-+ Language for version control
-+ Developed by Linus Torvalds (Linux, Android, Chrome OS)
-+ Uses command line or GUI
++ A system for version control that manages a collection of files in a structured way.
++ Uses the command line or a GUI.
++ Git is local.
+
 :::
 ::: column
-```{r}
-#| fig-align: center
-#| out-width: 50%
-knitr::include_graphics("https://logos-world.net/wp-content/uploads/2020/11/GitHub-Emblem.png") 
-```
 
-+ Cloud-based hosting service
-+ Basic services are free
-+ Advanced services are paid (Similar to RStudio) 
+
 :::
 ::::
 
-## Why GitHub?
 
-1. A structured way for tracking changes to files over the course of a project.
+## Git vs GitHub
 
-2. Makes it easy to have multiple people working on the same files at the same time.
-
-3. You can host a URL of fun things (like the class text, these slides, a personal website, etc.) with [GitHub pages](https://pages.github.com/).
-
-*Think "track-changes" or "drop-box" history, but more structured.*
-
-## Git Repositories
-
-+ Think of this as a folder-directory for a single project (like your stat-331 folder!)
+:::: columns
+::: column
 
 ```{r}
 #| fig-align: center
-#| out-width: 20%
+#| out-width: 50%
+knitr::include_graphics("https://bornsql.ca/wp-content/uploads/2022/03/Git-Logo-2Color.png") 
+```
 
++ A system for version control that manages a collection of files in a structured way.
++ Uses the command line or a GUI.
++ Git is local.
+
+:::
+::: column
+
+```{r}
+#| fig-align: center
+#| out-width: 50%
+knitr::include_graphics("https://pngimg.com/d/github_PNG65.png") 
+```
+
++ A cloud-based service that lets you use git across many computers.
++ Basic services are free, advanced services are paid (like RStudio!). 
++ GitHub is remote.
+
+:::
+::::
+
+
+## Why Learn GitHub?
+
+1. GitHub provides a structured way for tracking changes to files over the course of a project.
+  + *Think Google Docs or Dropbox history, but more structured and powerful!*
+
+2. GitHub makes it easy to have multiple people working on the same files at the same time.
+
+3. You can host a URL of fun things (like the class text, these slides, a personal website, etc.) with [GitHub pages](https://pages.github.com/).
+
+
+## Git Repositories
+
+Git is based on **repositories**.
+
+:::: {.columns}
+::: {.column width="80%"}
+
++ Think of a repository (**repo**) as a directory (folder) for a single project.
+  + This directory will likely contain code, documentation, data, to do lists, etc. associated with the project.
+  + You can link a local repo with a remote copy.
+
+:::
+::: {.column width="20%"}
+
+```{r}
+#| fig-align: center
 knitr::include_graphics("https://miro.medium.com/max/512/1*w07Er4gPg8H2Ew-P0HhxNA.png")
 ```
 
-+ You may have code, documentation, data, TODO lists, and more associated with a project.
+:::
+::::
 
-+ To create a repository, you can start with your local computer first, or you can start with the remote (online) repository first.
++ To create a repository, you can start with your local computer **or** you can start with the remote copy.
+
+
+
+## `.gitignore`
+
+Sometimes there are files that you **do not** want to track.
+
++ A `.gitignore` file specifies the files that git should intentionally ignore.
++ Often these are machine generated files (e.g., `/bin`, `.DS_Store`) or files/directories that you do not want to be shared (e.g., `solutions/`).
++ **We want to ignore `.Rproj` files!**
+
 
 # Actions in Git
+
 
 ## Cloning a Repo
 
 :::: columns
 ::: column
 
-Clone = create an exact copy locally
+<bR>
+
+Create an exact copy of a remote repo on your local machine.
 
 :::
 ::: column
@@ -102,24 +160,45 @@ knitr::include_graphics("images/git_clone_diagram.png")
 :::
 ::::
 
-## Committing
 
-Git tracks changes to each file that it is told to monitor, and as the files change, you provide short labels describing what the changes were and why they exist (called “commits”).
+## Committing Changes
+
+Tell git you have made changes you want to add to the repo.
+
++ Also provide a *commit message* -- a short label describing what the changes are and why they exist.
+
+:::: {.columns}
+::: {.column width="60%"}
+
+The red line is a change we commit (add) to the repo.
+
+:::
+::: {.column width="40%"}
 
 ```{r}
 #| fig-align: center
-#| out-width: 50%
-#| fig-cap: "Here, we commit the red line as a change to our file."
 knitr::include_graphics("images/git-commit.png")
 ```
 
-The log of these changes (along with the file history) is called your git commit history. This means you can always go back to old copies!
+:::
+::::
 
-## Pushing
+. . .
+
+The log of these changes (and the file history) is called your *git commit history*.
+
++ You can always go back to old copies!
+
+
+## Pushing Changes
 
 :::: columns
 ::: column
-Updates the copy of the repository on another machine (e.g. on GitHub) so that it has the most recent changes you’ve made to your machine.
+
+<br>
+
+Update the copy of your repo on GitHub so it has the most recent changes you’ve made on your machine.
+
 :::
 ::: column
 ```{r}
@@ -130,11 +209,16 @@ knitr::include_graphics("images/git_push_diagram.png")
 :::
 ::::
 
-## Pulling
+
+## Pulling Changes
 
 :::: columns
 ::: column
-Updates your local copy of the repository (the copy on your computer) with the files that are “in the cloud” (on GitHub). 
+
+<br>
+
+Update the local copy of your repo (the copy on your computer) with the version on GitHub.
+
 :::
 ::: column
 ```{r}
@@ -145,6 +229,7 @@ knitr::include_graphics("images/git_pull_diagram.png")
 :::
 ::::
 
+
 ## Pushing and Pulling
 
 ```{r}
@@ -153,70 +238,50 @@ knitr::include_graphics("images/git_pull_diagram.png")
 knitr::include_graphics("images/pushing-and-pulling.jpg")
 ```
 
-## Merge Conflicts
-
-Occur when you make changes to the same line as a collaborator either at the same time, or without starting from the same "state". 
-
-1. Maybe you are working in real time on the same line of code or text.
-2. Maybe you forgot to push your changes last time you finished working.
-3. Maybe you forgot to pull your changes before you started working this time.
-
-![](images/same-conflict-pull.jpg)
-
-
-## Workflow {#git-workflow}
-
-:::: columns
-::: column
-**Starting a new project/local repo**
-
-::: incremental
-1. Clone the project or create a new repository
-2. Make some changes
-4. Commit the changes
-5. Pull any changes from the remote repository
-6. Resolve any merge conflicts
-7. Push the changes (and merged files)
-:::
-:::
-::: column
-:::
-::::
 
 ## Workflow
 
-:::: columns
-::: column
-**Starting a new project/local repo**
-
-1. Clone the project or create a new repository
-2. Make some changes
-4. Commit the changes
-5. Pull any changes from the remote repository
-6. Resolve any merge conflicts
-7. Push the changes (and merged files)
-:::
-::: column
-**Working with an existing local repo**
+**When you have an existing local repo:**
 
 ::: incremental
-1. Pull the repo (especially if collaborating)
-2. Make some changes
-4. Commit the changes
-5. Pull any changes from the remote repository (again!)
-6. Resolve any merge conflicts
-7. Push the changes (and merged files)
+1. Pull the repo (especially if collaborating).
+2. Make some changes locally.
+4. Commit the changes to git.
+5. Pull any changes from the remote repository (again!).
+6. Resolve any merge conflicts.
+7. Push your changes to GitHub.
+
 :::
-:::
-::::
+
+
+## Merge Conflicts
+
+These occur when git encounters conflicting changes.
+
++ You and a collaborator made conflicting changes at the same time.
++ You made changes without starting from the same "state" as the repo you are trying to combine with.
+
+![](images/same-conflict-pull.jpg)
+
+## Troubleshooting Merge Conflicts
+
+1. Maybe you are working in real time on the same line of code or text as a collaborator.
+2. Maybe you forgot to push your changes the last time you finished working.
+3. Maybe you forgot to pull your changes before you started working this time.
+
+. . .
+
+**We will work on resolving merge conflicts today!**
+
 
 # Connect GitHub to RStudio
 
-## Rpackages we will need
 
-Work in your console or a .Rscript for this...
+## Install + Load `R` Packages
 
-1. Install and load the {usethis} Rpackage
+Work in your console or an Rscript for this.
+
+1. Install and load the `usethis` package.
 
 ```{r}
 #| eval: false
@@ -225,7 +290,7 @@ install.packages("usethis")
 library(usethis)
 ```
 
-2. Install and load {gitcreds} RPackage
+2. Install and load the `gitcreds` Package.
 
 ```{r}
 #| eval: false
@@ -234,9 +299,10 @@ install.packages("gitcreds")
 library(gitcreds)
 ```
 
+
 ## Configure git
 
-3. Tell git your email and username.
+3. Tell git your email and GitHub username.
 
 ```{r}
 #| eval: false
@@ -244,9 +310,12 @@ library(gitcreds)
 use_git_config(user.name = "JaneDoe2", user.email = "jane@example.org")
 ```
 
-## Generate your PAT (Personal Access Token)
+(Nothing should happen.)
 
-4. `Generate token`
+
+## Generate your Personal Access Token
+
+4. Generate a PAT.
 
 ```{r}
 #| eval: false
@@ -254,28 +323,28 @@ use_git_config(user.name = "JaneDoe2", user.email = "jane@example.org")
 create_github_token()
 ```
 
++ This will open GitHub and ask you to log in.
++ Fill in a Note and an Expiration (AT LEAST 60 days from now).
++ Click `Generate Token`.
+
 ```{r}
 #| fig-align: center
-#| out-width: 60%
-knitr::include_graphics("images/pat-generate.jpg")
+#| out-width: 50%
+knitr::include_graphics("images/pat-generate.png")
 ```
 
-::: callout-warning
-GitHub really doesn't like it when you do not have a PAT expiration date... but I don't ever want to deal with it again. Make sure your expiration date is AT LEAST through the end of the quarter (60 days).
-:::
 
 ## Store your PAT
 
-5. Copy your PAT
+5. Copy your PAT.
 
 ```{r}
 #| fig-align: center
-#| out-width: 70%
+#| out-width: 65%
 knitr::include_graphics("images/pat-copy.jpg")
 ```
 
-
-6. `Enter password or token:` Paste PAT
+6. Run the following code.
 
 ```{r}
 #| eval: false
@@ -283,9 +352,12 @@ knitr::include_graphics("images/pat-copy.jpg")
 gitcreds_set()
 ```
 
-## Verify PAT
+When prompted to **Enter password or token:**, paste your PAT.
 
-You should be good to go! Let's verify.
+
+## Verify your PAT
+
+7. Let's verify.
 
 ```{r}
 #| echo: true
@@ -294,248 +366,286 @@ git_sitrep()
 ```
 
 ```{r}
-#| out-width: 40%
-knitr::include_graphics("images/pat-verify.jpg")
+#| out-width: 90%
+knitr::include_graphics("images/pat-verify.png")
 ```
+
 
 # PA 6: Merge Conflicts
 
 Collaborating within a GitHub Repo
 
+
 ## Get into your groups!
 
-![](images/card-suits.jpg){width="20%"}
+Designate each person one of the suits:
 
-Designate each person to one of the suits -- you will be referencing it as you work through this activity.
+<center>
+![](images/card-suits.jpg){width="20%"}
+</center>
+
+You will reference these as you work through the activity.
 
 ::: callout-warning
 If you only have 3 group members here, assign one person both ![](images/club.jpg){width="3%"} and ![](images/heart.jpg){width="3%"}.
 
-<!-- If you only have 2 group members here, assign one person both ![](images/club.jpg){width="3%"} and ![](images/heart.jpg){width="3%"} and the other person both ![](images/spade.jpg){width="3%"} and ![](images/diamond.jpg){width="3%"}. -->
 :::
+
 
 ## Flags
 
-Please use sticky notes to indicate how your group is doing:
+<br> 
 
-+ <p style="background-color:Blue;">Blue</p> -- We are ready to move on
-+ <p style="background-color:Yellow;">Yellow</p> -- We're figuring it out
-+ <p style="background-color:Red;">Red</p> -- Please help!!
+Please put up your sticky note to indicate your group is ready to move on!
+
 
 # Repository Setup
 
-##  Creating a Repo (starting from GitHub)
+
+##  Create a Repo on GitHub
 
 ![](images/club.jpg){width="4%"} 
 
-+ Create a new Github repository -- `Repositories` > `New` 
-  + Name the repository `stat-331-PA6`
-  + You can choose Public or Private
++ Create a new Github repo: `Repositories` > `New` 
+  + Name the repo: `stat331-PA6`
+  + You can choose Public or Private.
   + Select `.gitignore template: R`
-+ Click on the `Settings` tab > Click on `Collaborators` > `Add people`
-+ Add your other group members to the repository using their username or email
++ After creating the repo, go to `Settings` > `Collaborators` > `Add people`
+  + Add your group members using their username or email.
 
-## Accessing the Repo (remote repo)
+
+## Access the Remote Repo
 
 ![](images/spade.jpg){width="4%"} ![](images/diamond.jpg){width="4%"} ![](images/heart.jpg){width="4%"}
 
-+ Verify repository invite in your email -- `View invite` > `Accept invite`
-+ Open the repository in GitHub -- `github.com/`
++ Accept the repo invite (in your email) -- `View invite` > `Accept invite`
++ Open the repo on GitHub.
 
-## Cloning the Repo (local repo)
+
+## Clone the Remote Repo Locally
 
 ![](images/spade.jpg){width="4%"} ![](images/diamond.jpg){width="4%"} ![](images/club.jpg){width="4%"} ![](images/heart.jpg){width="4%"} 
 
-+ In Rstudio `File` > `New Project` > `Version Control` > `Git` (pause)
-+ In GitHub, copy the HTTPS address from the repo `<> Code` and paste into `Repository URL` in RStudio
-+ Click `Browse` and navigate to where you want to create your new project. I recommend creating this on your desktop.
-
-::: callout-caution
-**Do not** save this within your master stat 331 folder!!! We don't want to embed and Rproject within an RProject.
-:::
-
++ Rstudio: `File` > `New Project` > `Version Control` > `Git`
++ GitHub: click `<> Code` and copy the HTTPS address.
++ Rstudio: paste the address as the `Repository URL`.
++ Click `Browse` and create this new project on your desktop.
+  + **Do not save this in your master STAT 331 folder!!! We don't want to embed an Rproj within another Rproj.**
 + `Create Project`
+
 
 # Collaborating in GitHub
 
-## Adding Documents to the Repo
+
+## Add Documents to the Repo
 
 ![](images/spade.jpg){width="4%"}
 
-+ Create a new Quarto file (using the standard template)
-  + Title the document "Practice Activity 6"
-  + **Resist** the urge to add author names
-  + Save the document as `PA6.qmd` in your `stat-331-PA6` desktop folder
-  + Add `self-contained: true` to the YAML
-  + Render the document
-+ Edit the `.gitignore` file to include `*.Rproj`
++ Create a new Quarto file.
+  + Change the title to "Practice Activity 6".
+  + **Resist** the urge to add authors.
+  + Save as `PA6.qmd` in your **new** `stat331-PA6` folder.
+  + Add `self-contained: true` to the YAML.
+  + Render the document.
++ Edit the `.gitignore` file to include `*.Rproj`.
 
-## Pushing Documents to the Repo
+
+## Push Documents to the Repo
 
 ![](images/spade.jpg){width="4%"}
 
-+ `Git` pane > `Commit` > `Stage` (or checkmark) files > `Commit message` > `Commit`
-  + Commit both the `.gitignore` file with an explanatory message such as *"Ignoring all .Rproj files in repo"*
-  + Commit the `PA6.qmd`, and `PA6.html` files with an explanatory message such as *"Created practice activity quarto file"*
-+ `Push` the changes to the remote repository
++ Rstudio: `Git` pane > `Commit`
+  + Stage (checkmark) the `.gitignore`, add a commit message (*"ignore all .Rproj files"*), click `Commit`, click `Close`.
+  + Stage (checkmark) `PA6.qmd` and `PA6.html`, add a commit message (*"create PA quarto file"*), click `Commit`, click `Close`.
++ Rstudio: `Git` pane > `Push` the changes to the remote repo.
 
-## Pulling Changes from the Repo
+
+## Pull Changes from the Repo
 
 ![](images/diamond.jpg){width="4%"} ![](images/club.jpg){width="4%"} ![](images/heart.jpg){width="4%"}
 
-+ `Git` pane > `Pull` the changes that were made!
++ Rstudio: `Git` pane > `Pull` the changes that were made!
 
-Everyone should now have the `.qmd` and `.html` files in their local repos!
+Everyone should now have the `.qmd` and `.html` files in their local repo!
 
-## Making a Change
++ Look in your `Files` pane.
+
+
+## Make a Change
 
 ![](images/diamond.jpg){width="4%"} 
 
-+ Add `author:` to the YAML and include everyone's *first* names
-+ Render the document
-+ `Git` pane > `Commit` > `Stage` (or checkmark) files > `Commit message` > `Commit`
-  + Commit the changes with a message such as *"added group first names"*
-+ `Push` the changes
++ Add `author:` to the YAML and include everyone's **first** names.
++ Render the document.
++ Rstudio: `Git` pane > `Commit` > Stage (checkmark) files > add commit message > `Commit`
+  + Use a commit message like *"add first names"*.
++ Rstudio: `Git` pane > `Push` the changes.
 
-## Pushing Changes & Not Pulling
+
+## Forget to Pull
 
 ![](images/spade.jpg){width="4%"} ![](images/club.jpg){width="4%"} ![](images/heart.jpg){width="4%"}
 
 **Do not** pull the changes that were made!
 
-## Making the Same Change
+
+## Make the Same Change
 
  ![](images/heart.jpg){width="4%"}
 
-+ Add `author:` to the YAML and to include everyone's *first* ***and*** *last names*.
-+ Render the document
-+ `Git` pane > `Commit` > `Stage` (or checkmark) files > `Commit message` > `Commit`
-  + Commit the changes with a message such as *"added group first and last names"*
-+ `Push` your changes
++ Add `author:` to the YAML and include everyone's **first and last** names.
++ Render the document.
++ Rstudio: `Git` pane > `Commit` > Stage (checkmark) files > add commit message > `Commit`
+  + Use a commit message like *"add first and last names"*.
++ Rstudio: `Git` pane > `Push` the changes.
 
-::: callout-caution
-Oh no `r emo::ji("shocked")` You got an error! Ugh. We forgot to pull before we started making changes `r emo::ji("cry")`
-:::
 
-## Forgetting to Pull before you Push
+## A Merge Conflict
 
 ![](images/heart.jpg){width="4%"}
 
-![](images/same-changes-error.jpg)
+You got an error! Ugh. We forgot to pull before we started making changes.
 
-## Resolving Merge Conflicts
+![](images/same-changes-error.png)
+
+
+## Resolve the Merge Conflict
 
  ![](images/heart.jpg){width="4%"}
  
-+ `Pull` the changes from the repo
+Rstudio: `Git` pane > `Pull` the changes from the repo.
 
-![](images/same-conflict-pull.jpg)
+<center>
+![](images/same-conflict-pull.jpg){width=65%}
+</center>
 
-## Resolving Merge Conflicts
+If your Git Pull window does not look like this:
+
++ Copy-paste the first command (
+<font size = 6>
+`git config pull.rebase false`
+</font>
+) into the Terminal pane and hit Enter.
++ `Pull` again.
+
+
+
+## Resolve the Merge Conflict
 
  ![](images/heart.jpg){width="4%"}
 
-![](images/merge-conflict-location-no-HEAD.png)
+</center>
+![](images/fix_conflict.png)
+<center>
 
-## Resolving Merge Conflicts
+
+## Resolve the Merge Conflict
 
  ![](images/heart.jpg){width="4%"}
-
-+ Review the document with the merge conflict
 
 ::: callout-tip
-Note how the conflicting lines are marked! You might need to submit this to Canvas `r emo::ji("smile")`
+Note how the conflicting lines are marked! You might need to submit this to Canvas...
 :::
 
-+ Resolve the conflict with the preferred change
-+ `Commit` your changes
-+ `Push` the changes to the repository
++ Edit the `.qmd` file to resolve the conflict with the preferred change. Render.
++ `Commit` your changes.
++ `Push` your changes to GitHub.
 
-## Pushing Changes & Not Pulling
+
+## Forget to Pull
 
 ![](images/spade.jpg){width="4%"} ![](images/diamond.jpg){width="4%"} ![](images/club.jpg){width="4%"}
 
 **Do not** pull the changes that were made!
 
-## Making Different Changes
+
+## Make a Different Change
 
 ![](images/spade.jpg){width="4%"}
 
-+ Change the first code chunk to find the product of 13 times 13.
-+ Render the document
-+ `Commit` your changes
-+ `Push` your changes
++ Eidt the first code chunk to find the product of $13 \times 13$.
++ Render the document.
++ `Commit` your changes and `Push` your changes to GitHub.
 
 ::: callout-warning
-You will get an error, read it, and **pull**.
-
-No merge conflicts should occur. Now **push** your changes.
+**You will get an error**, read it and `Pull`.
 :::
+
++ No merge conflicts should occur! `Push` your changes again.
+
 
 ## Auto Merge
 
+Note: your merge may have been made by a different strategy. That's okay!
+
 ![](images/auto_merge.png)
 
-## Making Different Changes
+
+## Forget to Pull
 
  ![](images/diamond.jpg){width="4%"} ![](images/club.jpg){width="4%"} ![](images/heart.jpg){width="4%"}
 
 **Do not** pull the changes that were made!
 
-## Making the Same Changes (Again)
+
+## Make the Same Change (Again)
 
 ![](images/club.jpg){width="4%"}
 
-+ Change the first code chunk to find the product of 11 times 11.
-+ Render the document
-+ `Commit` your changes
-+ `Push` the changes to the repository
++ Eidt the first code chunk to find the product of $11 \times 11$.
++ Render the document.
++ `Commit` your changes and `Push` your changes to GitHub.
 
-::: callout-caution
-You will get an error. Ugh!!!! We forgot to pull again!
+::: callout-warning
+**You will get an error.** Ugh!!!! We forgot to pull again!
 :::
 
-## Making the Same Changes (Again)
+
+## Make the Same Change (Again)
 
 ![](images/club.jpg){width="4%"}
 
-+ `Pull` the changes from the repo
-+ Review the document with the merge conflict
-+ Clear the merge conflict by choosing the correct/preferred change
-+ `Commit` your changes
-+ `Push` you changes
++ `Pull` the changes from the repo.
++ Edit the `.qmd` file to resolve the conflict with the preferred change.
++ `Commit` your changes and `Push` your changes to GitHub.
+
 
 ## Final Document
 
 ![](images/spade.jpg){width="4%"} ![](images/diamond.jpg){width="4%"} ![](images/club.jpg){width="4%"} ![](images/heart.jpg){width="4%"}
  
- `Pull`, and observe the changes in your document.
+ `Pull` the changes and look at your final document.
+
 
 ## Canvas Quiz Submission
 
-::: callout-note
-How does Git mark the start of lines with a merge conflict? Specifically, I want the **four capital letter characters** with which every conflict is marked.
-:::
+How does Git mark the start of lines with a **merge conflict**?
+
++ Specifically, I want the **four capital characters** with which every conflict is marked.
+
 
 ## Commit Tips
 
-+ Use relatively short, but also informative commit messages.
-+ Commit small blocks of changes. Work to commit every time you’ve accomplished a small task. 
-  + You’ll have small, bite-sized changes that are briefly described to serve as a record of what you’ve done (and what still needs doing)
-  + When you mess up (or end up in a merge conflict) you will have a much easier time pinpointing the spot where things went bad, what code was there before, and (because you have nice, descriptive commit messages) how the error occurred.
++ Use short, but informative commit messages.
++ Commit small blocks of changes -- commit every time you accomplish a small task. 
+  + You’ll have a set of bite-sized changes (with description) to serve as a record of what you’ve done.
+  + With frequent commits, its easier to find the issue when you mess up or end up in a merge conflict.
 
-## Tips for avoiding merge conflicts
 
-::: incremental
+## Tips for Avoiding Merge Conflicts
+
 + Always **pull** before you start working and always **push** after you are done working!
+  + If you follow this advice exactly, you will only have problems if two of you are making local changes to **the same line in the same file at the same time**.
 
-+ In general, if you follow the [workflow for an existing local repo](#git-workflow) exactly, you only have problems if two of you are making local changes to the same line in the same file at the same time.
+. . .
 
 + If you are working with collaborators in real time, **pull**, **commit**, and **push** often.
 
+. . .
+
 + Git commits **lines** -- lines of code, lines of text, etc.
-  + Practice good code format and and put each sentence on its own line.
-:::
+  + Practice good format and put each sentence on a line.
+  
 
 ## When all else fails...
 
@@ -547,67 +657,61 @@ Burn your local repo to the ground and clone again.
 knitr::include_graphics("https://t3.ftcdn.net/jpg/00/60/10/14/240_F_60101445_pT7VV0oc1OZHeyb4bjzsavtJbPk07kWn.jpg")
 ```
 
+
 # Final Project Group Contract
 
+
 # Questions about Midterm Exam?
+
 
 ## To do...
 
 + **PA 6: Merge Conflicts**
-  + Due Monday, 2/13 at 11:59pm
+  + Due **Monday, 5/8** at 11:59pm.
 
 + **Midterm Exam**
-  + In-class Wednesday 2/15
-  + Please grab the separators from the sides of class when you enter.
-  
-::: callout-note
-No individual office hours Friday this week.
+  + Wednesday, 5/10 + 24 hours.
 
-Office hours extended Tuesday from 10am - 12pm.
++ **Group Contracts**
+  + Due Wednesday, 5/17 at 11:59pm.
+
+::: callout-note
+**Extended office hours on Tuesday from 10:00 - 12:00. No office hours on Friday.**
 :::
   
-+ **Group Contracts**
-  + Due Wednesday 1/22 at 11:59pm
 
-## Wednesday, February 15th -- Midterm Exam
+## Wednesday, May 10 -- Midterm Exam
 
-+ Please grab separators from the sides of the room.
++ Please grab separators from the sides of the room as you enter.
 
-+ I will pass out a sheet with instructions and questions.
++ I will pass out a hard copy of the exam.
 
-+ Canvas will unlock midterm material at the beginning of class.
++ Canvas will unlock the **.qmd** template at the beginning of class.
 
-You're going to rock this `r emo::ji("smile")`
 
-## Wednesday, February 15th -- Midterm Exam
+## Wednesday, May 10 -- Midterm Exam
 
 **Section 1: General Questions**
 
-+ Canvas Quiz -- multiple submissions allowed (will keep highest), but grade not displayed.
-+ Due at end of class.
++ Cannot work on Section 2 until submit Section 1.
 
 **Section 2: Short Answer**
 
 + Download `.qmd` template from Canvas.
-+ Submit `.qmd` and `.html` file by the end of class.
++ Submit `.qmd` and `.html` files on Canvas by the end of class.
 
-**Section 3: Open-ended Analysis**
+**Section 3: Open-Ended Analysis**
 
 + Create your own `.qmd` file.
-+ Submit `.qmd` and `.html` file by **Thursday, 1/16 at 11:59pm**
++ Submit `.qmd` and `.html` file **24-hours** after the end of class.
+
 
 ## To do...
 
-+ **NO CLASS MONDAY, 2/20**
-
 + Read **Chapter 7: Writing Functions**
-  + Check-in 7.1 due Wednesday 2/22 at 8am
+  + Check-in 7.1 due Monday, 5/15 at 10:00am
 
 + **Final Project Group Contract**
-  + Due Wednesday 2/22 at 11:59pm
-  
-+ **Bonus Challenge - Data Mishaps Night**
-  + Reminder to Register
-  + February 23rd at 5pm PT
+  + Due Wednesday, 5/17 at 11:59pm
   
   
