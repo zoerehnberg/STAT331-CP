@@ -17,7 +17,7 @@ execute:
 
 [Download .qmd starter file](CH_functions.qmd)
 
-[Download `BlackfootFish.csv`](BlackfootFish.csv)
+[Download `BlackfootFish.csv`](../lab_assignments/lab7/BlackfootFish.csv)
 
 This is a continuation of [Lab 7: Functions + Fish](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab7/LA7_functions.html).
 
