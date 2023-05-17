@@ -22,164 +22,237 @@ library(palmerpenguins)
 
 Today we will...
 
-+ Project Proposal -- Data
++ Project Proposal + Data
 + New Material^[Material and images for today's lecture were modified from Dr. Theobold's text and [Hansjörg Neth's ds4psy text](https://bookdown.org/hneth/ds4psy/12.3-iter:functional-programming.html#iter:functional-programming)]
   + Review vectorization
   + The `map()` family
 + PA 8: The 12 Days of Christmas Starter Functions
 
 
+## Project Proposal + Data
+
+You must complete the *objectives* and write up the *written components* outlined under Section 1 on the Project Details page on Canvas.
+
+  + Due on Canvas on Monday, 5/29.
+
+
+# Performing Repeated Tasks
+
+
 ## Iteration
 
-Repeating the *same* operation multiple times
+Repeating the *same* operation multiple times.
 
++ Loops (e.g., `for()` and `while()`) allow us to iterate.
+
+:::: {.columns}
+::: {.column width="40%"}
+```{r}
+#| echo: true
+for(i in 1:10){
+  print(i^2)
+}
+```
+:::
+::: {.column width="60%"}
 ```{r}
 #| echo: false
 #| fig-align: center
-#| out-width: 70%
-#| fig-cap: "Image source: https://bookdown.org/hneth/ds4psyl"
+#| fig-cap: "https://bookdown.org/hneth/ds4psyl"
+#| out-width: 90%
 knitr::include_graphics("images/bart_board_iter.png")
 ```
+:::
+::::
 
 
 ## Vectorized Functions
 
-+ Operations in R are typically **vectorized**
-+ By default, the functions operate on *vectors* of values rather than a *single* value.
+Many operations in R are **vectorized**.
 
-::: panel-tabset
-### Vectorized
++ By default, these functions operate on *vectors* of values rather than a *single* value.
++ We can iterate *without* writing a loop.
+
+. . .
 
 ```{r}
-x <- seq(from = -4, to = 12, by = 0.5)
+#| echo: true
+x <- seq(from = -4, to = 6)
 x
-abs(x)
 ```
 
-### `for()` Loop
+:::: {.columns}
+::: {.column width="50%"}
+`for()` Loop:
 
 ```{r}
-x <- seq(from = -4, to = 12, by = 0.5)
 for(i in 1:length(x)){
   x[i] <- abs(x[i])
 }
-
 x
 ```
 :::
+::: {.column width="50%"}
+Vectorized:
+
+```{r}
+#| echo: false
+x <- seq(from = -4, to = 6)
+```
+
+```{r}
+abs(x)
+```
+:::
+::::
 
 
-## Is every function vectorized? Short answer, no.
+## Vectorized Functions
 
-For example, if the function you’ve written makes use of `if()` statements, your function cannot operate on vectors. 
+**Not every function is (or can be) vectorized.**
 
-::: panel-tabset
-### Error
++ E.g., a function using `if()` statements **cannot** operate on vectors.
 
+:::: {.columns}
+::: {.column width="47%"}
 ```{r}
 #| error: true
 pos_neg_zero <- function(x){
-  stopifnot(is.numeric(x))
-  
   if(x > 0){
     return("Greater than 0!")
   } else if (x < 0){
     return("Less than 0!")
   } else {
     return("Equal to 0!")
-      }
+  }
 }
 
-x <- seq(from = -4, to = 4, by = 1)
-
+x <- seq(from = -4, to = 4)
 pos_neg_zero(x)
 ```
 
-This error means that the `if(x > 0)` condition can only be checked for something of length 1. 
+:::
+::: {.column width="53%"}
 
-### Apply to individual elements
+The error us that `if(x > 0)` can only be checked for something of length 1 (a single number, not a vector).
+
+:::
+::::
+
+
+## Vectorized Functions
+
+**Not every function is (or can be) vectorized.**
+
++ E.g., a function using `if()` statements **cannot** operate on vectors.
+
+:::: {.columns}
+::: {.column width="47%"}
+```{r}
+#| error: true
+pos_neg_zero <- function(x){
+  if(x > 0){
+    return("Greater than 0!")
+  } else if (x < 0){
+    return("Less than 0!")
+  } else {
+    return("Equal to 0!")
+  }
+}
+
+x <- seq(from = -4, to = 3)
+pos_neg_zero(x)
+```
+
+:::
+::: {.column width="53%"}
 
 ```{r}
 result <- rep(NA, length(x))
-
 for(i in 1:length(x)){
   result[i] <- pos_neg_zero(x[i])
 }
 
 result
 ```
+:::
+::::
 
-### Vectorize -- `case_when()`
+
+## Vectorized Functions
+
+**Not every function is (or can be) vectorized.**
+
++ E.g., a function using `if()` statements **cannot** operate on vectors.
++ A **vectorized** version of `if()` statements? `case_when()`
 
 ```{r}
 pos_neg_zero <- function(x){
-  stopifnot(is.numeric(x))
-  
   state <- case_when(x > 0 ~ "Greater than 0!", 
                      x < 0 ~ "Less than 0!", 
-                     TRUE ~ "Equal to 0!")
+                     .default = "Equal to 0!")
   return(state)
 }
 
-x <- seq(from = -4, to = 4, by = 1)
+x <- seq(from = -4, to = 3)
 pos_neg_zero(x)
 ```
 
-:::
 
+## Some functions cannot be vectorized!
 
-## When can’t you vectorize your function?
-
-Applying `typeof()` to a **single** variable tells us the datatype of that column.
+Applying `class()` to a **single** variable in a datqaframe returns the data type of that column:
 
 ```{r}
-typeof(penguins$species)
+class(penguins[[1]])
 ```
 
-Applying `typeof()` to **every** variable in the data frame returns an object structure of the penguins data frame, not the datatype of its columns.
+Trying to apply `class()` to **every** variable in a dataframe returns the data type of the dataframe:
 
 ```{r}
-typeof(penguins)
+class(penguins)
 ```
 
 
 ## What can we do instead?
 
-Your good CSC 101 friend, the `for()` loop
+Write a `for()` loop...
 
 ```{r}
 data_type <- rep(NA, length = ncol(penguins))
-
 for(i in 1:ncol(penguins)){
-  data_type[i] <- typeof(penguins[[i]])
+  data_type[i] <- class(penguins[[i]])
 }
 
 # format table nicely
 tibble(column = names(penguins), 
-       type = data_type) %>% 
+       type = data_type) |> 
   pivot_wider(names_from = column, 
-              values_from = type) %>% 
-  knitr::kable()
+              values_from = type) |>  
+  knitr::kable() |>
+  kableExtra::kable_styling(font_size = 30)
 ```
 
 . . .
 
-... but we don't really need this in R because it is a functional programming language
+... but loops are computationally intensive!
 
 
-## Remember `across()`
+## What can we do instead?
 
-We have continually called on the `across()` function to reduce repetition in our code, when performing the **same** operation(s) on multiple columns.
+We have continually called on `across()` to reduce repetition.
+
++ Easily perform the **same** operation on multiple columns.
 
 ```{r}
-penguins %>% 
+penguins |> 
   summarise(across(.cols = everything(), 
-                   .fns = ~ sum(is.na(.x))))
+                   .fns = class))
 ```
 
 . . .
 
-Ugh. but `across()` uses a `for()` loop "behind the scenes"
+Ugh. Internally, `across()` uses a `for()` loop!
 
 ```
 for (j in seq_fns) {
@@ -189,13 +262,13 @@ for (j in seq_fns) {
 ```
 
 
-## 
+## How can we avoid `for()` loops?
 
 ```{r}
 #| echo: false
 #| fig-align: center
 #| out-width: 70%
-#| fig-cap: "Image source: https://bookdown.org/hneth/ds4psyl"
+#| fig-cap: "https://bookdown.org/hneth/ds4psyl"
 knitr::include_graphics("images/bart_board_for.png")
 ```
 
@@ -208,101 +281,114 @@ knitr::include_graphics("images/bart_board_for.png")
 > 
 > - Everything that happens is a function call.
 > 
-> John Chambers
+> John Chambers (creator of the pre-cursor to R)
 
 
 ## Functional Programming
 
-**The big picture:** Using functions as arguments to functions
+What's the big picture?
+
++ We will use **functions** as the **arguments** to other functions!
+
+<br>
 
 ::: callout-note
-There are a slew of `apply()` functions you will likely come across, but we will instead focus on the `purrr` package and `map()` family of functions.
+There are a slew of `apply()` functions you will likely come across.
+
+We will instead focus on the `purrr` package and the `map()` family of functions.
 :::
 
 
-## The best option: `purrr`
+## `purrr`
 
-The main goal of using `purrr` functions (instead of for loops) is to break common list manipulation challenges into smaller and independent pieces. This strategy involves two steps, each of which scales down the problem:
+:::: {.columns}
+::: {.column width="80%"}
+The `purrr` package breaks common list manipulations into small, independent pieces.
 
-1. Solving the problem for a single element of a list.
-Once we have solved that problem, `purrr` takes care of generalizing the solution to every element in the list.
+This strategy involves two steps:
 
-2. Breaking a complex problem down into smaller sub-problems that allow us to advance towards a solution.
-With `purrr`, we get many small pieces that we can compose together with the pipe (`|>`).
-
-This scaling-down strategy makes it easier to solve new problems and to understand our solutions to old problems when we re-read older code.
-
-::: callout-note
-[See the `purrr` cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/purrr.pdf)
 :::
+::: {.column width="20%"}
+![](images/purrr.png){width=80%}
+:::
+::::
+
+1. Break a complex problem into smaller **sub-problems**.
+    + We then compose the small pieces together with `|>`.
+2. Solve each sub-problem for **a single element** of a list.
+    + Once done, `purrr` will generalize the solution to every element in the list.
 
 
-## Introduction to `map()`
+## Brief Review: Lists
 
-`map` iterates through each item in the list and applies a function.
+
+A dataframe is a *list* of *columns*.
+
+
+
+## `map()`
+
+The `map()` function **iterates** through each item in a supplied list and applies a supplied function.
 
 ```{r}
 #| fig-align: center
-#| out-width: 50%
+#| out-width: 35%
 #| echo: false
 knitr::include_graphics("images/map.png")
 ```
 
-
-## `map()` family
-
-`map_xxx` variants allow you to specify the type of output you want back
-
-:::: columns
-::: column
-+ `map()` creates a *list*
-+ `map_chr()` creates a *character vector*
-+ `map_lgl()` creates an *logical vector*
-+ `map_int()` creates a *integer vector*
-+ `map_dbl()` creates a *numeric vector*
-:::
-::: column
-+ `map2_chr()`
-+ `map2_lgl()`
-+ `map2_int()`
-+ `map2_dbl()`
-+ `pmap()`
-:::
-::::
+Note: the first argument in `map()` is the list, so if we pipe into it, we **only** specify the function!
 
 
-## Example -- `map()` + penguins
+## The `map()` Family
+
+The `map_xxx()` variants allow you to specify the type of output you want.
+
++ `map()` creates a *list*.
++ `map_chr()` creates a *character vector*.
++ `map_lgl()` creates an *logical vector*.
++ `map_int()` creates a *integer vector*.
++ `map_dbl()` creates a *numeric vector*.
+
+All take in a list and a function as arguments.
+
+
+## `map()` + penguins
 
 ::: panel-tabset
 
-### `across()`
-
-```{r}
-penguins |> 
-  select(bill_length_mm:body_mass_g) |> 
-  summarize(
-    across(.cols = bill_length_mm:body_mass_g,
-           .fns = ~ mean(.x, na.rm = TRUE)))
-```
-
 ### `map_dbl()`
+
+Calculate the mean of each column.
+
++ Output will be a vector of doubles.
+
 ```{r}
 penguins |> 
   select(bill_length_mm:body_mass_g) |> 
   map_dbl(.f = ~ mean(.x, na.rm = TRUE))
 ```
 
++ Note: we use a lambda function (with `~` and `.x`), just like in `across()`!
+
+
 ### `map_int()`
+
+Calculate the number of `NA`s in each column.
+
++ Output will be a vector of integers.
+
 ```{r}
 penguins |> 
   map_int(.f = ~ sum(is.na(.x)))
 ```
 
-+ Note the `~` and the `.x`, just like in `across()`!
 
 ### `map_lgl()`
 
-R will return an error if the output is the wrong type
+R returns an error if the output is of the wrong type!
+
++ Output will be a logical vector??
 
 ```{r}
 #| error: true
@@ -312,18 +398,30 @@ penguins |>
 :::
 
 
-## Example -- `map()` + penguins
+## `map_if()`
+
+The `map_if()` function allows us to **conditionally** apply a function to each item in a list.
+
+. . .
 
 ::: panel-tabset
-
-What type of output does this produce?
 
 ### `across()`
 
 ```{r}
+#| eval: false
 penguins |> 
   mutate(across(.cols = where(is.numeric), 
                 .fns = scale))
+```
+
+```{r}
+#| echo: false
+penguins |> 
+  select(species:bill_depth_mm, sex) |> 
+  mutate(across(.cols = where(is.numeric), 
+                .fns = scale)) |> 
+  head(n = 8)
 ```
 
 ### `map_if()`
@@ -333,16 +431,34 @@ penguins |>
   map_if(is.numeric, scale)
 ```
 
+### `map_if()` to tibble
+
+```{r}
+#| eval: false
+penguins |> 
+  map_if(is.numeric, scale) |> 
+  as.tibble()
+```
+
+```{r}
+#| echo: false
+penguins |> 
+  select(species:bill_depth_mm, sex) |> 
+  map_if(is.numeric, scale) |> 
+  as.tibble() |> 
+  head(n = 8)
+```
+
 :::
 
 
-## 
+## Use efficient functional programming!
 
 ```{r}
 #| echo: false
 #| fig-align: center
 #| out-width: 70%
-#| fig-cap: "Image source: https://bookdown.org/hneth/ds4psy"
+#| fig-cap: "https://bookdown.org/hneth/ds4psy"
 knitr::include_graphics("images/bart_board_map.png")
 ```
 
@@ -353,17 +469,30 @@ knitr::include_graphics("images/bart_board_map.png")
 #| echo: false
 #| fig-align: center
 #| out-width: 80%
-#| fig-cap: "Image source: https://studioplayhouse.org/the-12-days-of-christmas/"
+#| fig-cap: "https://studioplayhouse.org/the-12-days-of-christmas/"
 knitr::include_graphics("https://studioplayhouse.org/wp-content/uploads/2020/06/12-Days-of-christmas.jpg")
 ```
 
 
 ## A (boring) Example
 
-[Timothee Chalamet's Statistics](https://www.youtube.com/watch?v=BvWefB4NGGI&ab_channel=Timoth%C3%A9eChalametFan)
-
 ::: panel-tabset
+
+### Break It Down
+
+How can we print out Timothee Chalamet's statistics [song](https://www.youtube.com/watch?v=BvWefB4NGGI&ab_channel=Timoth%C3%A9eChalametFan)?
+
++ We need to repeat "Statistics, yup" many, many times...
+
+```{r}
+map_chr(1:10, ~ "Statistics, yup")
+```
+
++ ...but at different points in the song, he repeats this phrase a different number of times!
+
 ### Function
+
+Let's turn this into a function!
 
 ```{r}
 chalamet_statistics <- function(n){
@@ -373,38 +502,30 @@ chalamet_statistics <- function(n){
 }
 ```
 
-### Break it down
+### `glue()`
 
-```{r}
-n = 10
-map_chr(1:n, ~ "Statistics, yup")
-```
+:::: {.columns}
+::: {.column width="70%"}
 
-### Remember `glue()`
+The `glue` package embeds R expressions in curly brackets that are then evaluated and inserted into the argument string.
 
-:::: columns
-::: column
-
-`glue` -- "interprets string literals that are small, fast, and dependency-free"
-
-glue does this by embedding R expressions in curly braces which are then evaluated and inserted into the argument string.
 :::
-::: column
+::: {.column width="30%"}
 
 ```{r}
 #| echo: false
 #| fig-align: center
+#| out-width: 50%
 knitr::include_graphics("images/glue.jpg")
 ```
-
-```{r}
-library(glue)
-name <- "Emily"
-glue('My name is {name}.')
-```
-
 :::
 ::::
+
+```{r}
+name <- "Zoe"
+glue::glue('My name is {name}.')
+```
+
 
 ### Repeat
 
@@ -415,9 +536,11 @@ chalamet_statistics <- function(n){
   return(glue::glue("{lyrics}"))
 }
 
-chalamet_statistics(n = 3)
+chalamet_statistics(n = 5)
 ```
-Long strings are broken by line and concatenated together.
+
++ Long strings get broken by line and concatenated together.
+
 :::
 
 
@@ -427,7 +550,7 @@ Long strings are broken by line and concatenated together.
 
 ::: panel-tabset
 
-### Making Lyrics
+### Lyrics
 
 ```{r}
 bottles_lyrics <- function(n){
@@ -438,7 +561,7 @@ bottles_lyrics <- function(n){
 bottles_lyrics(3)
 ```
 
-### Making a Song
+### Song
 ```{r}
 bottles_song <- function(n){
   song <- map_chr(n:0, bottles_lyrics)
@@ -617,6 +740,25 @@ pos_neg_zero(x)
 ```
 
 :::
+
+## `map2()` family
+
+These functions allow us to iterate over **two** lists at the same time.
+
++ `map2()`
++ `map2_chr()`
++ `map2_lgl()`
++ `map2_int()`
++ `map2_dbl()`
++ `pmap()`
+
+These have two list arguments, denoted `x` and `y`.
+
+
+```{r}
+
+```
+
 
 ## What is `pmap()` doing?
 

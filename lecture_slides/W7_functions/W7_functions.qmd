@@ -548,8 +548,16 @@ Today we will...
 
 + New Material
   + Calling Functions on Datasets
+  + Thinking About Missing Data
 + Lab 7: Functions and Fish
 + Challenge 7: Incorporating Multiple Inputs
+
+
+## Group Project Details
+
+<br>
+
+Check out the Canvas page outlining the group project!
 
 # Calling Functions on Datasets
 
@@ -665,7 +673,7 @@ Is it a good idea to scale (standardize) variables in a data analysis?
 E.g., a penguin with a bill length of 35 mm (std to 0.11) and a mass of 5500 g (std to 0.78).
 
 
-## Use Variables as Arguments?
+## Use variables as function arguments?
 
 ```{r stdcol}
 #| echo: true
@@ -843,24 +851,22 @@ std_column_01(penguins, body_mass_g)
 
 ## The Walrus Operator: `:=`
 
-When we use the *embrace operator*, we also have to use the *walrus operator*.
-
-+ `:=` is an alias of `=`.  
+When we use the *embrace operator*, we also have to use the *walrus operator* -- `:=` instead of `=`.  
 
 ```{r}
 #| echo: true
 #| eval: false
+#| code-line-numbers: "5"
 std_column_01 <- function(data, variable) {
   stopifnot(is.data.frame(data))
 
   data <- data |>
-    mutate({{variable}} := std_to_01( {{variable}}))
+    mutate({{variable}} := std_to_01({{variable}}))
   return(data)
 }
 
 std_column_01(penguins, body_mass_g)
 ```
-
 
 ```{r}
 #| echo: false
@@ -868,13 +874,14 @@ std_column_01 <- function(data, variable) {
   stopifnot(is.data.frame(data))
 
   data <- data |>
-    mutate({{variable}} := std_to_01( {{variable}}))
+    mutate({{variable}} := std_to_01({{variable}}))
   return(data)
 }
 
 tmp <- penguins |> 
   select(-flipper_length_mm)
-std_column_01(tmp, body_mass_g)
+std_column_01(tmp, body_mass_g) |> 
+  head()
 ```
 
 
@@ -882,10 +889,12 @@ std_column_01(tmp, body_mass_g)
 
 What if I want to modify multiple columns?
 
-+ Remember: we must use *lambda function notation* when calling our own functions inside `across()`!
++ Use `across()`!
 
 ```{r}
 #| echo: true
+#| eval: false
+#| code-line-numbers: "5"
 std_column_01 <- function(data, variables) {
   stopifnot(is.data.frame(data))
   
@@ -893,12 +902,24 @@ std_column_01 <- function(data, variables) {
     mutate(across({{variables}}, std_to_01))
   return(data)
 }
+
+std_column_01(penguins, bill_length_mm:body_mass_g)
 ```
 
 ```{r}
-#| eval: false
-#| echo: true
-std_column_01(penguins, bill_length_mm:body_mass_g)
+#| echo: false
+std_column_01 <- function(data, variables) {
+  stopifnot(is.data.frame(data))
+  
+  data <- data |> 
+    mutate(across({{variables}}, std_to_01))
+  return(data)
+}
+
+tmp <- penguins |> 
+  select(-flipper_length_mm)
+std_column_01(tmp, bill_length_mm:body_mass_g) |> 
+  head(n = 5)
 ```
 
 
@@ -938,25 +959,31 @@ We implicitly assume observations are missing **completely** at random!
 
 . . .
 
-We need to take more care when dealing with missing values!
+**We need to take more care when dealing with missing values!**
 
 
 ## Dealing with Missing Data
 
 + Look for patterns!
-    + Do observations with missing values have similar characteristics?
+    + Do observations with missing values have similar traits?
+
+. . .
+
 + Consider outside explanations!
     + Why might missing data exist?
     + Should we have a "missing" category in our analysis?
+
+. . .
+
 + Can we impute values?
     + If fish lengths are MAR *within* month, year, and river section, then the distribution of length will be similar for fish of the same month, year, and river section.
 
 
 ## Lab 7 and Challenge 7
 
-[Lab 7: Functions + Fish](https://earobinson95.github.io/stat331-calpoly/lab-assignments/lab7/lab7-functions-and-fish.html)
+[Lab 7: Functions + Fish](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab7/LA7_functions.html)
 
-[Challenge 7: Incorporating Multiple Inputs](https://earobinson95.github.io/stat331-calpoly/lab-assignments/lab7/challenge7-functions-and-fish.html)
+[Challenge 7: Incorporating Multiple Inputs](https://zoerehnberg.github.io/STAT331-S23/challenges/CH_functions.html)
 
 ```{r}
 #| fig-align: center

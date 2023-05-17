@@ -158,7 +158,7 @@ Next, let's test the function on the `length` column of the `BlackfootFish` data
 The code below makes a histogram of the original values of `length`. Add a plot of the rescaled values of `length`. Output your plots side-by-side (like challenge 1), so the reader can confirm the only aspect that has changed is the scale.
 
 ::: callout-warning
-This will require you to call your `rescaled_01()` function within a `mutate()` statement in order to create a `length_scaled` variable.
+This will require you to call your `rescale_01()` function within a `mutate()` statement in order to create a `length_scaled` variable.
 :::
 
 ::: callout-tip
