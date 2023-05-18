@@ -15,6 +15,7 @@ execute:
 #| message: false
 library(tidyverse)
 library(palmerpenguins)
+library(glue)
 ```
 
 
@@ -23,7 +24,7 @@ library(palmerpenguins)
 Today we will...
 
 + Project Proposal + Data
-+ New Material^[Material and images for today's lecture were modified from Dr. Theobold's text and [Hansjörg Neth's ds4psy text](https://bookdown.org/hneth/ds4psy/12.3-iter:functional-programming.html#iter:functional-programming)]
++ New Material^[Material and images for today's lecture were modified from Dr. Theobold and [Hansjörg Neth's ds4psy text](https://bookdown.org/hneth/ds4psy/12.3-iter:functional-programming.html#iter:functional-programming)]
   + Review vectorization
   + The `map()` family
 + PA 8: The 12 Days of Christmas Starter Functions
@@ -39,9 +40,25 @@ You must complete the *objectives* and write up the *written components* outline
 # Performing Repeated Tasks
 
 
+## Repetition
+
+Type out the task over and over.
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| fig-cap: "https://bookdown.org/hneth/ds4psyl"
+#| out-width: 50%
+knitr::include_graphics("images/bart_board_iter.png")
+```
+
+. . .
+
+Do not do this.
+
 ## Iteration
 
-Repeating the *same* operation multiple times.
+Repeatedly execute the *same* operation over and over.
 
 + Loops (e.g., `for()` and `while()`) allow us to iterate.
 
@@ -58,19 +75,19 @@ for(i in 1:10){
 ```{r}
 #| echo: false
 #| fig-align: center
+#| out-width: 80%
 #| fig-cap: "https://bookdown.org/hneth/ds4psyl"
-#| out-width: 90%
-knitr::include_graphics("images/bart_board_iter.png")
+knitr::include_graphics("images/bart_board_for.png")
 ```
 :::
 ::::
 
 
-## Vectorized Functions
+## Vectorization
 
 Many operations in R are **vectorized**.
 
-+ By default, these functions operate on *vectors* of values rather than a *single* value.
++ These functions operate on *vectors* of values rather than a *single* value.
 + We can iterate *without* writing a loop.
 
 . . .
@@ -83,7 +100,7 @@ x
 
 :::: {.columns}
 ::: {.column width="50%"}
-`for()` Loop:
+Loop:
 
 ```{r}
 for(i in 1:length(x)){
@@ -107,11 +124,13 @@ abs(x)
 ::::
 
 
-## Vectorized Functions
+## Vectorization
 
 **Not every function is (or can be) vectorized.**
 
 + E.g., a function using `if()` statements **cannot** operate on vectors.
+
+. . .
 
 :::: {.columns}
 ::: {.column width="47%"}
@@ -140,7 +159,7 @@ The error us that `if(x > 0)` can only be checked for something of length 1 (a s
 ::::
 
 
-## Vectorized Functions
+## Vectorization
 
 **Not every function is (or can be) vectorized.**
 
@@ -179,7 +198,7 @@ result
 ::::
 
 
-## Vectorized Functions
+## Vectorization
 
 **Not every function is (or can be) vectorized.**
 
@@ -240,7 +259,7 @@ tibble(column = names(penguins),
 
 ## What can we do instead?
 
-We have continually called on `across()` to reduce repetition.
+What about `across()`?
 
 + Easily perform the **same** operation on multiple columns.
 
@@ -262,15 +281,11 @@ for (j in seq_fns) {
 ```
 
 
-## How can we avoid `for()` loops?
+## What can we do instead?
 
-```{r}
-#| echo: false
-#| fig-align: center
-#| out-width: 70%
-#| fig-cap: "https://bookdown.org/hneth/ds4psyl"
-knitr::include_graphics("images/bart_board_for.png")
-```
+<br>
+
+...
 
 
 # Functional Programming
@@ -321,18 +336,54 @@ This strategy involves two steps:
 
 ## Brief Review: Lists
 
+A list is a 1-dimensional, heterogeneous data structure.
 
-A dataframe is a *list* of *columns*.
++ There are no restrictions on what data type or structure it can contain -- values, vectors, other lists, dataframes, etc.
++ Lists are indexed with `[]` or `[[]]`.
 
+. . .
+
+:::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| echo: false
+(my_list <- list(c(T, F, T, T), 
+                matrix(c(6.7, 5.58, 4.4, 6.0), nrow = 2),
+                "A"))
+```
+:::
+::: {.column width="50%"}
+```{r}
+my_list[1]
+my_list[[2]]
+my_list[[2]][1,2]
+```
+:::
+::::
+
+
+## Brief Review: Lists
+
+A dataframe / tibble is a specially formatted **list of columns**!
+
+```{r}
+small_penguins <- penguins[1:8,]
+small_penguins[3]
+small_penguins[[3]]
+```
+
+. . .
+
+The `purrr` package works for lists, so it works for dataframes.
 
 
 ## `map()`
 
-The `map()` function **iterates** through each item in a supplied list and applies a supplied function.
+The `map()` function **iterates** through each item in a list and applies a function, then returns the new list.
 
 ```{r}
 #| fig-align: center
-#| out-width: 35%
+#| out-width: 30%
 #| echo: false
 knitr::include_graphics("images/map.png")
 ```
@@ -340,9 +391,24 @@ knitr::include_graphics("images/map.png")
 Note: the first argument in `map()` is the list, so if we pipe into it, we **only** specify the function!
 
 
+## `map()` + Dataframes
+
+A dataframe is just a list of columns -- `map()` will apply a function to every column.
+
+. . .
+
+```{r}
+penguins |> 
+  select(bill_length_mm:body_mass_g) |>
+  map(~ mean(.x, na.rm = TRUE))
+```
+
+Use a lambda function (with `~` and `.x`), just like in <font size=6> `across()`</font>!
+
+
 ## The `map()` Family
 
-The `map_xxx()` variants allow you to specify the type of output you want.
+The `map_xxx()` variants allow you to specify the **type of output** you want.
 
 + `map()` creates a *list*.
 + `map_chr()` creates a *character vector*.
@@ -361,40 +427,41 @@ All take in a list and a function as arguments.
 
 Calculate the mean of each column.
 
-+ Output will be a vector of doubles.
-
 ```{r}
 penguins |> 
   select(bill_length_mm:body_mass_g) |> 
-  map_dbl(.f = ~ mean(.x, na.rm = TRUE))
+  map_dbl(~ mean(.x, na.rm = TRUE))
 ```
 
-+ Note: we use a lambda function (with `~` and `.x`), just like in `across()`!
+Output is a **vector of doubles**.
 
 
 ### `map_int()`
 
 Calculate the number of `NA`s in each column.
 
-+ Output will be a vector of integers.
-
 ```{r}
 penguins |> 
-  map_int(.f = ~ sum(is.na(.x)))
+  map_int(~ sum(is.na(.x)))
 ```
+
+Output is a **vector of integers**.
 
 
 ### `map_lgl()`
 
-R returns an error if the output is of the wrong type!
-
-+ Output will be a logical vector??
+Calculate the number of `NA`s in each column.
 
 ```{r}
 #| error: true
 penguins |> 
-  map_lgl(.f = ~ sum(is.na(.x)))
+  map_lgl(~ sum(is.na(.x)))
 ```
+
+R returns an error if the output is of the wrong type!
+
++ Output is a logical vector??
+
 :::
 
 
@@ -452,7 +519,19 @@ penguins |>
 :::
 
 
-## Use efficient functional programming!
+## `pmap()`
+
+
+
+
+## The `map()` Family
+
+<br>
+
+There are **so many** functions in the `map()` family -- check out the `purrr` [cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/purrr.pdf)!
+
+
+## Use functional programming!
 
 ```{r}
 #| echo: false
@@ -498,7 +577,7 @@ Let's turn this into a function!
 chalamet_statistics <- function(n){
   lyrics <- map_chr(1:n, ~ "Statistics, yup")
   
-  return(glue::glue("{lyrics}"))
+  return(glue("{lyrics}"))
 }
 ```
 
@@ -522,29 +601,24 @@ knitr::include_graphics("images/glue.jpg")
 ::::
 
 ```{r}
-name <- "Zoe"
-glue::glue('My name is {name}.')
+library(glue)
+name <- "Dr. Rehnberg"
+glue('My name is {name}.')
 ```
 
 
 ### Repeat
 
 ```{r}
-chalamet_statistics <- function(n){
-  lyrics <- map_chr(1:n, ~ "Statistics, yup")
-  
-  return(glue::glue("{lyrics}"))
-}
-
-chalamet_statistics(n = 5)
+chalamet_statistics(n = 8)
 ```
 
-+ Long strings get broken by line and concatenated together.
+With `glue()`, long strings get broken by line and concatenated together.
 
 :::
 
 
-## A (better) Example -- 99 Bottles of Beer
+## A (better) Example
 
 *99 bottles of beer on the wall, 99 bottles of beer. Take one down, pass it around, 98 bottles of beer on the wall...*
 
@@ -554,7 +628,7 @@ chalamet_statistics(n = 5)
 
 ```{r}
 bottles_lyrics <- function(n){
-  lyrics <- glue::glue("{n} bottles of beer on the wall, {n} bottles of beer \nTake one down, pass it around, {n -1} bottles of beer on the wall")
+  lyrics <- glue("{n} bottles of beer on the wall, {n} bottles of beer \nTake one down, pass it around, {n -1} bottles of beer on the wall")
   return(lyrics)
 }
 
@@ -565,7 +639,7 @@ bottles_lyrics(3)
 ```{r}
 bottles_song <- function(n){
   song <- map_chr(n:0, bottles_lyrics)
-  return(glue::glue("{song}"))
+  return(glue("{song}"))
 }
 
 bottles_song(3)
@@ -573,16 +647,14 @@ bottles_song(3)
 
 ### Alternate Ending
 
-*No more bottles of beer on the wall, no more bottles of beer.*
-
-*Go to the store and buy some more, 99 bottles of beer on the wall...*
+*No more bottles of beer on the wall, no more bottles of beer. Go to the store, buy some more, 99 bottles of beer on the wall...*
 
 ```{r}
 bottles_lyrics <- function(n){
   if(n == 0){
-    lyrics <- glue::glue("No more bottles of beer on the wall, no more bottles of beer. \nGo to the store and buy some more, 99 bottles of beer on the wall")
+    lyrics <- glue("No more bottles of beer on the wall, no more bottles of beer. \nGo to the store, buy some more, 99 bottles of beer on the wall...")
   } else{
-  lyrics <- glue::glue("{n} bottles of beer on the wall, {n} bottles of beer \nTake one down, pass it around, {n -1} bottles of beer on the wall")
+    lyrics <- glue("{n} bottles of beer on the wall, {n} bottles of beer \nTake one down, pass it around, {n -1} bottles of beer on the wall")
   }
   return(lyrics)
 }
@@ -599,27 +671,25 @@ bottles_song(4)
 ## To do...
   
 + **PA 8: The 12 Days of Christmas Starter Functions**
-  + Due Wednesday 3/1 at 8am
+  + Due Wednesday 5/24 at 10:00am.
   
-+ **Project Proposal -- Data**
-  + Due Sunday 3/5 at 11:59pm
++ **Project Proposal + Data**
+  + Due Monday 5/29 at 11:59pm.
 
 
 ## Wednesday, May 24
 
 Today we will...
 
-+ Bonus Challenge Opportunity
 + Lab 7 Comments
-+ Clarify `case_when()`
-+ Recap `pmap()`
-+ Preview for Lab 8: Writing the Full Song
-+ Work-time
++ New Material
+  + The `map2()` family
++ Work Time
   + Lab and Challenge 8
   + Project Proposal
 
 
-## Comments from Lab 7: Functions and Fish
+## Lab 7: Functions + Fish
 
 Get creative with your plots...
 
@@ -659,13 +729,14 @@ fish |>
 ::: panel-tabset
 
 ### Options
-+ Rotate your axes
-+ Make sure people don't tilt their head
-+ use non-default colors
-+ change font and/or font size
-+ add legend to your title!
 
-### Legend Colors in Plot title
++ Rotate your axes (no head tilting!).
++ Use non-default colors.
++ Change font size.
++ Add the legend to your title!
+
+### Colors in Title
+
 ```{r}
 #| eval: false
 labs(title = str_c("Missing Fish Weights for ",
@@ -674,7 +745,7 @@ labs(title = str_c("Missing Fish Weights for ",
       subtitle = "by Section of Blackfoot River")
 ```
 
-How did I figure out the colors?
+How did I find the color names?
 
 ```{r}
 library(RColorBrewer)
@@ -685,63 +756,7 @@ brewer.pal(n = 2, name = "Paired")
 ::::
 
 
-## `dplyr` 1.1.0 -- `case_when(.default = )`
-
-::: panel-tabset
-### `case_when()` logic
-
-```
-new_var <- case_when(condition1 ~ change1,
-                     condition2 ~ change2,
-                     .default = variable)
-```
-
-+ The `condition` should result in a TRUE/FALSE Boolean value
-+ The `change` is some sort of modification to a variable
-
-::: callout-tip
-Tip: Test it out on a simple case, then generalize!
-:::
-
-### `case_when(TRUE ~ )`
-
-Works with older versions of `dplyr` -- will always work!
-
-```{r}
-pos_neg_zero <- function(x){
-  stopifnot(is.numeric(x))
-  
-  state <- case_when(x > 0 ~ "Greater than 0!", 
-                     x < 0 ~ "Less than 0!", 
-                     TRUE ~ "Equal to 0!")
-  return(state)
-}
-
-x <- seq(from = -4, to = 4, by = 1)
-pos_neg_zero(x)
-```
-
-### `case_when(.default = )`
-
-Works with `dplyr` versions 1.1.0 over newer.
-
-```{r}
-pos_neg_zero <- function(x){
-  stopifnot(is.numeric(x))
-  
-  state <- case_when(x > 0 ~ "Greater than 0!", 
-                     x < 0 ~ "Less than 0!", 
-                     .default = "Equal to 0!")
-  return(state)
-}
-
-x <- seq(from = -4, to = 4, by = 1)
-pos_neg_zero(x)
-```
-
-:::
-
-## `map2()` family
+## The `map2()` Family
 
 These functions allow us to iterate over **two** lists at the same time.
 
@@ -770,40 +785,33 @@ knitr::include_graphics("images/pmap.png")
 ```
 
 
-## Lab and Challenge: 12 Days of Christmas
+## Lab + Challenge: 12 Days of Christmas
 
-1. Write a `sing_day()` function
-
-  + what does "one day" lyrics look like (how might you extract these?)
-  + what order do "one day" of lyrics go in
+1. Write a `sing_day()` function.
+    + What does "one day" lyrics look like?
+    + What order do "one day" of lyrics go in?
   
 ::: callout-tip
-Start with a small example and test it out on a single day outside of the function environment.
-
-```
-xmas2 |> 
-   pull(Full.Phrase)
-```
-The function `glue_collapse()` might be useful -- look at the arguments in the R documentation.
++ Start with a small example and test it on a single day outside of the function.
++ `glue_collapse()` might be useful -- find the arguments in the documentation.
 :::
 
-2. Iterate your `sing_day()` function over a set of days
-
+2. Iterate your `sing_day()` function over a set of days.
 3. Style your output!
 
 
 ## To do...
   
-+ **Lab 8: The 12 Days of Christmas Sing the Full Song**
-  + Due Friday 3/3 at 11:59pm
++ **Lab 8: The 12 Days of Christmas Full Song**
+  + Due Friday, 5/26 at 11:59pm.
 
-+ **Challenge 8: Styling Your Song**
-  + Due Saturday 3/4 at 11:59pm
++ **Challenge 8: Styling The 12 Days of Christmas**
+  + Due Saturday, 5/27 at 11:59pm.
   
-+ **Project Proposal -- Data**
-  + Due Sunday 3/5 at 11:59pm
++ **Project Proposal + Data**
+  + Due Monday, 5/29 at 11:59pm.
   
 + Read **Chapter 9: Regression & Simulation**
-  + Check-in 9.1 & 9.2 due Monday 3/6 at 8am
+  + Check-in 9.1 & 9.2 due Monday, 5/29 at 10:00am.
   
   

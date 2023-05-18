@@ -57,7 +57,7 @@ This week, your task is to write functions that will automatically sing this ver
 Run the provided code to load a dataset called `xmas`. This dataset contains the crucial information about each gift in the song. We will use this dataset to test our functions as we work on them.
 
 ```{r}
-xmas <- read.csv("https://github.com/earobinson95/stat331-calpoly/raw/master/practice-activities/data/xmas.csv")
+xmas <- read.csv("https://raw.githubusercontent.com/zoerehnberg/STAT331-S23/main/practice_activities/xmas.csv")
 ```
 
 ::: callout-tip
