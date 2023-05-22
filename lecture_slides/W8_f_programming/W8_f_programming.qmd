@@ -521,7 +521,12 @@ penguins |>
 
 ## `pmap()`
 
-
+```{r}
+#| fig-align: center
+#| out-width: 90%
+#| echo: false
+knitr::include_graphics("images/pmap.png")
+```
 
 
 ## The `map()` Family
@@ -542,7 +547,7 @@ knitr::include_graphics("images/bart_board_map.png")
 ```
 
 
-## [PA 8: The 12 Days of Christmas](https://earobinson95.github.io/stat331-calpoly/practice-activities/PA8-twelve-days-of-christmas.html)
+## [PA 8: The 12 Days of Christmas](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA8.html)
 
 ```{r}
 #| echo: false
@@ -561,7 +566,7 @@ knitr::include_graphics("https://studioplayhouse.org/wp-content/uploads/2020/06/
 
 How can we print out Timothee Chalamet's statistics [song](https://www.youtube.com/watch?v=BvWefB4NGGI&ab_channel=Timoth%C3%A9eChalametFan)?
 
-+ We need to repeat "Statistics, yup" many, many times...
++ We need to repeat "Statistics, yup" man times...
 
 ```{r}
 map_chr(1:10, ~ "Statistics, yup")
@@ -772,16 +777,6 @@ These have two list arguments, denoted `x` and `y`.
 
 ```{r}
 
-```
-
-
-## What is `pmap()` doing?
-
-```{r}
-#| fig-align: center
-#| out-width: 90%
-#| echo: false
-knitr::include_graphics("images/pmap.png")
 ```
 
 
