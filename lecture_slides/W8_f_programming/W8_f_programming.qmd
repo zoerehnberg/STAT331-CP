@@ -153,7 +153,7 @@ pos_neg_zero(x)
 :::
 ::: {.column width="53%"}
 
-The error us that `if(x > 0)` can only be checked for something of length 1 (a single number, not a vector).
+The `if(x > 0)` statement can only be checked for something of length 1 (a single number, not a vector).
 
 :::
 ::::
@@ -220,7 +220,7 @@ pos_neg_zero(x)
 
 ## Some functions cannot be vectorized!
 
-Applying `class()` to a **single** variable in a datqaframe returns the data type of that column:
+Applying `class()` to a **single** variable in a dataframe returns the data type of that column:
 
 ```{r}
 class(penguins[[1]])
