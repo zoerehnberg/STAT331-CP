@@ -519,11 +519,15 @@ penguins |>
 :::
 
 
-## `pmap()`
+## `pmap()` + Family
+
+These functions take in a **list of vectors** and a **function**.
+
++ The function must accept a number of arguments equal to the length of the list,
 
 ```{r}
 #| fig-align: center
-#| out-width: 90%
+#| out-width: 65%
 #| echo: false
 knitr::include_graphics("images/pmap.png")
 ```
@@ -686,7 +690,7 @@ bottles_song(4)
 
 Today we will...
 
-+ Lab 7 Comments
++ Midterm Exam
 + New Material
   + The `map2()` family
 + Work Time
@@ -694,104 +698,102 @@ Today we will...
   + Project Proposal
 
 
-## Lab 7: Functions + Fish
+## Midterm Exam
 
-Get creative with your plots...
-
-:::: columns
-::: column
-```{r}
-#| echo: false
-fish <- read.csv("../../lab_assignments/lab7/BlackfootFish.csv")
-
-fish |> 
-  filter(is.na(weight)) %>% 
-  group_by(year, section, trip) %>% 
-  count() %>% 
-  mutate(trip = as.factor(trip), 
-         year = as.factor(year)) %>% 
-  ggplot(aes(y = year, x = n,
-             fill = fct_relevel(trip, c("1", "2")))) + 
-  geom_col() + 
-  facet_wrap(vars(section)) + 
-  labs(y = "", 
-       x = "") +
-  scale_fill_manual(values = c("#1F87B4", "#A6CEE3")) +
-  labs(title = str_c("Missing Fish Weights for ",
-      "<span style = 'color:#A6CEE3'>**Trip 1**</span>",
-      " and <span style = 'color:#1F87B4'>**Trip 2**</span>"),
-      subtitle = "by Section of Blackfoot River") + 
-  theme(plot.title = ggtext::element_markdown(size = 24),
-        plot.subtitle = ggtext::element_markdown(size = 18),
-        legend.position = "none", 
-        axis.text.y = element_text(size = 12), 
-        axis.title = element_text(size = 16))
-```
-
-:::
-::: column
-
-::: panel-tabset
-
-### Options
-
-+ Rotate your axes (no head tilting!).
-+ Use non-default colors.
-+ Change font size.
-+ Add the legend to your title!
-
-### Colors in Title
-
-```{r}
-#| eval: false
-labs(title = str_c("Missing Fish Weights for ",
-      "<span style = 'color:#A6CEE3'>**Trip 1**</span>",
-      " and <span style = 'color:#1F87B4'>**Trip 2**</span>"),
-      subtitle = "by Section of Blackfoot River")
-```
-
-How did I find the color names?
-
-```{r}
-library(RColorBrewer)
-brewer.pal(n = 2, name = "Paired")
-```
-:::
-:::
-::::
++ Call a function only once, when possible.
++ ONLY print out what is being asked for.
++ Open-Ended Analysis
+    + State your research question up front.
+    + Don't print out the head of the data (or the full data).
+    + Data description -- don't just list the variable names.
+    + Intersperse written discussion and plots/tables.
+    + A table of summary statistics should be easily readable -- 40 rows is not easily readbale.
 
 
 ## The `map2()` Family
 
 These functions allow us to iterate over **two** lists at the same time.
 
+![](images/map2.png){width=80%)}
+
+
+## The `map2()` Family
+
+These functions include:
+
 + `map2()`
 + `map2_chr()`
 + `map2_lgl()`
 + `map2_int()`
 + `map2_dbl()`
-+ `pmap()`
 
-These have two list arguments, denoted `x` and `y`.
+Each function has **two** list arguments, denoted `.x` and `.y`, and a function argument.
 
+
+## Small `map2()` Example
+
+Find the minimum.
 
 ```{r}
+a <- c(1, 2, 4)
+b <- c(6, 5, 3)
 
+map2_chr(a, b,
+         ~ str_glue("The minimum of {.x} and {.y} is {min(.x, .y)}."))
 ```
+
+
+## Big `map2()` Example
+
+
+::: panel-tabset
+
+### The Problem
+
+Regress vehicle MPG on vehicle weight. Do the regression *separately* for 4-, 6-, and 8-cylinder vehicles.
+
+### Split Data
+
+```{r}
+(by_cyl <- mtcars |>
+   split(mtcars$cyl))
+```
+
+### Fit Model
+
+Fit a linear regression model to each subset of the data.
+
++ Regress vehicle MPG on vehicle weight.
++ We are fitting **three** separate models.
+
+```{r}
+mods <- by_cyl |>
+  map(~ lm(mpg ~ wt, data = .x))
+```
+
+### Predict
+
+Predict vehicle MPG from observed vehicle weight.
+
++ The `predict()` function needs **two** inputs.
+
+```{r}
+map2(mods, by_cyl, predict)
+```
+:::
+
 
 
 ## Lab + Challenge: 12 Days of Christmas
 
 1. Write a `sing_day()` function.
-    + What does "one day" lyrics look like?
-    + What order do "one day" of lyrics go in?
   
 ::: callout-tip
-+ Start with a small example and test it on a single day outside of the function.
-+ `glue_collapse()` might be useful -- find the arguments in the documentation.
++ Start with a small example and test it on a single day **outside of the function**.
++ `glue_collapse()` might be useful -- find its arguments in the documentation.
 :::
 
-2. Iterate your `sing_day()` function over a set of days.
+2. Iterate your `sing_day()` function over all days.
 3. Style your output!
 
 
