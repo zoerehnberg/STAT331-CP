@@ -521,9 +521,9 @@ When fitting a linear regression, you can include...
 
 + [PA 9.1: Mystery Animal](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA9_1.html)
 
-+ [Lab 9: Baby Names](https://earobinson95.github.io/stat331-calpoly/lab-assignments/lab9/Lab9-babynames.html)
++ [Lab 9: Baby Names](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab9/LA9_regression.html)
 
-+ [Challenge 9: Formatting Nice Tables](https://earobinson95.github.io/stat331-calpoly/lab-assignments/lab9/Challenge9-babynames.html)
++ [Challenge 9: Formatting Nice Tables](https://zoerehnberg.github.io/STAT331-S23/challenges/CH_regression.html)
 
 
 ## To do...
@@ -994,9 +994,9 @@ To get this: My random number is `r my_rand`.
 
 + [PA 9.2: Instrument Con](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA9_2.html)
 
-+ [Lab 9: Baby Names](https://earobinson95.github.io/stat331-calpoly/lab-assignments/lab9/Lab9-babynames.html)
++ [Lab 9: Baby Names](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab9/LA9_regression.html)
 
-+ [Challenge 9: Formatting Nice Tables](https://earobinson95.github.io/stat331-calpoly/lab-assignments/lab9/Challenge9-babynames.html)
++ [Challenge 9: Formatting Nice Tables](https://zoerehnberg.github.io/STAT331-S23/challenges/CH_regression.html)
 
 
 ## To do...
