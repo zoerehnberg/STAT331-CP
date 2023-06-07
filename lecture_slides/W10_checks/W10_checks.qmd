@@ -317,18 +317,72 @@ For your group project, you will run predictive checks to assess how well your m
 
 Today we will...
 
-+ Final Exam -- What to Expect
++ Linear Regression: Feedback
++ Final Exam: What to Expect
 + Remaining Q & A
-+ Course Evaluation
 + R Hex Cookies!
 + Final Project Work Time
 
-## Final Exam -- What to Expect
+
+## Linear Regression: Feedback
+
++ Think about the readability of the numbers you are presenting.
+  + Do you need 6 decimal places?
+  + Is scientific notation easily understood by the public?
+
++ Include units on your plots!
+
++ If you do any transformations, make sure you mention them.
+  + Also make sure they are clear on any plots!
+
+
+## Linear Regression: Feedback
+
++ When you present a plot or a table, **discuss in words** what you want the reader to take away from it.
+  + Discuss the table of variances as part of your discussion of model fit.
+
+
++ If you are modeling the average across years (or one particular year) make sure you include a plot of the average (or that year) in addition to the full data.
+
+
+## Linear Regression: Feedback
+
++ Some of you used a ratio of the response to the explanatory to show the relationship over time.
+  + This is often not easy to understand or interpret.
+  + I encourage you to find a clearer way to display this relationship over time.
+  + If you choose to go this route, you will need lots of clear explanation about what ratio you are calculating and what it means.
+  
+  
+  
+  
+
+## Final Exam: What to Expect
+
++ The exam is worth a total of 100 points and has 3 parts: General Questions, Short Answer, and Statistical Modeling.
++ You will have 2 hours and 50 minutes for the entire exam.
++ You will complete Part 1: General Questions first. 
+  + This part is closed note and closed computer.
++ You can complete the questions in Part 2: Short Answer and Part 3: Statistical Modeling in any order.
+  + A .qmd starter file will be opened at the start of each final.
+  + I will pass out paper copies of the questions.
+
+
+## Final Exam: What to Expect
+
+The exam is **cumulative** and will definitely contain questions on:
+
++ Data manipulations with `dplyr` and `tidyr`.
++ Data visualizations with `ggplot`.
++ Function writing.
++ Functional programming with `map`,
++ Statistical modeling with `lm`.
 
 
 # Q & A
 
-# Course Evaluation + Cookies!
+# Cookies!
+
+![](images/hex.png)
 
 ## To do...
 
