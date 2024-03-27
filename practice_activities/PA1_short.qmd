@@ -27,7 +27,7 @@ You can access PA1: Find the Mistakes in RStudio in one of two ways:
   + Note: if you do not have a Posit Cloud account, you will be asked to create one.
   + Note: make sure you save a permanent version!
 
-2. If you have already [installed R, RStudio, and Quarto](https://earobinson95.github.io/stat331-calpoly-text/01-introduction.html#checkin3-install), you can download the [practice activity template](https://raw.githubusercontent.com/zoerehnberg/STAT331-S23/main/practice_activities/PA1_short.qmd) here.
+2. If you have already [installed R, RStudio, and Quarto](https://earobinson95.github.io/stat331-calpoly-text/01-introduction.html#checkin3-install), you can download the [practice activity template](PA1_short.qmd) here.
   + Make sure to move this from your `Downloads` folder into your `STAT331/practice_activities` folder!
 
 ## Part One: Setup

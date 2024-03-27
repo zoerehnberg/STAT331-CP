@@ -27,8 +27,8 @@ You can access PA1: Find the Mistakes in RStudio in one of two ways:
   + Note: if you do not have a Posit Cloud account, you will be asked to create one.
   + Note: make sure you save a permanent version!
 
-2. If you have already [installed R, RStudio, and Quarto](https://earobinson95.github.io/stat331-calpoly-text/01-introduction.html#checkin3-install), you can create a new [Quarto document](https://earobinson95.github.io/stat331-calpoly-text/01-introduction.html#notebooks), and copy the [practice activity template](https://raw.githubusercontent.com/zoerehnberg/STAT331-S23/main/practice_activities/PA1.qmd) into the file.
-  + Make sure your Quarto file is on Source mode and not Visual mode (top left) when you copy the template.
+2. If you have already [installed R, RStudio, and Quarto](https://earobinson95.github.io/stat331-calpoly-text/01-introduction.html#checkin3-install), you can download the [practice activity template](PA1.qmd) here.
+  + Make sure to move this from your `Downloads` folder into your `STAT331/practice_activities` folder!
 
 ## Part One: Setup
 
@@ -121,9 +121,7 @@ top_secret <- top_secret + 14
 *Hint:* This is what is called a "relational" comparison, where you compare an object to a number and R will give you a vector of TRUEs and FALSEs based on whether the comparison is / is not met. You can then use these TRUEs and FALSEs as numbers, since TRUE = 1 and FALSE = 0 in R land.
 
 ```{r}
-# The code below verifies that there are 352 numbers with values **below** 17
-# should be 352!
-sum(top_secret < 17)
+# Write code to verify that there are 352 numbers with values **below** 17
 ```
 
 Next, carry out the following steps: 
@@ -131,82 +129,60 @@ Next, carry out the following steps:
 4. Turn your vector of numbers into a matrix with 5 columns.
 
 ```{r}
-## Complete the code to carry out step 4
-top_secret <-  matrix(top_secret, ncol = ____)
+## Write code to carry out step 4.
 ```
 
-+ Separately from your top secret numbers, create a vector of all the even numbers between 1 and 382. Name it "evens". That is, "evens" should contain 2, 4, 6, 8 ..., 382.
+5.  Separately from your top secret numbers, create a vector of all the even numbers between 1 and 382. Name it "evens". That is, "evens" should contain 2, 4, 6, 8 ..., 382.
 
 ```{r}
-# Code completed for you
-evens <- (1:191)*2
-# alternative solution: evens <- seq(from = 2, to = 382, by = 2)
+## Write code to carry out step 5.
 ```
 
-+ Subtract the "evens" vector from the first column of your secret message matrix.
+6.  Subtract the "evens" vector from the first column of your secret message matrix.
 
 ```{r}
-# Code completed for you
-top_secret[, 1] <- top_secret[, 1] - evens
+## Write code to carry out step 6.
 ```
 
-5. Subtract 100 from all numbers in the 18-24th rows of the 3rd column of your secret message matrix.
+7. Subtract 100 from all numbers in the 18-24th rows of the 3rd column of your secret message matrix.
 
 ```{r}
-## Complete the code to carry out step 5
-top_secret[18:24, 3] <- top_secret[_____, __] - 100
+## Complete the code to carry out step 7.
 ```
 
-6. Multiply all numbers in the 4th and 5th column of your secret message matrix by 2.
+8. Multiply all numbers in the 4th and 5th column of your secret message matrix by 2.
 
 ```{r}
-## Code to carry out step 6
+## Code to carry out step 8.
 ```
 
-7. Turn your secret message matrix back into a vector.
+9. Turn your secret message matrix back into a vector.
 
 ```{r}
-## Complete the code to carry out step 7
-top_secret <- ___(top_secret)
+## Write code to carry out step 9.
 ```
 
 **Checkpoint:** Headquarters has informed you that at this stage of decoding, all numbers in indices 500 and beyond are above 100. The code below verifies that this is true for your `top_secret` object! 
 
 ```{r}
-# The code below verifies that indices 500 and beyond have values **below** 100
-# should be 0!
-sum(top_secret[500:955] >= 100)
+# Write code to verify that indices 500 and beyond have values **below** 100
 ```
 
-The following operations on our secret message are completed for you, but make sure to still run these code chunks!
+10.  Take the square root of all numbers in indices 38 to 465.
 
-+ Take the square root of all numbers in indices 38 to 465.
+11.  Use the `round()` function to round all numbers to the nearest whole number.
 
-```{r}
-top_secret[38:465] <- sqrt(top_secret[38:465])
-```
-
-+ Use the `round()` function to round all numbers to the nearest whole number.
-
-```{r}
-top_secret <- round(top_secret, digits = 0)
-```
-
-+ Replace all instances of the number 39 with 20.
+12.  Replace all instances of the number 39 with 20.
   + This step requires another relational comparison, but this time it is equality. Equality in R is checked with a double equal sign rather than a single equal sign!
 
-```{r}
-top_secret[top_secret == 39] <- 20
-```
 
 **Checkpoint:** Headquarters has informed you that your final message should have 344 even numbers.
 
 *Hint:* Checking for divisibility is an interesting operation that isn't done much in R. Modulus is the operation you are interested in, where you are checking for whether the numbers are divisible by 2, with no remainder. See what you can find about modulus in R!
 
 ```{r}
-# The code below verifies how many even numbers are in your top_secret vector
+# Code to verify how many even numbers are in your top_secret vector
 # Should be 344!
-sum(top_secret %% 2 == 0)
 ```
 
 ## Part Three: The secret message!
