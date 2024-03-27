@@ -19,8 +19,8 @@ Today we will...
 + Directories & File Paths
 + Troubleshooting Errors
 + Scripts + Notebooks
-+ [PA 1: Find the Mistakes](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA1.html)
-+ Lab 1: Introduction to Quarto
++ [PA 1: Find the Mistakes](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA1_short.html)
++ [Lab 1: Introduction to Quarto](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab1/LA1_intro_quarto.html)
 
 
 
@@ -118,7 +118,7 @@ The heart and soul of **R** are **packages**.
 
 + These are "extra" sets of code that add **new functionality** to R when installed.
 + "Official" **R** packages live on the *Comprehensive R Archive Network*, or **CRAN**.
-+ But anyone can write and share new code in "package form" (more later).
++ But anyone can write and share new code in "package form".
 
 
 ## Packages
@@ -261,13 +261,13 @@ knitr::include_graphics("images/project_flag.jpg")
 ::::
 
 
-## RStudio Projects & Reproducibility
+## R Projects & Reproducibility
 
-RStudio Projects are great for **reproducibility**!
+R Projects are great for **reproducibility**!
 
 + You can send anyone your folder with your .Rproj file and they will be able to run your code on their computer.
 
-+ We will be using RStudio Projects throughout this course.
++ We will be using R Projects throughout this course.
 
 
 ## Principles of Reproducibility
@@ -288,7 +288,7 @@ jump in and start working right away.
   5. Analysis process is well-explained and easy to read.
 
 
-# [Setting up an RStudio Project](https://earobinson95.github.io/stat331-calpoly-text/01-introduction.html#rprojects)
+# [Setting up an R Project](https://earobinson95.github.io/stat331-calpoly-text/01-introduction.html#rprojects)
 
 
 ## Good practice
@@ -315,7 +315,7 @@ setwd("/User/reginageorge/Desktop/R_Class/Lab_1/")
 
 - That directory is specific to you!
 
-- R Markdown and Quarto (more on these later) ignore this code when knitting! 
+- Quarto ignores this code when knitting! 
 
 
 # R Basics
@@ -747,25 +747,6 @@ It *probably* means...
 matrix(c("a", "b", "c", "d"), num_row = 2)
 ```
 
-## [PA 1: Find the Mistakes](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA1.html)
-
-The components of the Practice Activity are described below:
-
-**Part One:**
-
-This file has many mistakes in the code. Some are errors that will prevent the file from knitting; some are mistakes that do NOT result in an error.
-
-Fix all the problems in the code chunks.
-
-**Part Two:**
-
-Follow the instructions in the file to uncover a secret message.
-
-Submit the name of the poem as the answer to the Canvas Quiz question.
-
-
-
-
 
 # Scripts + Notebooks
 
@@ -972,12 +953,31 @@ When you click **Render**:
     -   This will be saved in the same folder as "Lab1.qmd".
 
 
+
+## [PA 1: Find the Mistakes](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA1_short.html)
+
+The components of the Practice Activity are described below:
+
+**Part One:**
+
+This file has many mistakes in the code. Some are errors that will prevent the file from knitting; some are mistakes that do NOT result in an error.
+
+Fix all the problems in the code chunks.
+
+**Part Two:**
+
+Follow the instructions in the file to uncover a secret message.
+
+Submit the name of the poem as the answer to the Canvas quiz question.
+
+
+
 ## [Lab 1: Introduction to Quarto](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab1/LA1_intro_quarto.html)
 
 ## To do...
 
 + **PA 1: Find the Mistakes**
-  + Due Saturday (4/6) at aa:59pm
+  + Due Saturday (4/6) at 11:59pm
 + **Lab 1: Introduction to Quarto**
   + Due Saturday (4/6) at 11:59pm 
 + **Read Chapter 2: Importing Data + Basics of Graphics**
