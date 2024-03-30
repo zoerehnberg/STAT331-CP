@@ -19,8 +19,7 @@ Today we will...
 + Directories & File Paths
 + Troubleshooting Errors
 + Scripts + Notebooks
-+ [PA 1: Find the Mistakes](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA1_short.html)
-+ [Lab 1: Introduction to Quarto](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab1/LA1_intro_quarto.html)
++ [PA 1: Find the Mistakes](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA1_short.html) and [Lab 1: Introduction to Quarto](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab1/LA1_intro_quarto.html)
 
 
 
@@ -35,6 +34,7 @@ Hi, I'm Dr. Rehnberg!
 
 + My favorite things are being outside, drinking tea, and watching reality tv.
 
++ I love `R` and I'm excited to share that with you this quarter!
 
 
 ## On a personal note...
@@ -187,7 +187,7 @@ knitr::include_graphics("images/rstudio_session_4pane_layout.png")
 
 
 
-# Directories & Scientific Reproducibility
+# Directories & File Paths
 
 
 ## What is a directory?
@@ -294,7 +294,8 @@ jump in and start working right away.
 ## Good practice
 
 - Organize your folders carefully, and name them meaningfully:
-  * `/User/zrehnber/Stat331/lab1/` rather than `Desktop/stuff/`
+  * Good -- `/User/zrehnber/Stat331/lab1/`
+  * Bad -- `Desktop/stuff/`
     
 - Use **R Projects** liberally - put one in the "main" folder for each project
 
