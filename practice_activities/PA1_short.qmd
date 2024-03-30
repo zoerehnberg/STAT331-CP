@@ -32,7 +32,7 @@ You can access PA1: Find the Mistakes in RStudio in one of two ways:
 
 ## Part One: Setup
 
-Each of the following R chunks will cause one or more errors and / or do the desired task incorrectly.  Find the mistake, and correct it to complete the intended action.
+Each of the following R chunks will cause one or more errors or do the desired task incorrectly.  Find the mistake and correct it to complete the intended action.
 
 1. Create vectors containing the upper case letters, lower case letters, and some punctuation marks.
 
@@ -90,7 +90,7 @@ By altering this top secret set of numbers, you will be able to create a message
 
 where the original value(s) in `x` have had 12 added to them, and the resulting values are put back in to the object named `x`.
 
-*Be careful not to* **overwrite** *more than you intend. If this happens, go back and run (6) and any subsequent code chunks to start fresh with the top_secret vector.*
+*Be careful not to* **overwrite** *more than you intend. If this happens, go back and reread in the code, and then run any subsequent code chunks to start fresh with the top_secret vector.*
 
 + Add 14 to every number (completed for you!)
 
@@ -171,7 +171,7 @@ top_secret[18:24, 3] <- top_secret[_____, __] - 100
 top_secret <- ___(top_secret)
 ```
 
-**Checkpoint:** Headquarters has informed you that at this stage of decoding, all numbers in indices 500 and beyond are above 100. The code below verifies that this is true for your `top_secret` object! 
+**Checkpoint:** Headquarters has informed you that at this stage of decoding, all numbers in indices 500 and beyond are below 100. The code below verifies that this is true for your `top_secret` object! 
 
 ```{r}
 # The code below verifies that indices 500 and beyond have values **below** 100
