@@ -1,5 +1,5 @@
 ---
-title: "Intro to STAT 331/531 + Intro to R"
+title: "Intro to STAT 331/531 + Intro to `R`"
 format: 
   revealjs:
     #theme: [default, ../slide_custom.scss]
@@ -12,10 +12,10 @@ self-contained: true
 
 Today we will...
 
-+ Welcome to Stat 331/531: Statistical Computing in R
++ Welcome to Stat 331/531: Statistical Computing in `R`
 + Introduction
   + Intro to Me + You + the course
-  + Intro to R + RStudio
+  + Intro to `R` + RStudio
 + Directories & File Paths
 + Troubleshooting Errors
 + Scripts + Notebooks
@@ -73,21 +73,21 @@ I am looking forward to reading your introductions on Canvas Discussions!
 # Syllabus
 
 
-# Intro to R
+# Intro to `R`
 
 
-## What is R?
+## What is `R`?
 
-+ **R** is a programming language designed originally for *statistical analyses*.
-+ **R** was created by **Ross Ihaka** and **Robert Gentleman** in 1993.
-  + Their names are why it's called **R**.
-+ **R** was formally released by the **R Core Group** in 1997.
-  + This group of [20-ish volunteers](https://www.r-project.org/contributors.html) are the *only* people who can change the **base** (built-in) functionality of **R**.
++ `R` is a programming language designed originally for *statistical analyses*.
++ `R` was created by **Ross Ihaka** and **Robert Gentleman** in 1993.
+  + Their names are why it's called `R`.
++ `R` was formally released by the **`R` Core Group** in 1997.
+  + This group of [20-ish volunteers](https://www.r-project.org/contributors.html) are the *only* people who can change the **base** (built-in) functionality of `R`.
 
 
 ## Strengths
 
-**R**'s **strengths** are...
+`R`'s **strengths** are...
 
 ... handling data with lots of **different types** of variables.
 
@@ -98,13 +98,13 @@ I am looking forward to reading your introductions on Canvas Discussions!
 
 ## Weaknesses
 
-**R**'s **weaknesses** are...
+`R`'s **weaknesses** are...
 
 ... performing non-analysis programming tasks, like website creation (*python*, *ruby*, ...).
 
 ... hyper-efficient numerical computation (*matlab*, *C*, ...).
 
-... being a simple tool for all audiences (*SPSS*, *STATA*, *JMP*, *minitab*, ...).
+... being a simple tool for all audiences (*SPSS*, *STATA*, *JMP*, ...).
 
 
 ## But wait!
@@ -114,10 +114,10 @@ I am looking forward to reading your introductions on Canvas Discussions!
 
 ## Packages
 
-The heart and soul of **R** are **packages**.
+The heart and soul of `R` are **packages**.
 
-+ These are "extra" sets of code that add **new functionality** to R when installed.
-+ "Official" **R** packages live on the *Comprehensive R Archive Network*, or **CRAN**.
++ These are "extra" sets of code that add **new functionality** to `R` when installed.
++ "Official" `R` packages live on the *Comprehensive R Archive Network*, or **CRAN**.
 + But anyone can write and share new code in "package form".
 
 
@@ -145,18 +145,18 @@ To load a package use:
 library(tibble)
 ```
 
-+ You have to load a package **each time you restart R**.
++ You have to load a package **each time you restart `R`**.
 
 ## Open-Source
 
-Importantly, **R** is *open-source*.
+Importantly, `R` is *open-source*.
 
-+ There is no company that owns **R**, like there is for *SAS* or *Matlab*.
++ There is no company that owns `R`, like there is for *SAS* or *Matlab*.
   + (*Python* is also open-source!)
 
 . . .
 
-+ This means nobody can sell their **R** code!
++ This means nobody can sell their `R` code!
   + But you can sell "helpers" like **RStudio**.
   + And you can keep code **private** within an organization or company.
 
@@ -172,7 +172,7 @@ Importantly, **R** is *open-source*.
 
 **RStudio** is an IDE (*Integrated Developer Environment*).
 
-+ This means it is an application that makes it easier for you to interact with **R**.
++ This means it is an application that makes it easier for you to interact with `R`.
 
 ```{r, fig.align='center', out.width = "75%", echo = F}
 knitr::include_graphics("https://d33wubrfki0l68.cloudfront.net/0b4d0569b2ddf6147da90b110fbb2a17653c8b08/f06f3/images/shutterstock/r_vs_rstudio_1.png")
@@ -182,7 +182,7 @@ knitr::include_graphics("https://d33wubrfki0l68.cloudfront.net/0b4d0569b2ddf6147
 ##
 
 ```{r, echo = FALSE, out.width="75%", fig.align='center'}
-knitr::include_graphics("images/rstudio_session_4pane_layout.png")
+knitr::include_graphics("images/rstudio.png")
 ```
 
 
@@ -297,7 +297,7 @@ jump in and start working right away.
   * Good -- `/User/zrehnber/Stat331/lab1/`
   * Bad -- `Desktop/stuff/`
     
-- Use **R Projects** liberally - put one in the "main" folder for each project
+- Think of `Stat331` as **one** project and *not* each assignment as a new project. **Do not put projects within projects!**
 
 
 ## Bad practice
@@ -319,7 +319,7 @@ setwd("/User/reginageorge/Desktop/R_Class/Lab_1/")
 - Quarto ignores this code when knitting! 
 
 
-# R Basics
+# `R` Basics
 
 ## Data Types
 
@@ -371,7 +371,7 @@ earth_demolished <- FALSE
 
 + **Vector**: a one-dimensional column of homogeneous data.
 
-+ **Matrix**: the next step after a vector - it’s a set of homogenous data arranged in a two-dimensional, rectangular format.
++ **Matrix**: a two-dimensional set of homogeneous data arranged in a rectangular format.
 
 . . .
 
@@ -386,7 +386,7 @@ earth_demolished <- FALSE
 
 We use **square brackets** (``[]``) to access elements within data structures.
 
-  + In R, we start indexing from 1.
+  + In `R`, we start indexing from 1.
   
 . . .
 
@@ -506,11 +506,11 @@ x | y   # OR
 
 # Troubleshooting Errors!
 
-# Messages + Wwarnings + Errors
+# Messages + Warnings + Errors
 
 ## Messages
 
-Just because you see scary red text, this does **not** mean something went wrong! This is just **R** communicating with you.
+Just because you see scary red text, this does **not** mean something went wrong! This is just `R` communicating with you.
 
 . . .
 
@@ -525,7 +525,7 @@ library(lme4)
 
 ## Warnings
 
-Often, **R** will give you a **warning**.
+Often, `R` will give you a **warning**.
 
 + This means that your code *did* run... 
 
@@ -554,7 +554,7 @@ my_new_vec
 
 ## Errors
 
-If the word **Error** appears in your message from **R**, then you have a problem.
+If the word **Error** appears in your message from `R`, then you have a problem.
 
 + This means your code **could not run**!
 
@@ -672,7 +672,7 @@ my_obj[5]
 
 # Common Errors
 
-## **R** says...
+## `R` says...
 
 > Error: Object `some_obj` not found.
 
@@ -692,7 +692,7 @@ mean(some_obj)
 ```
 
 
-## **R** says...
+## `R` says...
 
 > Error: Object of type 'closure' is not subsettable.
 
@@ -710,7 +710,7 @@ mean[1, 2]
 ```
 
 
-## **R** says...
+## `R` says...
 
 > Error: Non-numeric argument to binary operator.
 
@@ -747,6 +747,8 @@ It *probably* means...
 #| code-line-numbers: false
 matrix(c("a", "b", "c", "d"), num_row = 2)
 ```
+
+*Hint: try typing `?matrix` into your console to view the documentation for this function.*
 
 
 # Scripts + Notebooks
@@ -804,7 +806,7 @@ Notebooks are an implementation of **literate programming**.
 
 
 
-**Quarto** uses *Markdown*, **AND** it can run and display **R** code.
+**Quarto** uses *Markdown*, **AND** it can run and display `R` code.
 
 + (Other languages, too!)
 + Quarto files have the **.qmd** extension.
@@ -816,19 +818,6 @@ Notebooks are an implementation of **literate programming**.
 knitr::include_graphics("images/rmd_ecosystem.png")
 ```
 
-
-
-## Highlights of Quarto
-
-+ Consistent implementation of attractive and handy features across outputs:
-  + E.g., tabsets, code-folding, syntax highlighting, etc.
-
-+ More accessible defaults and better support for accessibility.
-
-+ Guardrails that are helpful when learning:
-  + E.g., YAML completion, informative syntax errors, etc.
-
-+ Support for other languages like Python, Julia, Observable, and more.
 
 
 ## Quarto Formats
@@ -889,9 +878,9 @@ A few useful tips for formatting the **Markdown** text in your document:
 + \< \> -- embeds URLs
 
 
-## R Code Options in Quarto
+## `R` Code Options in Quarto
 
-**R code chunk** options are included at the top of each code chunk, prefaced with a #| (hashpipe).
+**`R` code chunk** options are included at the top of each code chunk, prefaced with a #| (hashpipe).
 
 + These options control how the following code is run and reported in the final Quarto document.
 + R code options can also be included in the front matter (YAML) and are applied globally to the document.
@@ -932,7 +921,7 @@ To take your *.qmd* file and make it look pretty, you have to **render** it.
 
 Quarto CLI (command line interface) orchestrates each step of rendering:
 
-1. Process the executable code chunks with either `knitr` or `jupyter`.
+1. Process the executable code chunks with `knitr`.
 2. Convert the resulting Markdown file to the desired output.
 
 ```{r, echo = F, fig.align='center'}
@@ -947,7 +936,7 @@ knitr::include_graphics("images/horst_qmd_render_schema.png")
 When you click **Render**:
 
 -   Your file is saved.
--   The R code written in your *.qmd* file gets run **in order**.
+-   The `R` code written in your *.qmd* file gets run **in order**.
     -   It starts from scratch, even if you previously ran some of the code.
 -   A new file is created.
     -   If your Quarto file is called "Lab1.qmd", then a file called "Lab1.html" will be created.
@@ -956,8 +945,6 @@ When you click **Render**:
 
 
 ## [PA 1: Find the Mistakes](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA1_short.html)
-
-The components of the Practice Activity are described below:
 
 **Part One:**
 
@@ -974,6 +961,9 @@ Submit the name of the poem as the answer to the Canvas quiz question.
 
 
 ## [Lab 1: Introduction to Quarto](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab1/LA1_intro_quarto.html)
+
+In this lab, you will begin to familiarize yourself with working in and customizing Quarto documents.
+
 
 ## To do...
 
