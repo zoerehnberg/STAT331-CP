@@ -3,7 +3,7 @@ title: "PA 1: Find the Mistakes"
 subtitle: "Working with R Objects"
 author: "YOUR NAME "
 format: html
-self-contained: true
+embed-resources: true
 execute:
   echo: true
   error: true
@@ -162,7 +162,7 @@ Next, carry out the following steps:
 ## Write code to carry out step 9.
 ```
 
-**Checkpoint:** Headquarters has informed you that at this stage of decoding, all numbers in indices 500 and beyond are above 100. The code below verifies that this is true for your `top_secret` object! 
+**Checkpoint:** Headquarters has informed you that at this stage of decoding, all numbers in indices 500 and beyond are below 100. The code below verifies that this is true for your `top_secret` object! 
 
 ```{r}
 # Write code to verify that indices 500 and beyond have values **below** 100
