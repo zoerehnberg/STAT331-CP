@@ -181,7 +181,7 @@ knitr::include_graphics("https://d33wubrfki0l68.cloudfront.net/0b4d0569b2ddf6147
 
 ##
 
-```{r, echo = FALSE, out.width="75%", fig.align='center'}
+```{r, echo = FALSE, out.width="90%", fig.align='center'}
 knitr::include_graphics("images/rstudio.png")
 ```
 
