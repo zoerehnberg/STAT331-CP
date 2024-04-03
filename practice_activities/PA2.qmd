@@ -116,24 +116,3 @@ Make sure your final report **does not** display any wanrings or messages from R
 
 5.  Color deficiencies can make differentiating groups difficult - which aesthetic could you add to your plot to double encode species?
 :::
-
-## If you finish early... take everything you know, and use it for evil! (+5 Challenge Points)
-
-For this Bonus Challenge, I want you to create the **ugliest version** of the scatterplot you created in (9) above. Then, explain why, exactly, you made the decisions you did, and which principles of good graphics you’ve intentionally violated.
-
-Ugliness is subjective, so the goal here is for you to explore the different ways you can customize the finer details of graphics. Make sure your finished masterpiece has appropriate axis labels and a title (after all, even ugly plots need to be correctly labeled!). You are free to add additional variables and layers, modify the aesthetics used, and leverage other packages. Let your creativity shine through!
-
-```{r ugly-graphic}
-
-```
-
-Once you have created the ugliest graphic you can, [save your plot](https://r4ds.hadley.nz/data-visualize.html#sec-ggsave), and upload it to the [shared google slides](https://docs.google.com/presentation/d/19bi4KyrpKrjntKtpcKZiZgsVf-cr4X2i2MnQ6hYln7Y/edit?usp=sharing) along with (1) how you modified the chart - let's share code! - and (2) your explanation for why you made the design decisions you did, including the  principles of good graphics you’ve intentionally violated.
-
-To receive your challenge points, upload the url link to your slide to the Canvas Assignment by **Monday, April 17 at 10:00am**.
-
-### Useful References
-
- + [Customizing ggplot2 graphics](http://r-statistics.co/Complete-Ggplot2-Tutorial-Part2-Customizing-Theme-With-R-Code.html)
- + [A group-created slideshow of awful graphics](https://docs.google.com/presentation/d/1ixRsGI8BWgT2zA5AbB61eMLUbJgObvBCZt-OnZDzvX4/edit#slide=id.p)
-
-
