@@ -168,7 +168,7 @@ Some people (and journals) prefer for boxplots to be stacked with a specific ori
 Notice how vertically stacked boxplots make the species labels more readable than horizontally stacked boxplots. This is good practice!
 
 
-## Conducting Statistical Analyses
+# Conducting Statistical Analyses
 
 Exploratory Data Analysis (EDA) is always a great start to investigating a dataset. Can we see a relationship between rodent weight and hindfoot length? How does rodent weight differ between species? After performing EDA, we can then conduct appropriate statistical analysis methods to formally investigate what we have seen.
 
@@ -233,7 +233,7 @@ species_estimates <- emmeans()
 ```
 
 
-## Use Your Graphics Skills for Evil
+# Use Your Graphics Skills for Evil
 
 **21. Create the *ugliest version* of the scatterplot you created in Q4 above. Then, explain why you made the decisions you did, and which principles of good graphics you’ve intentionally violated.**
 

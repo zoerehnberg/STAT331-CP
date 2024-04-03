@@ -3144,11 +3144,11 @@ return!"\t\n\x0B\f\r                　\u2028\u2029
   <ul class="collapse">
   <li><a href="#scatterplot" id="toc-scatterplot" class="nav-link" data-scroll-target="#scatterplot">Scatterplot</a></li>
   <li><a href="#boxplots" id="toc-boxplots" class="nav-link" data-scroll-target="#boxplots">Boxplots</a></li>
+  </ul></li>
   <li><a href="#conducting-statistical-analyses" id="toc-conducting-statistical-analyses" class="nav-link" data-scroll-target="#conducting-statistical-analyses">Conducting Statistical Analyses</a></li>
   <li><a href="#use-your-graphics-skills-for-evil" id="toc-use-your-graphics-skills-for-evil" class="nav-link" data-scroll-target="#use-your-graphics-skills-for-evil">Use Your Graphics Skills for Evil</a>
   <ul class="collapse">
   <li><a href="#useful-references" id="toc-useful-references" class="nav-link" data-scroll-target="#useful-references">Useful References</a></li>
-  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -3359,8 +3359,9 @@ Note
 </div>
 <p>Notice how vertically stacked boxplots make the species labels more readable than horizontally stacked boxplots. This is good practice!</p>
 </section>
-<section id="conducting-statistical-analyses" class="level2">
-<h2 class="anchored" data-anchor-id="conducting-statistical-analyses">Conducting Statistical Analyses</h2>
+</section>
+<section id="conducting-statistical-analyses" class="level1">
+<h1>Conducting Statistical Analyses</h1>
 <p>Exploratory Data Analysis (EDA) is always a great start to investigating a dataset. Can we see a relationship between rodent weight and hindfoot length? How does rodent weight differ between species? After performing EDA, we can then conduct appropriate statistical analysis methods to formally investigate what we have seen.</p>
 <p>In this section, we are going to conduct a one-way analysis of variance (ANOVA) to compare mean weight between the fourteen species.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -3436,8 +3437,8 @@ Alternative
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># carry out pairwise comparisons between species.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="use-your-graphics-skills-for-evil" class="level2">
-<h2 class="anchored" data-anchor-id="use-your-graphics-skills-for-evil">Use Your Graphics Skills for Evil</h2>
+<section id="use-your-graphics-skills-for-evil" class="level1">
+<h1>Use Your Graphics Skills for Evil</h1>
 <p><strong>21. Create the <em>ugliest version</em> of the scatterplot you created in Q4 above. Then, explain why you made the decisions you did, and which principles of good graphics you’ve intentionally violated.</strong></p>
 <p>Ugliness is subjective, so the goal here is for you to explore the different ways you can customize the finer details of graphics. Make sure your finished masterpiece has appropriate axis labels and a title (after all, even ugly plots need to be correctly labeled!). You are free to add additional variables and layers, modify the aesthetics used, and leverage other packages. Let your creativity shine through!</p>
 <div class="cell">
@@ -3451,7 +3452,6 @@ Alternative
 </ul>
 <!-- -->
 
-</section>
 </section>
 </section>
 
@@ -3911,7 +3911,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb17-172"><a href="#cb17-172" aria-hidden="true" tabindex="-1"></a>Notice how vertically stacked boxplots make the species labels more readable than horizontally stacked boxplots. This is good practice!</span>
 <span id="cb17-173"><a href="#cb17-173" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-174"><a href="#cb17-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-175"><a href="#cb17-175" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conducting Statistical Analyses</span></span>
+<span id="cb17-175"><a href="#cb17-175" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conducting Statistical Analyses</span></span>
 <span id="cb17-176"><a href="#cb17-176" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-177"><a href="#cb17-177" aria-hidden="true" tabindex="-1"></a>Exploratory Data Analysis (EDA) is always a great start to investigating a dataset. Can we see a relationship between rodent weight and hindfoot length? How does rodent weight differ between species? After performing EDA, we can then conduct appropriate statistical analysis methods to formally investigate what we have seen.</span>
 <span id="cb17-178"><a href="#cb17-178" aria-hidden="true" tabindex="-1"></a></span>
@@ -3976,7 +3976,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb17-245"><a href="#cb17-245" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb17-246"><a href="#cb17-246" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-247"><a href="#cb17-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-248"><a href="#cb17-248" aria-hidden="true" tabindex="-1"></a><span class="fu">## Use Your Graphics Skills for Evil</span></span>
+<span id="cb17-248"><a href="#cb17-248" aria-hidden="true" tabindex="-1"></a><span class="fu"># Use Your Graphics Skills for Evil</span></span>
 <span id="cb17-249"><a href="#cb17-249" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-250"><a href="#cb17-250" aria-hidden="true" tabindex="-1"></a>**21. Create the *ugliest version* of the scatterplot you created in Q4 above. Then, explain why you made the decisions you did, and which principles of good graphics you’ve intentionally violated.**</span>
 <span id="cb17-251"><a href="#cb17-251" aria-hidden="true" tabindex="-1"></a></span>
