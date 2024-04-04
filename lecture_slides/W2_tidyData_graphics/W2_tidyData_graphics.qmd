@@ -1303,6 +1303,9 @@ Can use `colorRampPalette()` from the `RColorBrewer` package to produce larger p
 knitr::include_graphics("images/big_gradient.png")
 ```
 
+
+## Color Guidelines
+
 + For **quantitative** data, use mappings from data to color that are **numerically and perceptually uniform**.
   + Relative discriminability of two colors should be proportional to the difference between the corresponding data values.
 
@@ -1331,7 +1334,7 @@ knitr::include_graphics("images/double.png")
 knitr::include_graphics("images/blues.png")
 ```
 
-+ with a bidirectional scale (e.g., + and - values), use a **purple-white-orange** color gradient. Always ransition through white!
++ with a bidirectional scale (e.g., + and - values), use a **purple-white-orange** color gradient. Transition through white!
 
 ```{r}
 #| fig-align: center
@@ -1369,9 +1372,7 @@ These packages have color palettes hthatare aesthetically pleasing and, in many 
 You can also take a look at other [ways to find nice color palettes](https://lisacharlottemuth.com/2016/04/22/Colors-for-DataVis/).
 
 
-## Week 2 Assignments
-
-[Lab 2: Exploring Rodents with ggplot2](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab2/LA2_ggplot.html)
+## [Lab 2: Exploring Rodents with ggplot2](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab2/LA2_ggplot.html)
 
 
 ## To do...
