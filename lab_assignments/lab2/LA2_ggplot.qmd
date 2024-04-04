@@ -125,7 +125,7 @@ It takes a larger cognitive load to read text that is rotated. It is common prac
 
 **9. Sketch out (by hand or using [Excalidraw](<https://excalidraw.com/>)) a game plan for creating side-by-side boxplots to visualize the distribution of weight within each species. Include an image of your game plan.** This can take on your own flavor! The ideas is that you are *thinking before coding*. I recommend saving this in the same folder as your .qmd file.
 
-![]()   <!-- Put the file path of your saved game plan in the square brackets! -->
+![]()   <!-- Put the file path of your saved game plan in the parentheses! -->
 
 ```{r boxplot}
 # Boxplot code for question 10 - 15!

@@ -5,7 +5,7 @@ format:
     #theme: [default, custom.scss]
     theme: default
 editor: source
-self-contained: true
+embed-resources: true
 ---
 
 ```{r setup}
@@ -14,16 +14,31 @@ self-contained: true
 library(tidyverse)
 ```
 
-## Monday, April 10
+## Monday, April 8
 
 Today we will...
 
 + Review PA 1: Find the Mistake
 + New Material
+  + Game Planning
   + Tidy Data
   + Load External Data
   + Graphics (and `ggplot2`)
 + [PA 2: Using Data Visualization to Find the Penguins](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA2.html)
+
+
+# Game Planning
+
+
+## Let's Talk About Game Planning
+
+**What**: [Game Plans!](https://earobinson95.github.io/stat331-calpoly-text/02-tidy-data-and-basics-of-graphics.html#exploratory-data-analysis-with-the-grammar-of-graphics) are strategic guides that prompt you to map your coding strategies before implementation.
+
+**How**: Your favorite sketch app, paper + pencil, online whiteboard ([Excalidraw!](https://excalidraw.com/)).
+
+**Why**: Dr. Robinson and I will be collecting and saving game plans through your Canvas assignment submissions to use in work related to investigating the efficacy of using game plans as a pedagogical tool in the context of statistical computing education.
+
+**Informed Consent**: Please complete the [informed consent](https://canvas.calpoly.edu/courses/130201/pages/informed-consent-for-participation) for game plans on Canvas by Friday 4/12 at 11:59pm.
 
 
 # Tidy Data
@@ -676,6 +691,18 @@ ggplot(data = mpg, aes(x = cty, y = hwy, color = class)) +
   facet_grid(.~class)
 ```
 
+
+### `facet_wrap()`
+```{r}
+#| echo: true
+#| fig-height: 2
+#| fig-width: 12
+#| code-line-numbers: "3"
+ggplot(data = mpg, aes(x = cty, y = hwy, color = class)) + 
+  geom_point() +
+  facet_wrap(.~class)
+```
+
 ### Options
 <font size = "6">
 
@@ -732,10 +759,10 @@ Position adjustments determine how to arrange `geom`'s that would otherwise occu
 #| echo: true
 #| code-line-numbers: "2"
 ggplot(mpg, aes(fl, fill = drv)) + 
-  geom_bar(position = "")`
+  geom_bar(position = "_____")
 ```
 
-![](https://unl-statistics.github.io/R-workshops/02-r-graphics/knitr/3-Layers_files/figure-html/unnamed-chunk-8-1.png)
+![](images/position.png)
 
 
 ## Plot Customizations
@@ -839,13 +866,11 @@ ggplot(data = mpg, mapping = aes(x = cty, y = hwy, color = class)) + geom_point(
 ggplot(data = mpg, 
        mapping = aes(x = cty, 
                      y = hwy, 
-                     color = class)
-       ) + 
+                     color = class)) + 
   geom_point() + 
   theme_bw() + 
   labs(x = "City (mpg)", 
-       y = "Highway (mpg)"
-       )
+       y = "Highway (mpg)")
 ```
 
 ### Somewhere In bBetween
@@ -854,8 +879,7 @@ ggplot(data = mpg,
 #| echo: true
 #| eval: false
 ggplot(data = mpg, 
-       mapping = aes(x = cty, y = hwy, color = class)
-       ) + 
+       mapping = aes(x = cty, y = hwy, color = class)) + 
   geom_point() + 
   theme_bw() + 
   labs(x = "City (mpg)", y = "Highway (mpg)")
@@ -945,8 +969,7 @@ Use the `mpg` dataset to create two side-by-side scatterplots of city MPG vs. hi
 ggplot(data = mpg,
        mapping = aes(x = cty,
                      y = hwy,
-                     color = drv)
-       ) +
+                     color = drv)) +
   geom_point() +
   facet_grid(.~year) +
   labs(x = "city MPG",
@@ -965,40 +988,26 @@ ggplot(data = mpg,
 ## To do...
 
 + **PA 2: Using Data Visualization to Find the Penguins**
-  + Due **Wednesday** (4/12) at 8:00am
-
-+ **Bonus Challenge: FizzBuzz (+5)**
-  + Due **Saturday** (4/15) at 11:59pm (optional)
-
-+ **Bonus Challenge: Ugly Graphics of Penguins (+5)**
-  + Due **Monday** (4/17) at 10:00am (optional)
+  + Due **Wednesday** (4/10) at 10:00am
 
 
 
-## Wednesday, April 12
+
+## Wednesday, April 10
 
 Today we will...
 
-+ Course Updates
 + New Material
   + What makes a good graphic?
+  + Gestalt Principles
+  + Color
 + Lab 2: Exploring Rodents with ggplot2
-+ Challenge 2: Spicing things up with ggplot2
 
 
-## A Couple of Updates
+## On Grading....
 
-After experiencing the first week and a half of classes:
+I post skeleton rubrics for lab activities on Canvas (on Thursdays) to share the general structure of how you will be graded.
 
-1. Check-ins will be due Mondays at **10:00am** (instead of 8:00am).
-  + I will hope to release Canvas check-in quizzes by noon on Thursdays, so you are not required to work over the weekend.
-2. Practice activities will be due Wednesday at **10:00am** (instead of 8:00am).
-
-## A Couple of Updates
-
-After experiencing the first week and a half of classes:
-
-3. I will post skeleton rubrics for lab activities on Canvas (on Thursdays) to share the general structure of how you will be graded.
   + Grading will be on a scale of *Master* to *Practitioner* to *Novice* to *No Effort*.
   + If you make a meaningful error in your code, you cannot earn *Master* for that question.
   + Your labs **will** have an appearance/workflow/code format portion. Check out the [guidelines](https://canvas.calpoly.edu/courses/98835/pages/lab-appearance-workflow-and-code-format).
@@ -1199,14 +1208,14 @@ Raise your hand when you notice it.
 
 ```{r}
 #| fig-align: center
-knitr::include_graphics("https://unl-statistics.github.io/R-workshops/02-r-graphics/knitr/4-Perception_files/figure-html/unnamed-chunk-3-1.png")
+knitr::include_graphics("images/pre-atten1.png")
 ```
 
 ## Pre-attentive Features
 
 ```{r}
 #| fig-align: center
-knitr::include_graphics("https://unl-statistics.github.io/R-workshops/02-r-graphics/knitr/4-Perception_files/figure-html/unnamed-chunk-4-1.png")
+knitr::include_graphics("images/pre-atten2.png")
 ```
 
 ## Pre-attentive Features
@@ -1226,21 +1235,20 @@ There is a **hierarchy** of features:
 ## Double Encoding
 ```{r}
 #| fig-align: center
-knitr::include_graphics("https://unl-statistics.github.io/R-workshops/02-r-graphics/knitr/4-Perception_files/figure-html/unnamed-chunk-5-1.png")
+knitr::include_graphics("images/double.png")
 ```
 
 ## No Double Encoding
 ```{r}
 #| fig-align: center
-knitr::include_graphics("https://unl-statistics.github.io/R-workshops/02-r-graphics/knitr/4-Perception_files/figure-html/unnamed-chunk-6-1.png")
+knitr::include_graphics("images/no_double.png")
 ```
 
-# Color
+# [Color](https://www.youtube.com/watch?v=zALBl5f1ib4)
 
 ## Color
 
-+ Use color to your advantage!
-  + Color, hue, and intensity are pre-attentive, where bigger contrasts lead to faster detection.
++ Color, hue, and intensity are pre-attentive features, and bigger contrasts lead to faster detection.
   + **Hue**: main color family (red, orange, yellow...)
   + **Intensity**: amount of color
 
@@ -1264,44 +1272,58 @@ knitr::include_graphics("images/intensity.png")
   
 ## Color Guidelines
 
-+ Use mappings from data to color that are numerically and perceptually uniform.
++ Do not use rainbow color gradients!
+
 + Be conscious of what certain colors “mean”.
-+ Do not use rainbow color gradients.
-+ Avoid using green-yellow-red color schemes -- you might have color-blind audience members!
+  + Good idea to use red for "good" and green for "bad"?
+
+```{r}
+#| fig-align: center
+#| layout-ncol: 2
+#| out-width: 70%
+knitr::include_graphics("images/rainbow.png")
+knitr::include_graphics("images/red_green.png")
+```
+
+
+## Color Guidelines
+  
++ For **categorical** data, try not to use more than 7 colors:
+
+```{r}
+#| fig-align: center
+#| out-width: 30%
+knitr::include_graphics("images/small_gradient.png")
+```
+
+Can use `colorRampPalette()` from the `RColorBrewer` package to produce larger palettes:
+
+```{r}
+#| fig-align: center
+knitr::include_graphics("images/big_gradient.png")
+```
+
++ For **quantitative** data, use mappings from data to color that are **numerically and perceptually uniform**.
+  + Relative discriminability of two colors should be proportional to the difference between the corresponding data values.
+
 
 ## Color Guidelines
 
-+ To colorblind-proof a graphic, try:
-  + **double encoding** - when you use color, **also** use another aesthetic (line type, shape, etc.).
-  + using a **monochromatic** color gradient.
-    + If you have a bidirectional scale (e.g., showing + and - values), use purple-white-orange. Always transition through white!
-  + printing your chart out in black and white -- if you can still read it, it will be safe for colorblind users.
-
-
-## Gradients
-
-::: panel-tabset
-
-### Qualitative schemes
-
-Usually no more than 7 colors:
+**To colorblind-proof a graphic...**
+  
++ use **double encoding** - when you use color, **also** use another aesthetic (line type, shape, etc.).
 
 ```{r}
 #| fig-align: center
-knitr::include_graphics("https://unl-statistics.github.io/R-workshops/02-r-graphics/knitr/4-Perception_files/figure-html/unnamed-chunk-8-1.png")
+#| out-width: 50%
+knitr::include_graphics("images/double.png")
 ```
 
-Can use `colorRampPalette()` from the `RColorBrewer` package to produce larger palettes by interpolating existing ones
+## Color Guidelines
 
-```{r}
-#| fig-align: center
-knitr::include_graphics("https://unl-statistics.github.io/R-workshops/02-r-graphics/knitr/4-Perception_files/figure-html/unnamed-chunk-9-1.png")
-```
-
-
-### Quantitative schemes
-
-Use color gradient with only one hue for positive values:
+**To colorblind-proof a graphic...**
+  
++ with a unidirectional scale (e.g., all + values), use a **monochromatic** color gradient.
 
 ```{r}
 #| fig-align: center
@@ -1309,15 +1331,29 @@ Use color gradient with only one hue for positive values:
 knitr::include_graphics("images/blues.png")
 ```
 
-Use color gradient with two hues for positive and negative values. Gradient should go through a light, neutral color (white).
++ with a bidirectional scale (e.g., + and - values), use a **purple-white-orange** color gradient. Always ransition through white!
 
 ```{r}
 #| fig-align: center
-#| out-width: 50%
+#| out-width: 70%
 knitr::include_graphics("images/PuOr.png")
 ```
 
-:::
+
+## Color Guidelines
+
+**To colorblind-proof a graphic...**
+
++ print your chart out in black and white -- if you can still read it, it will be safe for all users.
+
+```{r}
+#| fig-align: center
+#| layout-ncol: 2
+knitr::include_graphics("images/nyt_color.png")
+knitr::include_graphics("images/nyt_bw.png")
+```
+
+
 
 ## Color in ggplot2
 
@@ -1337,19 +1373,11 @@ You can also take a look at other [ways to find nice color palettes](https://lis
 
 [Lab 2: Exploring Rodents with ggplot2](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab2/LA2_ggplot.html)
 
-[Challenge 2: Spicing things up with ggplot2](https://zoerehnberg.github.io/STAT331-S23/challenges/CH_ggplot.html)
 
 ## To do...
 
 + **Lab 2: Exploring Rodents with ggplot2**
-  + due Friday, 4/14 at 11:59pm
-
-+ **Challenge 2: Spicing things up with ggplot2**
-  + due Saturday, 4/15 at 11:59pm
-  
-+ **Bonus Challenges**
-  + FizzBuzz -- due Saturday, 4/15 at 11:59pm
-  + Ugly Graphics of Penguins -- due Monday, 4/17 at 10:00am
+  + due Saturday, 4/13 at 11:59pm
   
 + **Read Chapter 3: Data Cleaning and Manipulation**
-  + **Check-in 3.1** due Monday 4/17 at 10:00am
+  + **Check-in 3.1** due Monday 4/15 at 10:00am
