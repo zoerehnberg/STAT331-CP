@@ -18,13 +18,23 @@ library(tidyverse)
 
 Today we will...
 
-+ Review PA 1: Find the Mistake
++ Comments from Week 1
++ Game Planning
 + New Material
   + Game Planning
   + Tidy Data
   + Load External Data
   + Graphics (and `ggplot2`)
 + [PA 2: Using Data Visualization to Find the Penguins](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA2.html)
+
+
+
+## Comments from Week 1
+
++ It is better to **not have spaces** in your directory or file names!
+  + Use "STAT_331" of "STAT331" instead of "STAT 331"!
+  + Use "week_1" or "week1" instead of "week 1"!
++ When you want to open R to complete a new assignment for this class, do so by **double clicking on your .Rproj file**.
 
 
 # Game Planning
@@ -217,13 +227,7 @@ Think of a graph or a data visualization as a mapping...
 + It's more flexible than a "chart zoo" of named graphs.
 + The software understands the structure of your graph.
 + It easily automates graphing of data subsets.
-  
-. . .
 
-::: {.callout-tip}
-## *ggplot2: elegant graphics for data analysis* by Hadley Wickham
-The grammar makes it easier for you to iteratively update a plot, changing a single feature at a time. The grammar is also useful because it suggests the high-level aspects of a plot that *can* be changed, giving you a framework to think about graphics, and hopefully shortening the distance from mind to paper. It also encourages the use of graphics customised to a particular problem, rather than relying on specific chart types.
-:::
 
 
 ## Components of Grammar of Graphics
@@ -277,8 +281,7 @@ ggplot(data = mpg)
 #| fig-height: 4.5
 #| fig-width: 4.5
 ggplot(data = mpg, 
-       aes(x = class, y = hwy)
-       )
+       aes(x = class, y = hwy))
 ```
 
 ### Add one `geom` per layer
@@ -291,8 +294,7 @@ ggplot(data = mpg,
 #| code-line-numbers: "4"
 #| fig-height: 6
 ggplot(data = mpg, 
-       aes(x = class, y = hwy)
-       ) +
+       aes(x = class, y = hwy)) +
   geom_jitter()
 ```
 :::
@@ -304,8 +306,7 @@ ggplot(data = mpg,
 #| code-line-numbers: "5"
 #| fig-height: 6
 ggplot(data = mpg, 
-       aes(x = class, y = hwy)
-       ) +
+       aes(x = class, y = hwy)) +
   geom_jitter() +
   geom_boxplot()
 ```
@@ -388,8 +389,7 @@ What aesthetics can we set (*see [ggplot2 cheat sheet](https://github.com/rstudi
 #| code-line-numbers: "2-3"
 ggplot(data = housingsub, 
        mapping = aes(x = date, 
-                     y = median)
-       ) +
+                     y = median)) +
   geom_point()
 ```
 
@@ -401,8 +401,7 @@ ggplot(data = housingsub,
 #| code-line-numbers: "2-3"
 ggplot(data = housingsub) +
   geom_point(mapping = aes(x = date, 
-                           y = median)
-             )
+                           y = median))
 ```
 
 :::
@@ -416,8 +415,7 @@ ggplot(data = housingsub) +
 ggplot(data = housingsub) +
   geom_point(mapping = aes(x = date, 
                            y = median,
-                           color = city)
-             )
+                           color = city))
 ```
 
 **Setting Aesthetics**
@@ -429,8 +427,7 @@ ggplot(data = housingsub) +
 ggplot(data = housingsub) +
   geom_point(mapping = aes(x = date, 
                            y = median), 
-             color = "blue"
-               )
+             color = "blue")
 ```
 
 :::
@@ -496,8 +493,7 @@ Wee use a `geom_xxx()` function to represent data points.
 ggplot(data = mpg,
        aes(x = cty,
            y = hwy,
-           color = class)
-       ) +
+           color = class)) +
   geom_point() +
   labs(x = "City (mpg)", y = "Highway (mpg)") +
   theme(axis.title = element_text(size = 14),
@@ -517,8 +513,7 @@ ggplot(data = mpg,
 ggplot(data = mpg,
        aes(x = cty,
            y = hwy,
-           color = class)
-       ) +
+           color = class)) +
   geom_text(aes(label = class)) +
   labs(x = "City (mpg)", y = "Highway (mpg)") +
   theme(axis.title = element_text(size = 14),
@@ -538,8 +533,7 @@ ggplot(data = mpg,
 ggplot(data = mpg,
        aes(x = cty,
            y = hwy,
-           color = class)
-       ) +
+           color = class)) +
   geom_line() +
   labs(x = "City (mpg)", y = "Highway (mpg)") +
   theme(axis.title = element_text(size = 14),
@@ -581,9 +575,17 @@ Make a plot of <span style="color:teal"> median house price </span> over <span s
 ### ggplot
 
 ```{r}
+#| echo: false
+sm_tx <- txhousing |>
+  filter(city %in% c("Dallas","Fort Worth", "Austin",
+                     "Houston", "El Paso"))
+```
+
+```{r}
 #| echo: true
 #| code-fold: true
-ggplot(data = txhousing, aes(x = date, y = median, color = city)) + 
+ggplot(data = sm_tx,
+       aes(x = date, y = median, color = city)) + 
   geom_point() + 
   geom_smooth(method = "loess") + 
   labs(x = "Date",
@@ -591,6 +593,94 @@ ggplot(data = txhousing, aes(x = date, y = median, color = city)) +
        title = "Texas Housing Prices")
 ```
 
+:::
+
+
+## Faceting
+
+Extracts subsets of data and places them in side-by-side plots.
+
+::: panel-tabset
+
+### `facet_grid()`
+```{r}
+#| echo: true
+#| fig-height: 3
+#| fig-width: 12
+#| code-line-numbers: "4"
+#| code-fold: true
+ggplot(data = sm_tx,
+       aes(x = date, y = median)) + 
+  geom_point() + 
+  facet_grid(.~city) +
+  geom_smooth(method = "loess") + 
+  labs(x = "Date",
+       y = "Median Home Price",
+       title = "Texas Housing Prices")
+```
+
+
+### `facet_wrap()`
+```{r}
+#| echo: true
+#| fig-height: 3.5
+#| fig-width: 8
+#| code-line-numbers: "4"
+#| code-fold: true
+#| fig-align: center
+ggplot(data = sm_tx,
+       aes(x = date, y = median)) + 
+  geom_point() + 
+  facet_wrap(.~city) +
+  geom_smooth(method = "loess") + 
+  labs(x = "Date",
+       y = "Median Home Price",
+       title = "Texas Housing Prices")
+
+```
+
+:::
+
+
+## Faceting
+
+Extracts subsets of data and places them in side-by-side plots.
+
+::: panel-tabset
+
+### Options
+<font size = "6">
+
++ `facet_grid(. ~ b)`: facet into columns based on b
++ `facet_grid(a ~ .)`: facet into rows based on a
++ `facet_grid(a ~ b)`: facet into both rows and columns
++ `facet_wrap( ~ b)`: wrap facets into a rectangular layout
+
+</font>
+
+### Scales
+You can set scales to let axis limits vary across facets:
+
+`facet_grid(y ~ x, scales = ______)`
+
+<font size = "6">
+
+  + `"free"` -- both x- and y-axis limits adjust to individual facets
+  + `"free_x"` -- only x-axis limits adjust
+  + `"free_y"` -- only y-axis limits adjust
+
+</font>
+
+### Labels
+You can set a labeller to adjust facet labels:
+
+<font size = "6">
+
++ `facet_grid(. ~ fl, labeller = label_both)`
++ `facet_grid(. ~ fl, labeller = label_bquote(alpha ^ .(x)))`
++ `facet_grid(. ~ fl, labeller = label_parsed)`
+
+</font>
 :::
 
 
@@ -673,71 +763,6 @@ ggplot(data = mpg,
 :::
 ::::
 :::
-
-## Faceting
-
-Extracts subsets of data and places them in side-by-side graphics.
-
-::: panel-tabset
-
-### `facet_grid()`
-```{r}
-#| echo: true
-#| fig-height: 2
-#| fig-width: 12
-#| code-line-numbers: "3"
-ggplot(data = mpg, aes(x = cty, y = hwy, color = class)) + 
-  geom_point() +
-  facet_grid(.~class)
-```
-
-
-### `facet_wrap()`
-```{r}
-#| echo: true
-#| fig-height: 2
-#| fig-width: 12
-#| code-line-numbers: "3"
-ggplot(data = mpg, aes(x = cty, y = hwy, color = class)) + 
-  geom_point() +
-  facet_wrap(.~class)
-```
-
-### Options
-<font size = "6">
-
-+ `facet_grid(. ~ b)`: facet into columns based on b
-+ `facet_grid(a ~ .)`: facet into rows based on a
-+ `facet_grid(a ~ b)`: facet into both rows and columns
-+ `facet_wrap( ~ b)`: wrap facets into a rectangular layout
-
-</font>
-
-### Scales
-You can set scales to let axis limits vary across facets:
-
-`facet_grid(y ~ x, scales = ______)`
-
-<font size = "6">
-
-  + `"free"` -- both x- and y-axis limits adjust to individual facets
-  + `"free_x"` -- only x-axis limits adjust
-  + `"free_y"` -- only y-axis limits adjust
-
-</font>
-
-### Labels
-You can set a labeller to adjust facet labels:
-
-<font size = "6">
-
-+ `facet_grid(. ~ fl, labeller = label_both)`
-+ `facet_grid(. ~ fl, labeller = label_bquote(alpha ^ .(x)))`
-+ `facet_grid(. ~ fl, labeller = label_parsed)`
-
-</font>
-:::
-
 
 ## Position Adjustements
 

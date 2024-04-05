@@ -208,7 +208,7 @@ You will notice that there is auto-generated text that is unrelated to the work 
 
 ### Styling your Quarto Document
 
-You can find a list of every option you can use to format an HTML document [here](https://quarto.org/docs/output-formats/html-basics.html). Further, [here](https://quarto.org/docs/output-formats/html-themes.html) are lists of different themes you can specify in your YAML to produce differently styled outputs.
+You can find a list of every option you can use to format an HTML document [here](https://quarto.org/docs/output-formats/html-basics.html) and [here](https://quarto.org/docs/reference/cells/cells-knitr.html). Further, [here](https://quarto.org/docs/output-formats/html-themes.html) are lists of different themes you can specify in your YAML to produce differently styled outputs.
 
 Make the following changes to your document:
 
