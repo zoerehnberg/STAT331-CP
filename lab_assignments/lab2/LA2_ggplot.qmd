@@ -246,6 +246,7 @@ Ugliness is subjective, so the goal here is for you to explore the different way
 ### Useful References
 
  + [Customizing ggplot2 graphics](http://r-statistics.co/Complete-Ggplot2-Tutorial-Part2-Customizing-Theme-With-R-Code.html)
+ + [Ugly graphics from a previous class](https://docs.google.com/presentation/d/19bi4KyrpKrjntKtpcKZiZgsVf-cr4X2i2MnQ6hYln7Y/edit?usp=sharing)
  + [A group-created slideshow of awful graphics](https://docs.google.com/presentation/d/1ixRsGI8BWgT2zA5AbB61eMLUbJgObvBCZt-OnZDzvX4/edit#slide=id.p)
 
 

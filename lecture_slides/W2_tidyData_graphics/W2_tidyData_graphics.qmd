@@ -35,6 +35,7 @@ Today we will...
   + Use "STAT_331" of "STAT331" instead of "STAT 331"!
   + Use "week_1" or "week1" instead of "week 1"!
 + When you want to open R to complete a new assignment for this class, do so by **double clicking on your .Rproj file**.
++ Make sure you **install** a package before you **load** it!
 
 
 # Game Planning
@@ -486,7 +487,7 @@ Wee use a `geom_xxx()` function to represent data points.
 ```{r}
 #| echo: true
 #| code-fold: true
-#| code-line-numbers: "6"
+#| code-line-numbers: "5"
 #| fig-height: 5
 #| fig-width: 7
 #| fig-align: center
@@ -506,7 +507,7 @@ ggplot(data = mpg,
 ```{r}
 #| echo: true
 #| code-fold: true
-#| code-line-numbers: "6"
+#| code-line-numbers: "5"
 #| fig-height: 5
 #| fig-width: 7
 #| fig-align: center
@@ -526,7 +527,7 @@ ggplot(data = mpg,
 ```{r}
 #| echo: true
 #| code-fold: true
-#| code-line-numbers: "6"
+#| code-line-numbers: "5"
 #| fig-height: 5
 #| fig-width: 7
 #| fig-align: center
@@ -672,13 +673,20 @@ You can set scales to let axis limits vary across facets:
 </font>
 
 ### Labels
-You can set a labeller to adjust facet labels:
+You can set a labeller to adjust facet labels.
+
+
 
 <font size = "6">
 
-+ `facet_grid(. ~ fl, labeller = label_both)`
-+ `facet_grid(. ~ fl, labeller = label_bquote(alpha ^ .(x)))`
-+ `facet_grid(. ~ fl, labeller = label_parsed)`
+Include both the variable name and factor name in the labels:
+
++ `facet_grid(. ~ b, labeller = label_both)`
+
+Display math symbols in the labels:
+
++ `facet_grid(. ~ b, labeller = label_bquote(alpha ^ .(b)))`
++ `facet_grid(. ~ b, labeller = label_parsed)`
 
 </font>
 :::
@@ -844,8 +852,7 @@ ggplot(data = mpg) +
        title = "Car Efficiency") +
   scale_y_continuous("Highway MPG", 
                      limits = c(0,50),
-                     breaks = seq(0,50,5)
-                     )
+                     breaks = seq(0,50,5))
 ```
 
 ### Scales: Color
