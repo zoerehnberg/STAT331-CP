@@ -4,7 +4,7 @@ format:
   revealjs:
         theme: default
 editor: source
-self-contained: true
+embed-resources: true
 ---
 
 ```{r setup}
@@ -14,14 +14,14 @@ library(tidyverse)
 library(palmerpenguins)
 ```
 
-## Monday, April 17
+## Monday, April 15
 
 Today we will...
 
-+ Review PA 2: Using Data Visualization to Find the Penguins
-+ Look at our [Ugly Graphics of Penguins](https://docs.google.com/presentation/d/19bi4KyrpKrjntKtpcKZiZgsVf-cr4X2i2MnQ6hYln7Y/edit?usp=sharing)!
++ Comments from Week 2
 + New Material
-  + Using `dplyr` verbs to manipulate data
+  + Introduce the `dplyr` package,
+  + Use `dplyr` verbs to manipulate data.
 + [PA 3: Identify the Mystery College](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA3.html)
 
 
@@ -44,7 +44,7 @@ data(cereal)
 str(cereal, give.attr = FALSE)
 ```
 
-### Data Head
+### Head of the Data
 
 ```{r}
 #| echo: true
@@ -65,7 +65,7 @@ summary(cereal)
 
 ## `dplyr`
 
-`dplyr` provides us with the *"Grammar of Data Manipulation"*.
+`dplyr` is part of the **tidyverse** that provides us with the *Grammar of Data Manipulation*.
 
 + This package gives us the tools to **wrangle, manipulate, and tidy** our data with ease.
 + Check out the `dplyr` [cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf).
@@ -688,7 +688,7 @@ knitr::include_graphics("https://github.com/allisonhorst/stats-illustrations/raw
 
 ## `mutate()`
 
-The data set gets **mutated** to either **include a new variable**...
+The dataset gets **mutated** to either **include a new variable**...
 
 ```{r}
 #| eval: false
@@ -796,7 +796,7 @@ cereal |>
 
 The `ungroup()` function will remove the internal grouping in your data.
 
-+ This is not something that you typically need to do, but if you are getting weird errors downstream from a `group_by()` statement, try ungrouping your data!
++ This is not something that you always need to do, but if you are getting weird errors downstream from a `group_by()` statement, try ungrouping your data!
 
 
 # `summarize()`
@@ -1000,15 +1000,15 @@ cereal |>
 
 ## [PA 3: Identify the Mystery College](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA3.html)
 
-Today you will use the `dplyr` package to clean some data and then use that cleaned data to figure out what college Ephelia has been accepted to.
+Today you will use the `dplyr` package to clean some data and then use that cleaned data to figure out what college Margaret has been accepted to.
 
-> Submit the full name of the college Ephelia will attend to the Canvas Quiz.
+> Submit the full name of the college Margaret will attend to the Canvas Quiz.
 
 
 ## To do...
 
 + **PA 3: Identify the Mystery College**
-  + Due Wednesday 4/19 at 10:00am
+  + Due Wednesday 4/17 at 10:00am
 
 
 ## Wednesday, April 19
