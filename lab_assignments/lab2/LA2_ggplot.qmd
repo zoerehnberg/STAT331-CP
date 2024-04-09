@@ -170,7 +170,7 @@ Notice how vertically stacked boxplots make the species labels more readable tha
 
 # Conducting Statistical Analyses
 
-Exploratory Data Analysis (EDA) is always a great start to investigating a dataset. Can we see a relationship between rodent weight and hindfoot length? How does rodent weight differ between species? After performing EDA, we can then conduct appropriate statistical analysis methods to formally investigate what we have seen.
+Exploratory Data Analysis (EDA) is always a great start to investigating a dataset. Can we see a relationship between rodent weight and hindfoot length? How does rodent weight differ between species? After performing EDA, we can then conduct appropriate statistical analyses to formally investigate what we have seen.
 
 In this section, we are going to conduct a one-way analysis of variance (ANOVA) to compare mean weight between the fourteen species.
 
@@ -210,7 +210,7 @@ species_mod <- aov()
 summary(species_mod)
 ```
 
-**18. Interpret the results of the ANOVA F-test in context of the hypotheses. Make sure to cite appropriate output from above.**
+**18. Based on the results of the ANOVA F-test, draw a conclusion in context of the hypotheses. Make sure to cite appropriate output from above.**
 
 But wait, the `aov()` output doesn’t actually tell us **which** species differ! Install the `emmeans` package by running `install.packages("emmeans")` in your console (NOT in the .qmd file). Then, run the code chunk below to load the package.
 
@@ -224,9 +224,10 @@ Look up the help documentation for `emmeans()`. This one might take a bit of Goo
 
 ```{r}
 species_estimates <- emmeans()
+species_estimates
 ```
 
-**20. Now that you have obtained the estimated model mean rodent weights, conduct pairwise comparisons using either the `contrast()` or `pairs()` functions from the `emmeans` package.**
+**20. Now that you have obtained the estimated model mean rodent weights, conduct pairwise comparisons using the `pairs()` function from the `emmeans` package.**
 
 ```{r}
 # carry out pairwise comparisons between species.
@@ -248,8 +249,3 @@ Ugliness is subjective, so the goal here is for you to explore the different way
  + [Customizing ggplot2 graphics](http://r-statistics.co/Complete-Ggplot2-Tutorial-Part2-Customizing-Theme-With-R-Code.html)
  + [Ugly graphics from a previous class](https://docs.google.com/presentation/d/19bi4KyrpKrjntKtpcKZiZgsVf-cr4X2i2MnQ6hYln7Y/edit?usp=sharing)
  + [A group-created slideshow of awful graphics](https://docs.google.com/presentation/d/1ixRsGI8BWgT2zA5AbB61eMLUbJgObvBCZt-OnZDzvX4/edit#slide=id.p)
-
-
-
-
-
