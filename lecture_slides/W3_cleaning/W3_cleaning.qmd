@@ -20,7 +20,7 @@ Today we will...
 
 + Comments from Week 2
 + New Material
-  + Introduce the `dplyr` package,
+  + Introduce the `dplyr` package.
   + Use `dplyr` verbs to manipulate data.
 + [PA 3: Identify the Mystery College](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA3.html)
 
@@ -1011,17 +1011,15 @@ Today you will use the `dplyr` package to clean some data and then use that clea
   + Due Wednesday 4/17 at 10:00am
 
 
-## Wednesday, April 19
+## Wednesday, April 17
 
 Today we will...
 
-+ Review Lab 2
 + Citing Your Sources!
 + New Material
-  + Extend `dplyr` verbs
-+ Thinking about Data Ethics
-+ [Lab 3](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab3/LA3_dplyr.html): Familiarity with AAE
-+ Challenge 3: Demographic Comparisons & Data Ethics
+  + Extend `dplyr` verbs to have more functionality.
+  + Think about data ethics.
++ [Lab 3](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab3/LA3_dplyr.html): Teacher Evaluations
 
 
 ## Lab 2
@@ -1094,15 +1092,16 @@ For each `type` of cereal, calculate the `mean` nutrient levels.
 
 . . .
 
-+ `.cols` -- specify the columns to apply functions to
-+ `.fns` -- specify the functions to apply
++ `.cols` -- specify the columns to apply functions to.
++ `.fns` -- specify the functions to apply.
++ `.x` -- a placeholder for the variable names being passed into the function.
 
 ```{r}
 #| echo: true
 #| eval: false
 cereal |> 
   group_by(type) |> 
-  summarise(across(.cols = calories:potass, .fns = mean))
+  summarise(across(.cols = calories:potass, .fns = ~ mean(.x)))
 ```
 
 ```{r}
@@ -1118,7 +1117,7 @@ cereal |>
 
 ## Discretize with `if_else()`
 
-For each cereal, label the `calories` as "high" or "low".
+For each cereal, label the `potass` as "high" or "low".
 
 . . .
 
@@ -1136,16 +1135,16 @@ One `if-else` statement:
 #| echo: true
 #| eval: false
 cereal |> 
-  mutate(cal_category = if_else(calories <= 100, "low", "high"),
-         .after = calories)
+  mutate(po_category = if_else(potass <= 100, "low", "high"),
+         .after = potass)
 ```
 
 ```{r}
 #| eval: true
 #| echo: false
 cereal |> 
-  mutate(cal_category = if_else(calories <= 100, "low", "high"),
-         .after = calories) |> 
+  mutate(po_category = if_else(potass <= 100, "low", "high"),
+         .after = potass) |> 
   knitr::kable() |> 
   kableExtra::scroll_box(height = "200px") |> 
   kableExtra::kable_styling(font_size = 30)
@@ -1219,7 +1218,7 @@ cereal |>
 
 ## Multiple Variables in `slice()`
 
-Find the **3** cereals with the lowest `calories` and `sugars`.
+Find the **3** cereals with the highest `fiber` and `potass`.
 
 . . .
 
@@ -1229,7 +1228,7 @@ Find the **3** cereals with the lowest `calories` and `sugars`.
 #| echo: true
 #| eval: false
 cereal |> 
-  slice_min(order_by = data.frame(calories, sugars),
+  slice_max(order_by = data.frame(fiber, potass),
             n = 3)
 ```
 
@@ -1237,7 +1236,8 @@ cereal |>
 #| eval: true
 #| echo: false
 cereal |> 
-  slice_min(order_by = data.frame(calories, sugars), n = 3) |> 
+  slice_max(order_by = data.frame(fiber, potass),
+            n = 3) |> 
   knitr::kable() |> 
   kableExtra::scroll_box(height = "250px") |> 
   kableExtra::kable_styling(font_size = 30)
@@ -1246,7 +1246,7 @@ cereal |>
 
 ## Piping into `ggplot()`
 
-Plot the `mean` `calories` per `cup` for each `manuf`.
+Plot the `mean` `protein` per `cup` for each `manuf`.
 
 . . .
 
@@ -1264,16 +1264,16 @@ cereal |>
                            manuf == "Q" ~ "Quaker Oats", 
                            manuf == "R" ~ "Ralston Purina")) |> 
   filter(type == "cold") |> 
-  mutate(cal_per_cup = calories / cups) |> 
+  mutate(pro_per_cup = protein / cups) |> 
   group_by(manuf) |> 
-  summarise(mean_cal_per_cup = mean(cal_per_cup)) |> 
+  summarise(mean_pro_per_cup = mean(pro_per_cup)) |> 
   ggplot(aes(x = manuf, 
-             y = mean_cal_per_cup, 
+             y = mean_pro_per_cup, 
              shape = manuf)) +
   geom_point(show.legend = FALSE,
              size = 6) +
   labs(x = "Manufacturer",
-       subtitle = "Mean Calories per Cup") +
+       subtitle = "Mean Protein per Cup") +
   theme_bw() +
   theme(axis.title.y = element_blank(),
         axis.title.x  = element_text(size = 30),
@@ -1286,7 +1286,7 @@ cereal |>
 
 ## Piping into `ggplot()`
 
-Plot the `mean` `calories` per `cup` for each `manuf`.
+Plot the `mean` `protein` per `cup` for each `manuf`.
 
 ```{r}
 #| output-location: slide
@@ -1302,23 +1302,23 @@ cereal |>
                            manuf == "Q" ~ "Quaker Oats", 
                            manuf == "R" ~ "Ralston Purina")) |> 
   filter(type == "cold") |> 
-  mutate(cal_per_cup = calories / cups) |> 
+  mutate(pro_per_cup = protein / cups) |> 
   group_by(manuf) |> 
-  summarise(mean_cal_per_cup = mean(cal_per_cup)) |> 
+  summarise(mean_pro_per_cup = mean(pro_per_cup)) |> 
   ggplot(aes(x = manuf, 
-             y = mean_cal_per_cup, 
+             y = mean_pro_per_cup, 
              shape = manuf)) +
   geom_point(show.legend = FALSE,
              size = 6) +
   labs(x = "Manufacturer",
-       subtitle = "Mean Calories per Cup") +
+       subtitle = "Mean Protein per Cup") +
   theme_bw() +
   theme(axis.title.y = element_blank(),
         axis.title.x  = element_text(size = 30),
         plot.subtitle = element_text(size = 32),
         axis.text = element_text(size = 22),
         axis.text.x = element_text(angle = 13)) +
-  scale_y_continuous(limits = c(75,225))
+  scale_y_continuous(limits = c(0,6))
 ```
 
 
@@ -1424,21 +1424,14 @@ cereal |>
 :::
 
 
-## [Lab 3: Familiarity with AAE + Challenge 3: Demographic Comparisons + Data Ethics](https://zoerehnberg.github.io/STAT331-S23//lab_assignments/lab3/LA3_dplyr.html)
-
-<center>
-![](images/published-article.jpg)
-</center>
+## [Lab 3: Teacher Evaluations](https://zoerehnberg.github.io/STAT331-S23//lab_assignments/lab3/LA3_dplyr.html)
 
 
 ## To do...
 
-+ **Lab 3: Familiarity with AAE**
-  + Due Friday, 4/21 at 11:59pm
-  
-+ **Challenge 3: Demographic Comparisons & Data Ethics**
-  + Due Saturday, 4/22 at 11:59pm
++ **Lab 3: Teacher Evaluations**
+  + Due Saturday, 4/20 at 11:59pm
   
 + **Read Chapter 4: Data Joins and Transformations**
-  + **Check-in 4.1 + 4.2** due Monday 4/24 at 10:00am
+  + **Check-in 4.1 + 4.2** due Monday 4/22 at 10:00am
   
