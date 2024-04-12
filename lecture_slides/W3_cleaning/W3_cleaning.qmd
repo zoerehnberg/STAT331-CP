@@ -25,6 +25,32 @@ Today we will...
 + [PA 3: Identify the Mystery College](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA3.html)
 
 
+## Comments from Week 2
+
++ Read through your .html to make sure it looks correct.
+  + Is any of your code producing errors/warnings/messages?
+  + Are images appearing properly?
+  + Are hyperlinks working properly?
++ Do not install packages in Quarto code chunks!
+  + Remember: **we only install packages once**.
++ Make sure you **cite** external sources.
+  + E.g., many people used `sapply()` to get the variable data types -- this is fine, but where did you find this solution?
+
+
+## Citing Your Sources
+
+When you write code, you will **need** to reference function/package documentation and external resources.
+
++ This is part of being a programmer!
+
+. . .
+
+When you rely on external resources for an assignment in this course, **you must cite your sources**.
+
++ If you use **any** resources outside of the course text, the course slides, and the posted cheatsheets, you **must include a citation**!
++ You will lose points if you do not.
+
+
 ## Example Data set --  [Cereal](https://search.r-project.org/CRAN/refmans/liver/html/cereal.html)
 
 ```{r}
@@ -1015,37 +1041,10 @@ Today you will use the `dplyr` package to clean some data and then use that clea
 
 Today we will...
 
-+ Citing Your Sources!
 + New Material
   + Extend `dplyr` verbs to have more functionality.
   + Think about data ethics.
 + [Lab 3: Teacher Evaluations](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab3/LA3_dplyr.html)
-
-
-## Lab 2
-
-+ Read through your .html to make sure it looks correct.
-  + Is any of your code producing errors/warnings/messages?
-  + Are images appearing properly?
-  + Are hyperlinks working properly?
-+ Do not install packages in Quarto code chunks!
-  + Remember: **we only install packages once**.
-+ Make sure you **cite** external sources.
-  + E.g., many people used `sapply()` to get the variable data types -- where did you find this solution?
-
-
-## Citing Your Sources
-
-When you write code, you will **need** to reference function/package documentation and external resources.
-
-+ This is part of being a programmer!
-
-. . .
-
-When you rely on external resources for an assignment in this course, **you must cite your sources**.
-
-+ If you use **any** resources outside of the course text, the course slides, and the posted cheatsheets, you **must include a citation**!
-+ You will lose points if you do not.
 
 
 # Extending `dplyr` verbs
@@ -1394,7 +1393,7 @@ cereal |>
 + We have a lot of power to declare **truth and fact**, hiding behind the *black box* of data science methods.
 
 
-## From Hippocratic Oath to Data Science Oath
+## Data Science Oath
 
 + I will not be ashamed to say, “I know not,” nor will I fail to call in my colleagues when the skills of another are needed.
 + I will respect the privacy of my data subjects, for their data are not disclosed to me that the world may know.
