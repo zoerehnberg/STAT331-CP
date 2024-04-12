@@ -1019,7 +1019,7 @@ Today we will...
 + New Material
   + Extend `dplyr` verbs to have more functionality.
   + Think about data ethics.
-+ [Lab 3](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab3/LA3_dplyr.html): Teacher Evaluations
++ [Lab 3: Teacher Evaluations](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab3/LA3_dplyr.html)
 
 
 ## Lab 2

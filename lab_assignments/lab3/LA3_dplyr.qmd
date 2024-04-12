@@ -1,9 +1,9 @@
 ---
-title: "Lab 3: Familiartiy with AAE"
+title: "Lab 3: Student Evaluations of Teaching"
 author: "NAME"
 format: 
   html:  
-    self-contained: true
+    embed-resources: true
     code-tools: true
     toc: true
 editor: source
@@ -13,12 +13,15 @@ execute:
   message: false
 ---
 
+In this lab, we will be using the `dplyr` package to explore student evaluations of teaching data. **You are expected to use functions from `dplyr` to do your data manipulation!**
+
+
 [Download starter .qmd file](LA3_dplyr.qmd)
 
-[Download `AAE.csv`](AAE.csv)
+[Download `teacher_evals.csv`](teacher_evals.csv)
 
 ::: callout-warning
-Save **both** your .qmd file and your data set in the same folder within your Stat 331 directory! **DO NOT** open your .qmd file straight from your downloads folder.
+Save **both** your .qmd file and your dataset in the same folder within your Stat 331 directory! **DO NOT** open the .qmd file straight from your downloads folder.
 :::
 
 ::: {.callout-tip collapse="true"}
@@ -31,15 +34,59 @@ Save **both** your .qmd file and your data set in the same folder within your St
 -   Be sure to **save** your work regularly.
 -   Be sure to **render** your file every so often, to check for errors and make sure it looks nice.
     -   Make sure your Quarto document does not contain `View(dataset)` or `install.packages("package")`, both of these will prevent rendering.
-    -   Check your Quarto document for moments when you looked at the data by typing the name of the data frame. Leaving these in means the whole dataset will print out and this looks unprofessional.
+    -   Check your Quarto document for occasions when you looked at the data by typing the name of the data frame. Leaving these in means the whole dataset will print out and this looks unprofessional. **Remove these!**
     -   If all else fails, you can set your execution options to `error: true`, which will allow the file to render even if errors are present.
 :::
 
-### Data Set
+### The Data
 
-The data set `AAE` contains results from a study conducted by a linguist at the University of Minnesota. The researcher was interested in predicting musical taste based on familiarity with African American English (AAE). 168 subjects participated in the study, and each was asked to define 64 different AAE terms. The definitions given were used to create a `familiarity` score for each subject for each term. This score quantifies how well the subject knew the term on a scale of 1-5 (1 = not at all, 5 = very well). Before tackling the problems, study the description of each variable [here](http://conservancy.umn.edu/bitstream/handle/11299/116327/5/explanationAAEHiphopChesley.txt).
+The `teacher_evals` dataset contains student evaluations of reaching (SET) collected from students at a university in Poland. There are SET surveys from students in all fields and all levels of study offered by the university. 
 
-**1. Load the appropriate R packages and import the `AAE` data.**
+The SET questionnaire that students at this university complete is as follows:
+
+> Evaluation survey of the teaching staff of [university name].
+>
+> Please complete the following evaluation form, which aims to assess the lecturer’s performance. Only one answer should be indicated for each question. The answers are coded in the following way: 5 - I strongly agree; 4 - I agree; 3 - Neutral; 2 - I don’t agree; 1 - I strongly don’t agree.
+>
+> Question 1: I learnt a lot during the course. 
+>
+> Question 2: I think that the knowledge acquired during the course is very useful.
+>
+> Question 3: The professor used activities to make the class more engaging.
+>
+> Question 4: If it was possible, I would enroll for a course conducted by this lecturer again. 
+>
+> Question 5: The classes started on time.
+>
+> Question 6: The lecturer always used time efficiently.
+>
+> Question 7: The lecturer delivered the class content in an understandable and efficient way.
+>
+> Question 8: The lecturer was available when we had doubts.
+>
+> Question 9. The lecturer treated all students equally regardless of their race, background and ethnicity.
+
+
+These data are from the end of the winter semester of the 2020-2021 academic year. In the period of data collection, all university  classes were entirely online amid the Covid-19 pandemic. While expected learning outcomes were not changed, the online mode of study could have affected grading policies and could have implications for data.
+
+**Average SET scores** were combined with many other variables, including:
+
+1. **characteristics of the teacher** (degree, seniority, gender, SET scores in the past 6 semesters).
+2. **characteristics of the course** (time of day, day of the week, course type, course breadth, class duration, class size).
+3. **percentage of students providing SET feedback.**
+4. **course grades** (mean, standard deviation, percentage failed for the current course and previous 6 semesters).
+
+This rich dataset allows us to **investigate many of the biases in student evaluations of teaching** that have been reported in the literature and to formulate new hypotheses.
+
+Before tackling the problems below, study the description of each variable [here](https://earobinson95.github.io/stat331-calpoly/lab-assignments/Lab3-dplyr/teacher_evals_codebook.pdf).
+
+::: {style="font-size: 70%;"}
+
+Citation: journal, Under blind review in refereed. *University SET data, with faculty and courses characteristics.* Ann Arbor, MI: Inter-university Consortium for Political and Social Research [distributor], 2021-09-12. <https://doi.org/10.3886/E149801V1>
+
+:::
+
+**1. Load the appropriate R packages and the `teacher_evals` data.**
 
 ```{r setup}
 # code chunk for loading packages
@@ -49,195 +96,171 @@ The data set `AAE` contains results from a study conducted by a linguist at the 
 # code chunk for importing the data
 ```
 
-### Summary
+### Data Inspection + Summary
 
-**2. Provide a brief overview (2-4 sentences) of the data set.**
+**2. Provide a brief overview (~4 sentences) of the dataset.**
 
 ::: callout-note
-It is always good practice to start an analysis by getting a feel for the data and providing a quick summary for readers. You do not need to show any source code for this question, although you probably want to use code to get some information about the data set.
+It is always good practice to start an analysis by getting a feel for the data and providing a quick summary for readers. You do not need to show any code for this question, although you probably want to use code to get some information about the data(e.g., `summary(data)`, `glimpse(data)`, `dim(data)`, etc.). Things to think about – where did the data come from? what sort of data are provided (context and data type)? how much data do you have? etc.
 :::
 
 ```{r}
 # you may want to use code to answer this question
 ```
 
-**3. What are the rows of this data set?**
+**3. What is the unit of observation (i.e. a single row in the dataset) identified by?**
 
 ::: callout-warning
-It is not one person per row!
+It is not one instructor per row! It’s also not just one class per row!
 :::
 
 ```{r}
 # you may want to use code to answer this question
 ```
 
-**4. Missing values for some of the variables were replaced with other values. How were missing values replaced? What do you believe are some benefits and drawbacks of doing this?**
-
-```{r}
-# you may want to use code to answer this question
-```
-
-**5. How many unique AAE words were studied in this data set? You MUST show code for this.**
+**4. Use one `dplyr` pipeline to clean the data by (1) renaming the `gender` variable `sex`, (2) removing all courses with fewer than 10 respondents, (3) changing data types in whichever way you see fit (e.g., is the instructor ID really a numeric data type?), and (4) only keeping the columns we will use -- `course_id`, `teacher_id`, `question_no`, `no_participants`, `resp_share`, `SET_score_avg`, `percent_failed_cur`, `academic_degree`, `seniority`, and `sex`. Assign your cleaned data to a new variable named `teacher_evals_clean` – use this data going forward.**
 
 ::: callout-tip
-Helpful functions: `distinct()`, `count()`
+Helpful functions: `rename()`, `mutate()`, `as.factor()`
+
+It would be most efficient to use `across()` in combination with `mutate()` to complete this task.
+
+:::
+
+```{r}
+# code chunk for Q4
+```
+
+**5. How many unique instructors and unique courses are present in the cleaned dataset?**
+
+::: callout-tip
+
+Helpful functions: `summarize()`, `n_distinct()`
+
 :::
 
 ```{r}
 # code chunk for Q5
 ```
 
-**6. Overwrite the `ethnic` variable to re-categorize `ethnic` into only two groups, "white" and "non-white".**
-
-::: callout-tip
-Helpful functions: `mutate()`, `if_else()`
-:::
+**6. One teacher-course combination has some missing values, coded as `NA` Which instructor has these missing values? Which couse? What variable are the missing values in?**
 
 ```{r}
 # code chunk for Q6
 ```
 
-**7. It is fairly common for researchers to simplify their data by collapsing ethnic or racial categories similar to what you just did. What are some issues with representing the data in this way?**
-
-
-
-
-**8. Adjust the *variable type* for `sex` and `ethnic` from `character` to `factor`**
+**7. What are the demographics of the instructors in this study? Investigate the variables `academic_degree`, `seniority`, and `sex` and summarize your findings in ~3 complete sentences.**
 
 ::: callout-tip
-Helpful functions: `mutate()`, `as.factor()`
 
-It may be more efficient to use `across()` in combination with `mutate()` to complete this task.
+You’ll need to first manipulate your data to have each instructor represented only once.
+
+Helpful functions: `select()`, `distinct(___, .keep_all = TRUE)`, `count()`, `summary()`
+
 :::
+
+```{r}
+# code chunk for Q7
+```
+
+**8. Each course seems to have used a different subset of the 9 evaluation questions. How many teacher-course combinations asked all 9 questions?**
 
 ```{r}
 # code chunk for Q8
 ```
 
-**9. What are the demographics of the people in this study? Investigate the variables `sex`, `age`, and `ethnic` and summarize your findings in 1-3 complete sentences.**
+
+## Rate my Professor
 
 ::: callout-tip
-You'll need to first manipulate your data to have each person represented only once.
 
-Helpful functions: `select()`, `grop_by()` `distinct()`, `count()`, `summary()`
+Helpful functions: `filter()`, `group_by()`, `summarize()`, `slice()`
+
+Useful variables: `question_no`, `teacher_id`, `SET_score_avg`, `percent_failed_cur`, `resp_share`, `academic_degree`, `seniority`, `sex`
+
 :::
+
+**9. Which instructors had the highest and lowest average rating for Question 1 (I learnt a lot during the course.) across all their courses?**
+
+**a. Sketch a game plan and include the image below.**
+
+![]()
+
+**b. Implement/code your game plan**
 
 ```{r}
 # code chunk for Q9
 ```
 
-
-**10. Make at least two plots to display the demographic information of the subjects in this study.**
-
-::: callout-note
-You do not need to discuss these plots, but make sure they are appropriate to the data types and have informative titles and axis labels. Feel free to use the skills you learned in Challenge 2 to enhance your plots!
-:::
+**10. Which instructors with one year of experience had the highest and lowest average percentage of students failing in the current semester across all their courses?**
 
 ```{r}
 # code chunk for Q10
 ```
 
-### Familiar Words
-
-
-**11. Write a piece of code to obtain the following output. *DO NOT* just filter based on the provided subject IDs. There are other logical statements that you can use to get this output.**
-
-![Write code to replicate this output.](output.png)
+**11. Which female instructors with either a doctorate or professor degree had the highest and lowest average percent of students responding to the evaluation across all their courses?**
 
 ```{r}
 # code chunk for Q11
 ```
 
-**12. For each demographic group listed below, determine *all* words in this study that were the most *and* least familiar, *on average*.**
+## Chi-Square Test of Independence
 
 ::: callout-tip
-What I'm asking you to do is, for each of the specified demographic groups, return the word or words that are most familiar, on average, and the word or words that are least familiar, on average. If you find that multiple words are tied for the most or least familiar, return all of the tied words.
 
-Helpful functions: `filter()`, `group_by()`, `summarize()`, `slice_max()`, `slice_min()`
+## Refresher on Chi-square test of independence
 
-Useful variables: `word`, `familiarity`, `sex`, `age`, `ethnic`
+While a second course in statistics is a pre-requisite for this class, [here](https://openintro-ims.netlify.app/inference-tables#inference-tables) is a refresher on Chi-square tests of independence.
+
 :::
 
-  **a. Think about coding this up if your group of interest is non-white folks. Create a game plan with your thought process and include an image below. You do not need to provide R code.**
+Let’s compare the level of SET ratings for Question 3 (The professor used activities to make the class more engaging.) between senior instructors and junior instructors.
 
-![]()
-
-  **b. Write code for people below the age of 20.**
-
-```{r}
-# code chunk for Q12b
-```
-
-  **c. Write code for non-white women.**
-
-```{r}
-# code chunk for Q12c
-```
-
-  **d. Write code for white men above the age of 30.**
-
-```{r}
-# code chunk for Q12d
-```
-
-
-### Study Subjects
-
-A joke among the [Tidy Tuesday](https://www.tidytuesday.com/) community is that Justin Bieber was one of the subjects in this study. Bieber, a white male, from a relatively small town (10,000-60,000 people) in Ontario would have been 17-23 at the time of the study.
-
-**13. Determine which subject you believe is secretly Bieber. Justify your answer.**
+**12. Create a new dataset `teacher_evals_compare` that accomplishes the following with one `dplyr` pipeline: (1) includes responses for Question 3 only, (2) creates a new variable called `SET_level` that is “excellent” if the `SET_score_avg` is 4 or higher (inclusive) and “standard” otherwise, (3) creates a new variable called `sen_level` that is “junior” if `seniority` is less than 4 (not inclusive) and “senior” otherwise, and (4) contains only the variables we are interested in – `course_id`, `SET_level`, and `sen_level`.**
 
 ::: callout-tip
-Refer again to the data set description. There is another clue about Bieber's identity.
+
+Helpful functions: `filter()`, `mutate()`, `if_else()`, `select()`
+
+:::
+
+```{r}
+# code chunk for Q12
+```
+
+**13. Using the new dataset and your `ggplot2` skills, recreate the filled bar plot shown below.**
+
+![](make_plot.png)
+
+::: calout-tip
+
+Helpful geometric object and arguments: `geom_bar(stat = ..., position = ...)`
+
+You should NOT have to do any more data manipulation to create this plot. Note that getting the general structure and reader friendly labels is good enough, but my favorite colors are “steelblue” and “orange3”, and my favorite theme is black/white!
+
 :::
 
 ```{r}
 # code chunk for Q13
 ```
 
-
-
-## Challenge 3: Demographic Comparisons & Data Ethics (+10)
-
-::: callout-note
-Your challenge should be submitted as a separate file, not included at the bottom of your Lab 3 file. Please submit your rendered HTML file on Canvas.
-
-Make sure to include the following Quarto options in the YAML for your `challeng3.qmd` file:
-
--   `self-contained: true`
--   `echo: true`
--   `code-tools: true`
-
-You might just want to copy the YAML from this lab, or create a copy of this lab and delete the unnecessary parts. **You may still need some of your data cleaning steps from the lab.**
-:::
-
-### Demographic Comparisons
-
-Let's compare the number of artists that participants reported liking for each genre. Specifically, you will determine which music genre **most differentiates** each of the demographic groups provided.
-
-> Which genre had the **most different** average (mean or median) number of reported artists between the two groups?
->
-> -   Male versus Female
-> -   White versus Non-White
+**14. Look up the documentation for `chisq.test()` to carry out a chi-square test of independence between the SET level and instructor seniority level in your new dataset.**
 
 ::: callout-tip
-You might find it helpful to first create a new data set with only the variables you are interested in! Look at the music variables in the data set description along with the demographics of interest.
 
-Helpful functions: `select()`, `group_by()`, `summarize()`, `across()`
+Note that the `chisq.test()` function does not take a formula / data specification as we have seen before. You will either have to use `with()` or indicate the variables of interest using `$` syntax.
 
-Other useful operations in R: `mean`, `diff`, `abs`, `which.max()`
 :::
 
-### Study Design Critique -- Data Ethics
+```{r}
+# code chunk for Q14
+```
 
-Analysis and results related to this study were published in the article ([You Know What It Is: Learning Words through Listening to Hip-Hop](https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0028248&type=printable)) by Paula Chesley.
+**15. Draw a conclusion about the independence of evaluation level and seniority level based on your chi-square test.**
 
-Many concerns, including from previous 331 students, have been raised regarding the **design** and **social context** of this study.
 
-Review the [data description](http://conservancy.umn.edu/bitstream/handle/11299/116327/5/explanationAAEHiphopChesley.txt) outlining how participants were recruited for this study. Also look through the article for additional details regarding aspects of the study.
+### Study Critique
 
-> Based on the design of this study and its context (African American English), what are **at least two** concerns you have?
->
-> Keep in mind that this critique aligns with conversations regarding data ethics.
->
-> Thus, your concerns need to address the racial aspects of the design of this study.
+Part of the impetus behind this study was to investigate characteristics of a course or an instructor that might affect student evaluations of teaching that are **not** explicitly related to teaching effectiveness. For instance, it has been shown that gender identity and presentation affect student evaluations of teaching ([an example](https://link.springer.com/article/10.1007/s10755-014-9313-4?nr_email_referer=1)).
+
+**16. If you were to conduct this study at Cal Poly, what are two other variables you would like to collect that you think might be related to student evaluations? These should be course or instructor characteristics that were not collected in this study. Explain what effects you would expect to see for each.**
