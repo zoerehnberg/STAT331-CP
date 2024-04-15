@@ -89,6 +89,13 @@ summary(cereal)
 
 # Data Wrangling with `dplyr`
 
+```{r}
+#| echo: false
+#| fig-cap: "(Allison Horst)"
+knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-illustrations/main/rstats-artwork/data_cowboy.png")
+```
+
+
 ## `dplyr`
 
 `dplyr` is part of the **tidyverse** that provides us with the *Grammar of Data Manipulation*.
@@ -98,8 +105,9 @@ summary(cereal)
 
 ```{r}
 #| echo: false
-#| fig-cap: "Data wrangling by Allison Horst"
-knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-illustrations/main/rstats-artwork/data_cowboy.png")
+#| fig-align: center
+knitr::include_graphics("images/dplyr.png")
+
 ```
 
 
@@ -181,9 +189,9 @@ dr_rehnberg |>
 
 <font size = "6">
 
-+ `filter(data = cereal, ...)`
-+ `select(data = cereal, ...)`
-+ `mutate(data = cereal, ...)`
++ `filter(.data = cereal, ...)`
++ `select(.data = cereal, ...)`
++ `mutate(.data = cereal, ...)`
 
 </font>
 
@@ -197,7 +205,7 @@ These are equivalent:
 ```{r}
 #| echo: true
 #| eval: false
-summary(data = cereal)
+summary(.data = cereal)
 ```
 
 :::
@@ -225,7 +233,7 @@ You can also pipe manipulated data or summaries directly into your `ggplot2` cod
 
 ```{r}
 #| fig-align: center
-#| fig-cap: "dplyr filter() by Allison Horst"
+#| fig-cap: "(Allison Horst)"
 knitr::include_graphics("https://github.com/allisonhorst/stats-illustrations/raw/main/rstats-artwork/dplyr_filter.jpg")
 ```
 
@@ -707,7 +715,7 @@ colnames(cereal)[2:4] <- c("maker","temp","cals")
 
 ```{r}
 #| fig-align: center
-#| fig-cap: "Mutate (by Allison Horst)"
+#| fig-cap: "(Allison Horst)"
 knitr::include_graphics("https://github.com/allisonhorst/stats-illustrations/raw/main/rstats-artwork/dplyr_mutate.png")
 ```
 
@@ -720,14 +728,14 @@ The dataset gets **mutated** to either **include a new variable**...
 #| eval: false
 #| echo: true
 cereal |> 
-  mutate(cal_per_cup = calories / cups)
+  mutate(potass_per_cup = potass / cups)
 ```
 
 ```{r}
 #| eval: true
 #| echo: false
 cereal |> 
-  mutate(cal_per_cup = calories / cups)  |> 
+  mutate(potass_per_cup = potass / cups)  |> 
   knitr::kable() |> 
   kableExtra::scroll_box(height = "200px") |> 
   kableExtra::kable_styling(font_size = 30)
@@ -759,14 +767,14 @@ You can define new columns...
 ```{r}
 #| echo: true
 #| eval: false
-cereal$cal_per_cup <- cereal$calories / cereal$cups
+cereal$potass_per_cup <- cereal$potass / cereal$cups
 ```
 
 ```{r}
 #| echo: false
 #| eval: true
 tmp <- cereal
-tmp$cal_per_cup <- tmp$calories / tmp$cups
+tmp$potass_per_cup <- tmp$potass / tmp$cups
 tmp |> 
   knitr::kable() |> 
   kableExtra::scroll_box(height = "300px") |> 
@@ -788,7 +796,7 @@ cereal$shelf <- as.factor(cereal$shelf)
 
 ```{r}
 #| fig-align: center
-#| fig-cap: "The ungroup() command can be just as important as the group_by() command! (by Allison Horst)"
+#| fig-cap: "(Allison Horst)"
 knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-illustrations/main/rstats-blanks/ungroup_blank.png")
 ```
 
@@ -822,7 +830,7 @@ cereal |>
 
 The `ungroup()` function will remove the internal grouping in your data.
 
-+ This is not something that you always need to do, but if you are getting weird errors downstream from a `group_by()` statement, try ungrouping your data!
++ This is not something that you always need to do, but if you are getting unexpected output downstream from a `group_by()` statement, try ungrouping your data!
 
 
 # `summarize()`
@@ -963,9 +971,9 @@ cereal |>
 #| eval: false
 cereal |> 
   filter(type == "cold") |> 
-  mutate(cal_per_cup = calories / cups) |> 
+  mutate(potass_per_cup = potass / cups) |> 
   group_by(manuf) |> 
-  summarise(mean_cal_per_cup = mean(cal_per_cup))
+  summarise(mean_potass_per_cup = mean(potass_per_cup))
 ```
 
 ```{r}
@@ -973,9 +981,9 @@ cereal |>
 #| echo: false
 cereal |> 
   filter(type == "cold") |> 
-  mutate(cal_per_cup = calories / cups) |> 
+  mutate(potass_per_cup = potass / cups) |> 
   group_by(manuf) |> 
-  summarise(mean_cal_per_cup = mean(cal_per_cup)) |> 
+  summarise(mean_potass_per_cup = mean(potass_per_cup)) |> 
   knitr::kable() |> 
   kableExtra::scroll_box(height = "400px") |> 
   kableExtra::kable_styling(font_size = 30)
@@ -992,9 +1000,9 @@ When you manipulate your data, make sure you assign your new dataset to a variab
 #| eval: false
 cereal_summary <- cereal |> 
   filter(type == "cold") |> 
-  mutate(cal_per_cup = calories / cups) |> 
+  mutate(potass_per_cup = potas / cups) |> 
   group_by(manuf) |> 
-  summarise(mean_cal_per_cup = mean(cal_per_cup))
+  summarise(mean_potass_per_cup = mean(potass_per_cup))
 ```
 
 
@@ -1009,7 +1017,7 @@ Similar to the `+` formatting in `ggplot`, **do not** continue a line after writ
 ```{r}
 #| echo: true
 #| eval: false
-cereal |> group_by(type) |> summarise(mean_calories = mean(calories), num_cereals = n(), mean_sugar = mean(sugars))
+cereal |> group_by(type) |> summarise(mean_fiber = mean(fiber), num_cereals = n(), mean_sugar = mean(sugars))
 ```
 
 ### Good Practice
@@ -1018,11 +1026,13 @@ cereal |> group_by(type) |> summarise(mean_calories = mean(calories), num_cereal
 #| eval: false
 cereal |> 
   group_by(type) |> 
-  summarise(mean_calories = mean(calories), 
+  summarise(mean_fiber = mean(fiber), 
             num_cereals = n(),
             mean_sugar = mean(sugars))
 ```
+
 :::
+
 
 ## [PA 3: Identify the Mystery College](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA3.html)
 
