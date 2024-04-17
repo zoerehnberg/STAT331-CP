@@ -1105,15 +1105,11 @@ For each `type` of cereal, calculate the `mean` nutrient levels.
 
 + `.cols` -- to specify the **columns** to apply functions to.
 + `.fns` -- to specify the **functions** to apply.
-+ `.x` -- as a placeholder for the variable names being passed into the function.
++ `.x` -- as a placeholder for the variables being passed into the function.
 
 . . .
 
-We use **lambda function** notation:
-
-<center>
-`~ <FUN_NAME>(.x, <ARGS>)`
-</center>
+We use **lambda functions**: `~ <FUN_NAME>(.x, <ARGS>)`
 
 
 ## Summarize multiple columns with `across()`
@@ -1135,8 +1131,8 @@ cereal |>
   group_by(type) |> 
   summarise(across(.cols = calories:potass, .fns = mean)) |> 
   knitr::kable() |> 
-  kableExtra::scroll_box(height = "170px") |> 
-  kableExtra::kable_styling(font_size = 30)
+  kableExtra::scroll_box(height = "130px") |> 
+  kableExtra::kable_styling(font_size = 23)
 ```
 
 . . .
@@ -1158,8 +1154,8 @@ cereal |>
   summarise(across(.cols = calories:potass,
                    .fns = ~ mean(.x, trim = 0.1))) |> 
   knitr::kable() |> 
-  kableExtra::scroll_box(height = "170px") |> 
-  kableExtra::kable_styling(font_size = 30)
+  kableExtra::scroll_box(height = "130px") |> 
+  kableExtra::kable_styling(font_size = 23)
 ```
 
 
@@ -1444,9 +1440,9 @@ cereal |>
 
 ## Data Science Oath
 
-+ I will not be ashamed to say, “I know not,” nor will I fail to call in my colleagues when the skills of another are needed.
-+ I will respect the privacy of my data subjects, for their data are not disclosed to me that the world may know.
-+ I will remember that my data are not just numbers without meaning or context, but represent real people and situations, and that my work may lead to unintended societal consequences, such as inequality, poverty, and disparities due to algorithmic bias.
++ I will not be ashamed to say, **“I know not,”** nor will I fail to call in my colleagues when the skills of another are needed.
++ I will respect the **privacy** of my data subjects, for their data are not disclosed to me that the world may know.
++ I will remember that my data are not just numbers without meaning or context, but represent **real people and situations**, and that my work may lead to unintended societal consequences, such as inequality, poverty, and disparities due to algorithmic bias.
 
 
 ## ASA Ethical Guidelines
