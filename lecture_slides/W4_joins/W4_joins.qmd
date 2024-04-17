@@ -12,6 +12,7 @@ embed-resources: true
 #| message: false
 library(tidyverse)
 library(palmerpenguins)
+library(ggridges)
 ```
 
 ## Monday, April 22
@@ -222,14 +223,14 @@ How would you **manually** convert this to **long format**?
 0.  Keep the column `Week`.
 1.  Create a new column `Day_of_Week`.
 2.  Create a new column `Rainfall` (hold daily rainfall values).
-3.  Now we have three columns (`Week`, `Day_of_Week`, and `Rainfall`) -- start moving Sunday values over.
+3.  Now we have three columns -- move Sunday values over.
 :::
 
 . . .
 
 <center> 
 
-![](images/pivot_rain1.png){width=35%}
+![](images/pivot_rain1.png){width=25%}
 
 </center> 
 
@@ -239,12 +240,12 @@ How would you **manually** convert this to **long format**?
 0.  Keep the column `Week`.
 1.  Create a new column `Day_of_Week`.
 2.  Create a new column `Rainfall` (hold daily rainfall values).
-3.  Now we have three columns (`Week`, `Day_of_Week`, and `Rainfall`) -- start moving Sunday values over.
+3.  Now we have three columns -- move Sunday values over.
 4.  Duplicate `Week` 1-5 and copy Monday values over.
 
 <center> 
 
-![](images/pivot_rain2.png){width=35%}
+![](images/pivot_rain2.png){width=25%}
 </center> 
 
 
@@ -253,14 +254,30 @@ How would you **manually** convert this to **long format**?
 0.  Keep the column `Week`.
 1.  Create a new column `Day_of_Week`.
 2.  Create a new column `Rainfall` (hold daily rainfall values).
-3.  Now we have three columns (`Week`, `Day_of_Week`, and `Rainfall`) -- start moving Sunday values over.
+3.  Now we have three columns -- move Sunday values over.
 4.  Duplicate `Week` 1-5 and copy Monday values over.
 5.  Duplicate `Week` 1-5 and copy Tuesday values over.
 
-::: incremental
+## Manual Method: Steps
+
+0.  Keep the column `Week`.
+1.  Create a new column `Day_of_Week`.
+2.  Create a new column `Rainfall` (hold daily rainfall values).
+3.  Now we have three columns -- move Sunday values over.
+4.  Duplicate `Week` 1-5 and copy Monday values over.
+5.  Duplicate `Week` 1-5 and copy Tuesday values over.
+6.  Continue for the rest of the days of the week.
+
+## Manual Method: Steps
+
+0.  Keep the column `Week`.
+1.  Create a new column `Day_of_Week`.
+2.  Create a new column `Rainfall` (hold daily rainfall values).
+3.  Now we have three columns -- move Sunday values over.
+4.  Duplicate `Week` 1-5 and copy Monday values over.
+5.  Duplicate `Week` 1-5 and copy Tuesday values over.
 6.  Continue for the rest of the days of the week.
 7.  You may want to `arrange()` by `Week` to get the rainfall values chronological order.
-:::
 
 
 
@@ -1227,8 +1244,10 @@ I have randomly selected 25 songs (and their albums) to consider.
 ```{r}
 #| echo: false
 set.seed(2)
-eras_data <- read_excel("data/TS_data.xlsx", sheet = 1) |> 
-  slice_sample(n = 25)
+full_eras <- read_excel("data/TS_data.xlsx", sheet = 1)
+eras_data <- full_eras |> 
+  slice_sample(n = 25) |> 
+  select(Song, Album)
 ```
 
 ```{r}
@@ -1324,7 +1343,7 @@ eras_data |>
 
 ## Creating a Factor -- NOTE
 
-To change a column type to factor, you must wrap `fct()` in a `mutate()` call!
+To change a column type to factor, you must wrap `fct()` in a `mutate()` call.
 
 ```{r}
 #| echo: true
@@ -1413,6 +1432,25 @@ eras_data <- eras_data |>
 **Non-specified levels are not re-coded.**
 
 
+## Re-coding a Factor -- `case_when`
+
+We have similar functionality with the `case_when()` function...
+
+. . .
+
+```{r}
+#| echo: true
+eras_data |>
+  mutate(Album = case_when(Album == "Folklore" ~ "folklore",
+                           Album == "Evermore" ~ "evermore",
+                           Album == "Reputation" ~ "reputation",
+                           .default = Album),
+         Album = fct(Album)) |> 
+  pull(Album)
+```
+
+
+
 ## Collapsing a Factor --`fct_collapse`
 
 Collapse multiple existing levels of a factor with the syntax `<new level> = c(<old levels>)`.
@@ -1464,90 +1502,92 @@ Unspecified levels remain in the same order at the **end**.
 :::
 
 
-## Re-coding a Factor -- `fct_recode`
+## Re-ordering Factors in `ggplot2`
 
 ::: panel-tabset
-### cereal
 
-```{r}
-#| echo: true
-library(liver)
-data(cereal)
-str(cereal$manuf)
-```
+### Original
 
-### `case_when()`
-```{r}
-#| echo: true
-#| eval: false
-cereal |> 
-  mutate(manuf = case_when(manuf == "A" ~ "American Home Food Products", 
-                           manuf == "G" ~ "General Mills", 
-                           manuf == "K" ~ "Kelloggs", 
-                           manuf == "N" ~ "Nabisco", 
-                           manuf == "P" ~ "Post", 
-                           manuf == "Q" ~ "Quaker Oats", 
-                           manuf == "R" ~ "Ralston Purina"),
-         manuf = as.factor(manuf)) |> 
-  select(manuf) |> 
-  summary()
-```
-
-
-```{r}
-#| eval: true
-#| echo: false
-cereal |> 
-  mutate(manuf = case_when(manuf == "A" ~ "American Home Food Products", 
-                           manuf == "G" ~ "General Mills", 
-                           manuf == "K" ~ "Kelloggs", 
-                           manuf == "N" ~ "Nabisco", 
-                           manuf == "P" ~ "Post", 
-                           manuf == "Q" ~ "Quaker Oats", 
-                           manuf == "R" ~ "Ralston Purina"),
-         manuf = as.factor(manuf)) |> 
-  select(manuf) |> 
-  summary() |> 
-  knitr::kable() |> 
-  kableExtra::scroll_box(height = "200px") |> 
-  kableExtra::kable_styling(font_size = 30)
-```
-
-### `fct_recode()`
+The bars follow the default factor levels.
 
 ```{r}
 #| echo: true
 #| eval: false
-cereal |> 
-  mutate(manuf = fct_recode(manuf, 
-                             "American Home Food Products" = "A", 
-                             "General Mills" = "G", 
-                             "Kelloggs" = "K", 
-                             "Nabisco" = "N", 
-                             "Post" = "P", 
-                             "Quaker Oats" = "Q", 
-                             "Ralston Purina" = "R")) |> 
-  select(manuf) |> 
-  summary()
+#| code-line-numbers: "2"
+full_eras |> 
+  mutate(Album = fct(Album)) |> 
+  ggplot() +
+  geom_bar(aes(y = Album,
+               fill = Album)) +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  labs(x = "Number of Songs",
+       y = "",
+       subtitle = "Album",
+       title = "Songs Played on the Eras Tour")
 ```
 
+### Plot
+
 ```{r}
-#| eval: true
 #| echo: false
-cereal |> 
-  mutate(manuf = fct_recode(manuf, 
-                             "American Home Food Products" = "A", 
-                             "General Mills" = "G", 
-                             "Kelloggs" = "K", 
-                             "Nabisco" = "N", 
-                             "Post" = "P", 
-                             "Quaker Oats" = "Q", 
-                             "Ralston Purina" = "R")) |> 
-  select(manuf) |> 
-  summary()|> 
-  knitr::kable() |> 
-  kableExtra::scroll_box(height = "200px") |> 
-  kableExtra::kable_styling(font_size = 30)
+full_eras |> 
+  mutate(Album = fct(Album)) |> 
+  ggplot() +
+  geom_bar(aes(y = Album,
+               fill = Album)) +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  labs(x = "Number of Songs",
+       y = "",
+       subtitle = "Album",
+       title = "Songs Played on the Eras Tour")
+```
+
+### Specify Levels
+
+We can order factor levels to order the bar plot.
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "2-6"
+full_eras |> 
+  mutate(Album = fct(Album,
+                     levels = c("Fearless","Speak Now","Red",
+                                "1989","Reputation","Lover",
+                                "Folklore","Evermore",
+                                "Midnights"))) |> 
+  ggplot() +
+  geom_bar(aes(y = Album,
+               fill = Album)) +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  labs(x = "Number of Songs",
+       y = "",
+       subtitle = "Album",
+       title = "Songs Played on the Eras Tour")
+```
+
+### Plot
+
+```{r}
+#| echo: false
+full_eras |> 
+  mutate(Album = fct(Album,
+                     levels = c("Fearless","Speak Now","Red",
+                                "1989","Reputation","Lover",
+                                "Folklore","Evermore",
+                                "Midnights"))) |> 
+  ggplot() +
+  geom_bar(aes(y = Album,
+               fill = Album)) +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  labs(x = "Number of Songs",
+       y = "",
+       subtitle = "Album",
+       title = "Songs Played on the Eras Tour")
 ```
 
 :::
@@ -1556,33 +1596,35 @@ cereal |>
 ## Re-ordering Factors in `ggplot2`
 
 ```{r}
-cereal_recode <- cereal |> 
-  filter(manuf != "A") |> 
-  mutate(manuf = fct_recode(manuf, 
-                             "General Mills" = "G", 
-                             "Kelloggs" = "K", 
-                             "Nabisco" = "N", 
-                             "Post" = "P", 
-                             "Quaker Oats" = "Q", 
-                             "Ralston Purina" = "R"))
+full_eras <- full_eras |> 
+  mutate(Album = fct(Album,
+                     levels = c("Fearless","Speak Now","Red",
+                                "1989","Reputation","Lover",
+                                "Folklore","Evermore",
+                                "Midnights")))
 ```
 
 ::: panel-tabset
 
 ### Original
 
+The ridge plots follow the order of the factor levels.
+
 ```{r}
 #| echo: true
 #| eval: false
-#| code-line-numbers: "4"
-library(ggridges)
-cereal_recode |> 
-  ggplot(aes(x = sugars, 
-             y = manuf, 
-             fill = manuf)) +
+#| code-line-numbers: "3"
+full_eras |> 
+  ggplot(aes(x = Length, 
+             y = Album, 
+             fill = Album)) +
   geom_density_ridges() +
   theme_minimal() +
-  theme(legend.position = "none")
+  theme(legend.position = "none")+
+  labs(x = "Song Length (mins)",
+       y = "",
+       subtitle = "Album",
+       title = "Songs Played on the Eras Tour")
 ```
 
 ### Plot
@@ -1590,51 +1632,59 @@ cereal_recode |>
 ```{r}
 #| echo: false
 library(ggridges)
-cereal_recode |> 
-  ggplot(aes(x = sugars, 
-             y = manuf, 
-             fill = manuf)) +
+full_eras |> 
+  ggplot(aes(x = Length, 
+             y = Album, 
+             fill = Album)) +
   geom_density_ridges() +
   theme_minimal() +
-  theme(legend.position = "none")
+  theme(legend.position = "none")+
+  labs(x = "Song Length (mins)",
+       y = "",
+       subtitle = "Album",
+       title = "Songs Played on the Eras Tour")
 ```
 
 ### `fct_reorder()`
+
+Inside `ggplot()`, we can order factor levels by a summary value.
 
 ```{r}
 #| echo: true
 #| eval: false
 #| code-line-numbers: "3-5"
-cereal_recode |> 
-  ggplot(aes(x = sugars, 
-             y = fct_reorder(.f = manuf, 
-                             .x = sugars,
+full_eras |> 
+  ggplot(aes(x = Length, 
+             y = fct_reorder(.f = Album,
+                             .x = Length,
                              .fun = mean), 
-             fill = manuf)) +
+             fill = Album)) +
   geom_density_ridges() +
   theme_minimal() +
-  theme(legend.position = "none")
+  theme(legend.position = "none")+
+  labs(x = "Song Length (mins)",
+       y = "",
+       subtitle = "Album",
+       title = "Songs Played on the Eras Tour")
 ```
-
-We can reorder factor levels based on a summary value.
-
-+ Note: default reordering function is the median.
 
 ### Plot
 
 ```{r}
 #| echo: false
-cereal_recode |> 
-  ggplot(aes(x = sugars, 
-             y = fct_reorder(.f = manuf, 
-                             .x = sugars,
+full_eras |> 
+  ggplot(aes(x = Length, 
+             y = fct_reorder(.f = Album,
+                             .x = Length,
                              .fun = mean), 
-             fill = manuf)
-         ) +
+             fill = Album)) +
   geom_density_ridges() +
   theme_minimal() +
-  theme(legend.position = "none") +
-  labs()
+  theme(legend.position = "none")+
+  labs(x = "Song Length (mins)",
+       y = "",
+       subtitle = "Album",
+       title = "Songs Played on the Eras Tour")
 ```
 
 :::
@@ -1647,71 +1697,102 @@ cereal_recode |>
 ### Original
 
 ```{r}
-#| echo: true
-#| eval: false
-#| code-line-numbers: "6"
-cereal_recode |> 
-  group_by(manuf, shelf) |> 
-  summarise(avg_sugar = mean(sugars, na.rm = TRUE)) |> 
-  ggplot(aes(x = shelf, 
-             y = avg_sugar, 
-             color = manuf)) +
-  geom_line(size = 1.5) +
-  theme_minimal() +
-  labs(color = "Manuf.")
+full_eras <- full_eras |> 
+  mutate(Single = if_else(Single == "Y", 1, 0))
 ```
 
-The order of the legend follows the order of the factor levels.
+The legend follows the order of the factor levels.
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "7"
+full_eras |> 
+  filter(!Album %in% c("1989","Fearless")) |> 
+  group_by(Album, Single) |> 
+  summarise(avg_len = mean(Length)) |> 
+  ggplot(aes(x = Single, 
+             y = avg_len, 
+             color = Album)) +
+  geom_point(size = 1.5) +
+  geom_line() +
+  theme_minimal() +
+  scale_x_continuous(breaks = c(0,1),
+                     labels = c("No","Yes")) +
+  labs(y = "",
+       subtitle = "Average Song Length",
+       color = "Album")
+```
 
 ### Plot
 
 ```{r}
 #| echo: false
-cereal_recode |> 
-  group_by(manuf, shelf) |> 
-  summarise(avg_sugar = mean(sugars, na.rm = TRUE)) |> 
-  ggplot(aes(x = shelf, 
-             y = avg_sugar, 
-             color = manuf)) +
-  geom_line(size = 1.5) +
+full_eras |> 
+  filter(!Album %in% c("1989","Fearless")) |> 
+  group_by(Album, Single) |> 
+  summarise(avg_len = mean(Length)) |> 
+  ggplot(aes(x = Single, 
+             y = avg_len, 
+             color = Album)) +
+  geom_point(size = 1.5) +
+  geom_line() +
   theme_minimal() +
-  labs(color = "Manuf.")
+  scale_x_continuous(breaks = c(0,1),
+                     labels = c("No","Yes")) +
+  labs(y = "",
+       subtitle = "Average Song Length",
+       color = "Album")
 ```
 
 ### `fct_reorder2()`
 
+Inside `ggplot()`, we can order factor levels by the $y$ values associated with the largest $x$ values.
+
 ```{r}
 #| echo: true
 #| eval: false
-#| code-line-numbers: "6"
-cereal_recode |> 
-  group_by(manuf, shelf) |> 
-  summarise(avg_sugar = mean(sugars, na.rm = TRUE)) |> 
-  ggplot(aes(x = shelf, 
-             y = avg_sugar, 
-             color = fct_reorder2(manuf, .x = shelf, .y = avg_sugar))) +
-  geom_line(size = 1.5) +
+#| code-line-numbers: 7-9
+full_eras |> 
+  filter(!Album %in% c("1989","Fearless")) |> 
+  group_by(Album, Single) |> 
+  summarise(avg_len = mean(Length)) |> 
+  ggplot(aes(x = Single, 
+             y = avg_len, 
+             color = fct_reorder2(.f = Album,
+                                  .x = Single,
+                                  .y = avg_len))) +
+  geom_point(size = 1.5) +
+  geom_line() +
   theme_minimal() +
-  labs(color = "Manuf.")
+  scale_x_continuous(breaks = c(0,1),
+                     labels = c("No","Yes")) +
+  labs(y = "",
+       subtitle = "Average Song Length",
+       color = "Album")
 ```
-
-We can reorder factor levels based on the y values associated with the largest x values.
-
-+ The legend order will match the line order on the far right.
 
 ### Plot
 
 ```{r}
 #| echo: false
-cereal_recode |> 
-  group_by(manuf, shelf) |> 
-  summarise(avg_sugar = mean(sugars, na.rm = TRUE)) |> 
-  ggplot(aes(x = shelf, 
-             y = avg_sugar, 
-             color = fct_reorder2(manuf, .x = shelf, .y = avg_sugar))) +
-  geom_line(size = 1.5) +
+full_eras |> 
+  filter(!Album %in% c("1989","Fearless")) |> 
+  group_by(Album, Single) |> 
+  summarise(avg_len = mean(Length)) |> 
+  ggplot(aes(x = Single, 
+             y = avg_len, 
+             color = fct_reorder2(.f = Album,
+                                  .x = Single,
+                                  .y = avg_len))) +
+  geom_point(size = 1.5) +
+  geom_line() +
   theme_minimal() +
-  labs(color = "Manuf.")
+  scale_x_continuous(breaks = c(0,1),
+                     labels = c("No","Yes")) +
+  labs(y = "",
+       subtitle = "Average Song Length",
+       color = "Album")
 ```
 
 ::: 
