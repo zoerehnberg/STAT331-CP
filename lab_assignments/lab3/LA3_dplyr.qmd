@@ -143,7 +143,7 @@ Helpful functions: `summarize()`, `n_distinct()`
 # code chunk for Q5
 ```
 
-**6. One teacher-course combination has some missing values, coded as `NA` Which instructor has these missing values? Which couse? What variable are the missing values in?**
+**6. One teacher-course combination has some missing values, coded as `NA`. Which instructor has these missing values? Which couse? What variable are the missing values in?**
 
 ```{r}
 # code chunk for Q6
