@@ -1,10 +1,10 @@
 ---
-title: "Data Joins + Transformations"
+title: "Data Joins + Transformations + Factors"
 format: 
   revealjs:
     theme: default
 editor: source
-self-contained: true
+embed-resources: true
 ---
 
 ```{r setup}
@@ -14,59 +14,36 @@ library(tidyverse)
 library(palmerpenguins)
 ```
 
-## Monday, April 24
+## Monday, April 22
 
 Today we will...
 
--   Review PA 3: Identify the Mystery College
+-   Comments from Week 3
 -   New Material
-    -   Lambda functions
-    -   Pivoting with `tidyr`
-    -   Joining with `dplyr`
+    -   Pivoting data with `tidyr`
+    -   Joining data with `dplyr`
 -   [PA 4: Military Spending](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA4.html)
--   [Bonus Challenge: Murder in SQL City](https://zoerehnberg.github.io/STAT331-S23/challenges/bCH_murder.html)
 
 
-## Lambda Functions
+## Comments from Week 3
 
-We know how to use `across()` to apply  built-in functions across many columns.
++ The [`tidyverse`](https://www.tidyverse.org/packages/) package automatically loads `ggplot2`, `dplyr`, `readr`, etc. -- do not load these twice!
 
-```{r}
-library(liver)
-data(cereal)
-```
-
-```{r}
-#| echo: true
-cereal |> 
-  summarize(across(calories:potass, mean))
-```
-
-. . .
-
-But what if we want to pass **additional arguments** to a function?
-
-+ E.g., we need to drop missing data (`na.rm = T`).
-+ E.g., we need to calculate a **trimmed** mean (`trim = 0.1`).
++ Do not use `mutate()` + `distinct()`, when you can use `summarize()`!
+  + We want to pay attention to the **efficiency** of our code.
 
 
-## Lambda Functions
+## `mutate()` vs `summarise()`
 
-When you want to specify additional arguments, you need to use a **lambda function** rather than just the function name:
+::: panel-tabset
+### `mutate()`
 
-<center>
-`~ <FUN_NAME>(.x, <ARGS>)`
-</center>
+![](images/mutate-sketch.JPG)
 
-. . .
+### `summarise()`
 
-Calculate trimmed means, trimming 10% of the data on each end.
-
-```{r}
-#| echo: true
-cereal |> 
-  summarize(across(calories:potass, ~ mean(.x, trim = 0.1)))
-```
+![](images/summarise-sketch.JPG){width=85%}
+:::
 
 
 # Data Layouts
@@ -84,25 +61,27 @@ Tidy data...
 
 ## Consequences of Messy Data
 
-![Illustration by Allison Horst](https://www.openscapes.org/img/blog/tidydata/tidydata_2.jpg)
+![Allison Horst](https://www.openscapes.org/img/blog/tidydata/tidydata_2.jpg)
 
--   Tidy: use the same tools in similar ways for different datasets.
--   Messy: create unique tools that are difficult to generalize.
+-   *Tidy*: use the same tools in similar ways for different datasets.
+-   *Messy*: create unique tools that are difficult to generalize.
 
 
 ## Creating Tidy Data
 
 We may need to **transform** our data to turn it into the **version of tidy** that is best for a task at hand.
 
-![Illustration by Allison Horst](https://www.openscapes.org/img/blog/tidydata/tidydata_4.jpg)
+![Allison Horst](https://www.openscapes.org/img/blog/tidydata/tidydata_4.jpg)
 
 
 ## Creating Tidy Data
 
-We want to look at `mean` **cereal nutrients** based on `shelf`.
+Let's say we want to look at `mean` **cereal nutrients** based on `shelf`.
+
+. . .
 
 + The data are in a **wide** format -- a separate column for each nutrient.
-+ Transforming the data will make plotting easier.
++ **Transforming** the data will make plotting easier.
 
 ```{r}
 #| echo: true
@@ -216,7 +195,7 @@ cereal_long |>
 
 ::: columns
 ::: column
-![Tidyexpalin animation by Kelsey Gonzalez](https://github.com/gadenbuie/tidyexplain/raw/main/images/static/png/original-dfs-tidy.png)
+![Kelsey Gonzalez](https://github.com/gadenbuie/tidyexplain/raw/main/images/static/png/original-dfs-tidy.png)
 :::
 
 ::: column
@@ -240,14 +219,49 @@ How would you **manually** convert this to **long format**?
 ## Manual Method: Steps
 
 ::: incremental
-1.  Create a new column: `Day_of_Week`.
-2.  Create a new column: `Rainfall` (hold daily rainfall values).
+0.  Keep the column `Week`.
+1.  Create a new column `Day_of_Week`.
+2.  Create a new column `Rainfall` (hold daily rainfall values).
+3.  Now we have three columns (`Week`, `Day_of_Week`, and `Rainfall`) -- start moving Sunday values over.
+:::
+
+. . .
+
+<center> 
+
+![](images/pivot_rain1.png){width=35%}
+
+</center> 
+
+
+## Manual Method: Steps
+
+0.  Keep the column `Week`.
+1.  Create a new column `Day_of_Week`.
+2.  Create a new column `Rainfall` (hold daily rainfall values).
+3.  Now we have three columns (`Week`, `Day_of_Week`, and `Rainfall`) -- start moving Sunday values over.
+4.  Duplicate `Week` 1-5 and copy Monday values over.
+
+<center> 
+
+![](images/pivot_rain2.png){width=35%}
+</center> 
+
+
+## Manual Method: Steps
+
+0.  Keep the column `Week`.
+1.  Create a new column `Day_of_Week`.
+2.  Create a new column `Rainfall` (hold daily rainfall values).
 3.  Now we have three columns (`Week`, `Day_of_Week`, and `Rainfall`) -- start moving Sunday values over.
 4.  Duplicate `Week` 1-5 and copy Monday values over.
 5.  Duplicate `Week` 1-5 and copy Tuesday values over.
+
+::: incremental
 6.  Continue for the rest of the days of the week.
 7.  You may want to `arrange()` by `Week` to get the rainfall values chronological order.
 :::
+
 
 
 ## Computational Approach
@@ -271,13 +285,8 @@ Take a **wide** dataset and turn it into a **long** daaset.
 
 ```{r}
 #| echo: true
-#| code-line-numbers: "6-8"
 #| eval: false
-library(readxl)
-slo_rainfall <- read_xlsx("data/2023-rainfall-slo.xlsx")
-
 slo_rainfall |> 
-  mutate(across(Sunday:Saturday, as.numeric)) |> 
   pivot_longer(cols      = Sunday:Saturday,
                names_to  = "Day_of_Week",
                values_to = "Daily_Rainfall")
@@ -295,7 +304,7 @@ slo_rainfall |>
                names_to  = "Day_of_Week",
                values_to = "Daily_Rainfall")|> 
   knitr::kable() |> 
-  kableExtra::scroll_box(height = "400px") |> 
+  kableExtra::scroll_box(height = "500px") |> 
   kableExtra::kable_styling(font_size = 30)
 ```
 
@@ -311,7 +320,7 @@ Take a **long** dataset and turn it into a **wide** daaset.
 
 ## `pivot_wider()`
 
-We calculate the mean amount of protein for cereals on each shelf and for each manufacturer.
+Let's say we calculate the `mean` amount of `protein` for cereals on each `shelf` and for each `manuf`.
 
 ```{r}
 #| echo: true
@@ -336,6 +345,10 @@ mean_protein |>
 
 
 ## `pivot_wider()`
+
+We can make this dataset more easily readable...
+
+. . .
 
 ```{r}
 #| eval: false
@@ -397,9 +410,9 @@ mean_protein |>
 
 Multiple, interconnected tables of data are called **relational**.
 
-+ It is the *relation* between data sets, not just the individual data sets themselves, that are important.
++ It is the *relation* between datasets, not just the individual datasets themselves, that are important.
 
-![IMDb movie relational data](https://relational.fit.cvut.cz/assets/img/datasets-generated/imdb_ijs.svg)
+![IMDb movie relational data](images/imdb_relational.png)
 
 ```{r imdb-data}
 #| eval: false
@@ -496,7 +509,7 @@ Filter *observations* based on values in new dataframe.
 
 A key uniquely identifies an observation in a data set.
 
-+ To combine (join) two datasets, the key needs to be present in both.
++ To combine (join) two datasets, the **key** needs to be present in both.
 
 . . .
 
@@ -711,13 +724,13 @@ directors_genres |>
 
 
 
-## Mutating Joins
+## More Mutating Joins
 
--   `left_join()` -- keep only (and all) observations in the left data set
+-   `left_join()` -- keep only (and all) observations present in the left data set
 
--   `right_join()` -- keep only (and all) observations in the right data set 
+-   `right_join()` -- keep only (and all) observations present in the right data set 
 
--   `full_join()` -- keep  all observations in both data sets
+-   `full_join()` -- keep only (and all) observations present in **both** data sets
 
 <center>
 
@@ -726,7 +739,7 @@ directors_genres |>
 </center>
 
 
-## Mutating Joins
+## More Mutating Joins
 
 Which directors would **remain** for each of the following?
 
@@ -930,59 +943,26 @@ directors_genres_subset |>
 
 Today you will be tidying messy data to explore the relationship between countries of the world and military spending.
 
-+ **Due Wednesday, 4/26 at 10:00am**
-
-## [Bonus Challenge: Murder in SQL City](https://zoerehnberg.github.io/STAT331-S23/challenges/bCH_murder.html)
-
-For this challenge, you will be using table joins to solve a murder mystery!
-
-+ Completing this Challenge will require the manipulation of strings -- we will focus on this next week.
-+ **Due Monday, 5/8 at 11:59pm**
-
-<center>
-![](images/sql-murder-relational-data.png){width=50%}
-</center>
++ **Due Wednesday, 4/24 at 10:00am**
 
 
 ## To do...
 
 -   **PA 4: Military Spending**
-    -   Due Wednesday, 4/26 at 10:00am
--   **Bonus Challenge: Murder in SQL City**
-    -   Due Monday, 5/8 at 11:59pm
+    -   Due Wednesday, 4/24 at 10:00am
 
 
-## Wednesday, April 26
+
+## Wednesday, April 24
 
 Today we will...
 
--   Review Lab 3: Familiarity with AAE
--   Miscellaneous...
+-   New Material
+    -   Extensions to Relational Data
+    -   Factors with `forcats`
     -   Clean Variable Names
     -   Lifecycle Stages
--   Extensions to Relational Data
--   Lab 4: Avocados
--   Challenge 3: Avocado Toast Ate My Mortgage
-
-
-## Lab 3: Familiarity with AAE
-
-+ The [`tidyverse`](https://www.tidyverse.org/packages/) package automatically loads `ggplot2`, `dplyr`, `readr`, etc. -- do not load these twice!
-
-+ Do not use `mutate()` + `distinct()`, when you can use `summarize()`!
-
-
-## `mutate()` vs `summarise()`
-
-::: panel-tabset
-### `mutate()`
-
-![](images/mutate-sketch.JPG)
-
-### `summarise()`
-
-![](images/summarise-sketch.JPG){width=85%}
-:::
+-   Lab 4: Childcare Costs
 
 
 ## Lab 3: Game Plan!
@@ -1030,117 +1010,6 @@ For each demographic group, determine **all** words in this study that were the 
 ![](images/GP5.png){width=70%}
 
 </center>
-
-
-## Clean Variable Names with [`janitor`](https://sfirke.github.io/janitor/)
-
-```{r}
-#| include: false
-library(readxl)
-library(tidyverse)
-military <- read_xlsx("../../practice_activities/gov_spending_per_capita.xlsx", 
-                sheet = "Share of Govt. spending", 
-                skip  = 7, 
-                n_max  = 191)
-
-military_clean <- military |> 
-  mutate(across(`1988`:`2019`,
-                ~ na_if(.x, y = ". .")),
-         across(`1988`:`2019`,
-                ~ na_if(.x, y = "xxx")))
-```
-
-Data from external sources likely has variable names not ideally formatted for R.
-
-Names may...
-
-+ contain spaces.
-+ start with numbers.
-+ start with a mix of capital and lower case letters.
-
-. . .
-
-```{r}
-#| eval: true
-#| echo: true
-names(military)[1:12]
-```
-
-
-## Clean Variable Names with [`janitor`](https://sfirke.github.io/janitor/)
-
-
-The `janitor` package converts all variable names in a dataset to *snake_case*.
-
-Names will...
-
-+ start with a lower case letter.
-+ have spaces filled in with `_`.
-
-```{r}
-#| eval: true
-#| echo: true
-#| code-line-numbers: "3-5"
-library(janitor)
-military_clean_names <- military |> 
-  clean_names()
-
-names(military_clean_names)[1:12]
-```
-
-
-## Lifceycle Stages
-
-As packages get updated, the functions and function arguments included in those packages will change.
-
-+ The accepted syntax for a function may change.
-+ A function/functionality may disappear.
-
-![[Learn more about lifecycle stages](https://lifecycle.r-lib.org/articles/stages.html) of packages, functions, function arguments in R.](images/lifecycle.png)
-
-
-## Deprecated Functions
-
-A **deprecated** functionality has a better alternative available and is scheduled for removal.
-
-+ You get a warning telling you what to use instead.
-
-. . .
-
-```{r}
-#| warning: true
-#| message: true
-#| echo: true
-#| code-line-numbers: "2"
-military_clean |> 
-  filter(across(Notes:`2019`, is.na)) |> 
-  slice_head(n = 3) |> 
-  select(1:8)
-```
-
-
-## Deprecated Functions
-
-You **should not** use deprecated functions!
-
-Instead, we use...
-
-```{r}
-#| echo: true
-#| code-line-numbers: "2"
-military_clean |>
-  filter(if_all(Notes:`2019`, ~ is.na(.x))) |> 
-  slice_head(n = 3) |> 
-  select(1:8)
-```
-
-
-## Superceded Functions
-
-A **superseded** functionality has a better alternative, but is not going away .
-
-+ This is a softer alternative to deprecation.
-+ A superseded function will not give a warning (since there’s no risk if you keep using it), but the documentation will give you a recommendation.
 
 
 # Extensions to Relational Data
@@ -1337,16 +1206,645 @@ species |>
 
 :::
 
+# Factor Variables
 
-## Lab + Challenge
 
-[Lab 4: Avocados + Challenge 4: Avocado Toast Ate My Mortgage](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab4/LA4_avocado.html)
+## What is a factor variable?
 
-<br> **Handy Helpers**
+Factors are used for
 
-`rename()` -- Change names of columns
+1. categorical variables with a fixed and known set of possible values.
+  + E.g., `day_born` = Sunday, Monday, Tuesday, ..., Saturday
+2. displaying character vectors in non-alphabetical order.
 
-`separate()` -- Separate values of a variable
+
+## Eras Tour
+
+Let's consider songs that Taylor Swift played on her Eras Tour.
+
+I have randomly selected 25 songs (and their albums) to consider.
+
+```{r}
+#| echo: false
+set.seed(2)
+eras_data <- read_excel("data/TS_data.xlsx", sheet = 1) |> 
+  slice_sample(n = 25)
+```
+
+```{r}
+#| echo: true
+eras_data |> 
+  slice_head(n = 10)
+```
+
+
+## Creating a Factor -- Base `R`
+
+A **character** vector:
+
+```{r}
+#| echo: true
+eras_data |> 
+  pull(Album)
+```
+
+. . .
+
+A **factor** vector:
+
+```{r}
+#| echo: true
+eras_data |> 
+  pull(Album) |> 
+  factor()
+```
+
+
+
+## Creating a Factor -- Base `R`
+
+When you create a factor variable from a vector...
+
++ Every unique element in the vector becomes a **level**.
++ The levels are ordered alphabetically.
++ The elements are no longer displayed in quotes.
+
+
+## Creating a Factor -- Base `R`
+
+You can **specify the order of the levels** with the `level` argument.
+
+```{r}
+#| echo: true
+eras_data |> 
+  pull(Album) |> 
+  factor(levels = c("Fearless","Speak Now","Red","1989",
+                    "Reputation","Lover","Folklore",
+                    "Evermore","Midnights"))
+```
+
+## `forcats`
+
+:::: {.columns}
+::: {.column width="80%"}
+We use this package to...
+
++ turn character variables into factors.
+
++ make factors by discretizing numeric variables.
+
++ rename or reorder the levels of an existing factor.
+:::
+::: {.column width="20%"}
+```{r}
+#| fig-align: center
+knitr::include_graphics("https://github.com/rstudio/hex-stickers/blob/main/thumbs/forcats.png?raw=true")
+```
+:::
+::::
+
+::: callout-note
+The packages `forcats` ("for categoricals") helps wrangle categorical variables.
+
+  + `forcats` loads with `tidyverse`!
+:::
+
+
+## Creating a Factor -- `fct`
+
+With `fct()`, the levels are automatically ordered in the **order of first appearance**.
+
+```{r}
+#| echo: true
+eras_data |> 
+  pull(Album) |> 
+  fct()
+```
+
+
+## Creating a Factor -- NOTE
+
+To change a column type to factor, you must wrap `fct()` in a `mutate()` call!
+
+```{r}
+#| echo: true
+#| eval: false
+eras_data <- eras_data |> 
+  mutate(Album = fct(Album))
+```
+
+. . .
+
+I am just using `pull()` to display the outcome.
+
+```{r}
+#| echo: true
+eras_data |> 
+  pull(Album) |> 
+  fct()
+```
+
+
+## Creating a Factor -- `fct`
+
+You can still **specify the order of the levels** with `level`.
+
+```{r}
+#| echo: true
+eras_data |> 
+  pull(Album) |> 
+  fct(levels = c("Fearless","Speak Now","Red","1989",
+                 "Reputation","Lover","Folklore",
+                 "Evermore","Midnights"))
+```
+
+
+## Creating a Factor -- `fct`
+
+You can also **specify non-present levels**.
+
+```{r}
+#| echo: true
+eras_data |> 
+  pull(Album) |> 
+  fct(levels = c("Taylor Swift",
+                 "Fearless","Speak Now","Red","1989",
+                 "Reputation","Lover","Folklore",
+                 "Evermore","Midnights",
+                 "The Tortured Poets Department")) 
+```
+
+```{r}
+#| echo: false
+eras_data <- eras_data |> 
+  mutate(Album = fct(Album,
+                     levels = c("Taylor Swift",
+                                "Fearless","Speak Now","Red",
+                                "1989","Reputation","Lover",
+                                "Folklore","Evermore","Midnights",
+                                "The Tortured Poets Department")))
+```
+
+
+## Re-coding a Factor -- `fct_recode`
+
+Oops, we have a typo in some of our levels! We change existing levels with the syntax `<new level> = <old level>`.
+
+. . .
+
+```{r}
+#| echo: true
+eras_data |>
+  pull(Album) |> 
+  fct_recode("folklore" = "Folklore",
+             "evermore" = "Evermore",
+             "reputation" = "Reputation")
+```
+
+```{r}
+#| echo: false
+eras_data <- eras_data |>
+  mutate(Album = fct_recode(.f = Album,
+                            "folklore" = "Folklore",
+                            "evermore" = "Evermore",
+                            "reputation" = "Reputation"))
+```
+
+**Non-specified levels are not re-coded.**
+
+
+## Collapsing a Factor --`fct_collapse`
+
+Collapse multiple existing levels of a factor with the syntax `<new level> = c(<old levels>)`.
+
+. . .
+
+```{r}
+#| echo: true
+eras_data |> 
+  mutate(Genre = fct_collapse(.f= Album,
+                       "country pop" = c("Taylor Swift", "Fearless"),
+                       "pop rock" = c("Speak Now","Red"),
+                       "electropop" = c("1989","reputation","Lover"),
+                       "folk pop" = c("folklore","evermore"),
+                       "alt-pop" = "Midnights")) |> 
+  slice_sample(n = 6)
+```
+
+
+## Re-leveling a Factor --`fct_relevel`
+
+Change the **order** of the levels of an existing factor.
+
+::: panel-tabset
+
+### Original
+
+```{r}
+#| echo: true
+eras_data |>
+  pull(Album) |> 
+  levels()
+```
+
+### Ordered by Copies Sold
+
+```{r}
+#| echo: true
+eras_data |> 
+  pull(Album) |>
+  fct_relevel(c("Fearless","1989","Taylor Swift",
+                "Speak Now","Red","Midnights","reputation",
+                "folklore","Lover","evermore")) |> 
+  levels()
+```
+
+Unspecified levels remain in the same order at the **end**.
+
+:::
+
+
+## Re-coding a Factor -- `fct_recode`
+
+::: panel-tabset
+### cereal
+
+```{r}
+#| echo: true
+library(liver)
+data(cereal)
+str(cereal$manuf)
+```
+
+### `case_when()`
+```{r}
+#| echo: true
+#| eval: false
+cereal |> 
+  mutate(manuf = case_when(manuf == "A" ~ "American Home Food Products", 
+                           manuf == "G" ~ "General Mills", 
+                           manuf == "K" ~ "Kelloggs", 
+                           manuf == "N" ~ "Nabisco", 
+                           manuf == "P" ~ "Post", 
+                           manuf == "Q" ~ "Quaker Oats", 
+                           manuf == "R" ~ "Ralston Purina"),
+         manuf = as.factor(manuf)) |> 
+  select(manuf) |> 
+  summary()
+```
+
+
+```{r}
+#| eval: true
+#| echo: false
+cereal |> 
+  mutate(manuf = case_when(manuf == "A" ~ "American Home Food Products", 
+                           manuf == "G" ~ "General Mills", 
+                           manuf == "K" ~ "Kelloggs", 
+                           manuf == "N" ~ "Nabisco", 
+                           manuf == "P" ~ "Post", 
+                           manuf == "Q" ~ "Quaker Oats", 
+                           manuf == "R" ~ "Ralston Purina"),
+         manuf = as.factor(manuf)) |> 
+  select(manuf) |> 
+  summary() |> 
+  knitr::kable() |> 
+  kableExtra::scroll_box(height = "200px") |> 
+  kableExtra::kable_styling(font_size = 30)
+```
+
+### `fct_recode()`
+
+```{r}
+#| echo: true
+#| eval: false
+cereal |> 
+  mutate(manuf = fct_recode(manuf, 
+                             "American Home Food Products" = "A", 
+                             "General Mills" = "G", 
+                             "Kelloggs" = "K", 
+                             "Nabisco" = "N", 
+                             "Post" = "P", 
+                             "Quaker Oats" = "Q", 
+                             "Ralston Purina" = "R")) |> 
+  select(manuf) |> 
+  summary()
+```
+
+```{r}
+#| eval: true
+#| echo: false
+cereal |> 
+  mutate(manuf = fct_recode(manuf, 
+                             "American Home Food Products" = "A", 
+                             "General Mills" = "G", 
+                             "Kelloggs" = "K", 
+                             "Nabisco" = "N", 
+                             "Post" = "P", 
+                             "Quaker Oats" = "Q", 
+                             "Ralston Purina" = "R")) |> 
+  select(manuf) |> 
+  summary()|> 
+  knitr::kable() |> 
+  kableExtra::scroll_box(height = "200px") |> 
+  kableExtra::kable_styling(font_size = 30)
+```
+
+:::
+
+
+## Re-ordering Factors in `ggplot2`
+
+```{r}
+cereal_recode <- cereal |> 
+  filter(manuf != "A") |> 
+  mutate(manuf = fct_recode(manuf, 
+                             "General Mills" = "G", 
+                             "Kelloggs" = "K", 
+                             "Nabisco" = "N", 
+                             "Post" = "P", 
+                             "Quaker Oats" = "Q", 
+                             "Ralston Purina" = "R"))
+```
+
+::: panel-tabset
+
+### Original
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "4"
+library(ggridges)
+cereal_recode |> 
+  ggplot(aes(x = sugars, 
+             y = manuf, 
+             fill = manuf)) +
+  geom_density_ridges() +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+### Plot
+
+```{r}
+#| echo: false
+library(ggridges)
+cereal_recode |> 
+  ggplot(aes(x = sugars, 
+             y = manuf, 
+             fill = manuf)) +
+  geom_density_ridges() +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+### `fct_reorder()`
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "3-5"
+cereal_recode |> 
+  ggplot(aes(x = sugars, 
+             y = fct_reorder(.f = manuf, 
+                             .x = sugars,
+                             .fun = mean), 
+             fill = manuf)) +
+  geom_density_ridges() +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+We can reorder factor levels based on a summary value.
+
++ Note: default reordering function is the median.
+
+### Plot
+
+```{r}
+#| echo: false
+cereal_recode |> 
+  ggplot(aes(x = sugars, 
+             y = fct_reorder(.f = manuf, 
+                             .x = sugars,
+                             .fun = mean), 
+             fill = manuf)
+         ) +
+  geom_density_ridges() +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  labs()
+```
+
+:::
+
+
+## Re-ordering Factors in `ggplot2`
+
+::: panel-tabset
+
+### Original
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "6"
+cereal_recode |> 
+  group_by(manuf, shelf) |> 
+  summarise(avg_sugar = mean(sugars, na.rm = TRUE)) |> 
+  ggplot(aes(x = shelf, 
+             y = avg_sugar, 
+             color = manuf)) +
+  geom_line(size = 1.5) +
+  theme_minimal() +
+  labs(color = "Manuf.")
+```
+
+The order of the legend follows the order of the factor levels.
+
+### Plot
+
+```{r}
+#| echo: false
+cereal_recode |> 
+  group_by(manuf, shelf) |> 
+  summarise(avg_sugar = mean(sugars, na.rm = TRUE)) |> 
+  ggplot(aes(x = shelf, 
+             y = avg_sugar, 
+             color = manuf)) +
+  geom_line(size = 1.5) +
+  theme_minimal() +
+  labs(color = "Manuf.")
+```
+
+### `fct_reorder2()`
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "6"
+cereal_recode |> 
+  group_by(manuf, shelf) |> 
+  summarise(avg_sugar = mean(sugars, na.rm = TRUE)) |> 
+  ggplot(aes(x = shelf, 
+             y = avg_sugar, 
+             color = fct_reorder2(manuf, .x = shelf, .y = avg_sugar))) +
+  geom_line(size = 1.5) +
+  theme_minimal() +
+  labs(color = "Manuf.")
+```
+
+We can reorder factor levels based on the y values associated with the largest x values.
+
++ The legend order will match the line order on the far right.
+
+### Plot
+
+```{r}
+#| echo: false
+cereal_recode |> 
+  group_by(manuf, shelf) |> 
+  summarise(avg_sugar = mean(sugars, na.rm = TRUE)) |> 
+  ggplot(aes(x = shelf, 
+             y = avg_sugar, 
+             color = fct_reorder2(manuf, .x = shelf, .y = avg_sugar))) +
+  geom_line(size = 1.5) +
+  theme_minimal() +
+  labs(color = "Manuf.")
+```
+
+::: 
+
+
+
+# `janitor` Package
+
+
+## Clean Variable Names with [`janitor`](https://sfirke.github.io/janitor/)
+
+```{r}
+#| include: false
+library(readxl)
+library(tidyverse)
+military <- read_xlsx("../../practice_activities/gov_spending_per_capita.xlsx", 
+                sheet = "Share of Govt. spending", 
+                skip  = 7, 
+                n_max  = 191)
+
+military_clean <- military |> 
+  mutate(across(`1988`:`2019`,
+                ~ na_if(.x, y = ". .")),
+         across(`1988`:`2019`,
+                ~ na_if(.x, y = "xxx")))
+```
+
+Data from external sources likely has variable names not ideally formatted for R.
+
+Names may...
+
++ contain spaces.
++ start with numbers.
++ start with a mix of capital and lower case letters.
+
+. . .
+
+```{r}
+#| eval: true
+#| echo: true
+names(military)[1:12]
+```
+
+
+## Clean Variable Names with [`janitor`](https://sfirke.github.io/janitor/)
+
+
+The `janitor` package converts all variable names in a dataset to *snake_case*.
+
+Names will...
+
++ start with a lower case letter.
++ have spaces filled in with `_`.
+
+```{r}
+#| eval: true
+#| echo: true
+#| code-line-numbers: "3-5"
+library(janitor)
+military_clean_names <- military |> 
+  clean_names()
+
+names(military_clean_names)[1:12]
+```
+
+
+
+# Lifecycle Stages
+
+## Lifceycle Stages
+
+As packages get updated, the functions and function arguments included in those packages will change.
+
++ The accepted syntax for a function may change.
++ A function/functionality may disappear.
+
+![[Learn more about lifecycle stages](https://lifecycle.r-lib.org/articles/stages.html) of packages, functions, function arguments in R.](images/lifecycle.png)
+
+
+## Lifceycle Stages
+
+<center>
+
+![](images/summarize_lifecycle.png){width=70%}
+
+</center>
+
+## Deprecated Functions
+
+A **deprecated** functionality has a better alternative available and is scheduled for removal.
+
++ You get a warning telling you what to use instead.
+
+. . .
+
+```{r}
+#| warning: true
+#| message: true
+#| echo: true
+#| code-line-numbers: "2"
+military_clean |> 
+  filter(across(Notes:`2019`, is.na)) |> 
+  slice_head(n = 3) |> 
+  select(1:8)
+```
+
+
+## Deprecated Functions
+
+You **should not** use deprecated functions!
+
+Instead, we use...
+
+```{r}
+#| echo: true
+#| code-line-numbers: "2"
+military_clean |>
+  filter(if_all(Notes:`2019`, ~ is.na(.x))) |> 
+  slice_head(n = 3) |> 
+  select(1:8)
+```
+
+
+## Superceded Functions
+
+A **superseded** functionality has a better alternative, but is not going away.
+
++ This is a softer alternative to deprecation.
++ A superseded function will not give a warning (since there’s no risk if you keep using it), but the documentation will give you a recommendation.
+
+
+
+## [Lab 4: Childcare Costs](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab4/LA4_avocado.html)
 
 <br> **Filtering Joins**
 
@@ -1390,11 +1888,7 @@ demographics_subj <- data_clean |>
 
 ## To do...
 
--   **Lab 4: Avocados**
-    -   Due Friday, 4/28 at 11:59pm
--   **Challenge 4: Avocado Toast Ate My Mortgage**
-    -   Due Saturday, 4/29 at 11:59pm
--   **Read Chapter 5: Special Data Types**
-    -   **Check-in 5.1 - 5.3** due Monday (5/1) at 10:00am
--   [**Bonus Challenge: Murder Mystery in SQL City**](https://zoerehnberg.github.io/STAT331-S23/challenges/bCH_murder.html)
-    -   Due Monday 5/8 at 11:59pm
+-   **Lab 4: Childcare Costs**
+    -   Due Saturday (4/27) at 11:59pm
+-   **Read Chapter 5: Strings + Dates**
+    -   **Check-in 5.1 - 5.2** due Monday (4/29) at 10:00am

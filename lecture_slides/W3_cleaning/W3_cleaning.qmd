@@ -1101,9 +1101,24 @@ For each `type` of cereal, calculate the `mean` nutrient levels.
 
 . . .
 
-+ `.cols` -- specify the columns to apply functions to.
-+ `.fns` -- specify the functions to apply.
-+ `.x` -- a placeholder for the variable names being passed into the function.
+**Within** the `summarize()` function, we use the `across()` function, with three arguments:
+
++ `.cols` -- to specify the **columns** to apply functions to.
++ `.fns` -- to specify the **functions** to apply.
++ `.x` -- as a placeholder for the variable names being passed into the function.
+
+. . .
+
+We use **lambda function** notation:
+
+<center>
+`~ <FUN_NAME>(.x, <ARGS>)`
+</center>
+
+
+## Summarize multiple columns with `across()`
+
+For each `type` of cereal, calculate the `mean` nutrient levels.
 
 ```{r}
 #| echo: true
@@ -1123,6 +1138,30 @@ cereal |>
   kableExtra::scroll_box(height = "170px") |> 
   kableExtra::kable_styling(font_size = 30)
 ```
+
+. . .
+
+```{r}
+#| echo: true
+#| eval: false
+cereal |> 
+  group_by(type) |> 
+  summarise(across(.cols = calories:potass,
+                   .fns = ~ mean(.x, trim = 0.1)))
+```
+
+```{r}
+#| eval: true
+#| echo: false
+cereal |> 
+  group_by(type) |> 
+  summarise(across(.cols = calories:potass,
+                   .fns = ~ mean(.x, trim = 0.1))) |> 
+  knitr::kable() |> 
+  kableExtra::scroll_box(height = "170px") |> 
+  kableExtra::kable_styling(font_size = 30)
+```
+
 
 ## Discretize with `if_else()`
 
