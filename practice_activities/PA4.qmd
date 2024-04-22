@@ -224,4 +224,7 @@ eastern_europe <- c("Armenia", "Azerbaijan", "Belarus",
 ### Canvas Q2 + Q3
 
 **9. Looking at the plot you created above, which Eastern European country had the second highest median military expenditure?.**
+
+**10. Looking at the plot you created above, which Eastern European country had the largest variability in military expenditures over time?**
+
 :::
