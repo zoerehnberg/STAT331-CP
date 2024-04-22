@@ -1,5 +1,5 @@
 ---
-title: "Data Joins + Transformations + Factors"
+title: "Data Joins + Pivots + Factors"
 format: 
   revealjs:
     theme: default
@@ -979,54 +979,7 @@ Today we will...
     -   Factors with `forcats`
     -   Clean Variable Names
     -   Lifecycle Stages
--   Lab 4: Childcare Costs
-
-
-## Lab 3: Game Plan!
-
-For each demographic group, determine **all** words in this study that were the most **and** least familiar, **on average**.
-
-
-## Lab 3: Game Plan!
-
-![](https://github.com/earobinson95/stat331-calpoly/blob/master/lab-assignments/Lab3-dplyr/q11-q13-sketch.png?raw=true)
-
-
-## Lab 3: Game Plan!
-
-<center>
-
-![](images/GP1.png){width=70%}
-
-</center>
-
-## Lab 3: Game Plan!
-
-<center>
-
-![](images/GP2.png){width=70%}
-
-</center>
-
-## Lab 3: Game Plan!
-
-</center>
-
-![](images/GP3.png){width=70%}
-
-</center>
-
-## Lab 3: Game Plan!
-
-![](images/GP4.png)
-
-## Lab 3: Game Plan!
-
-</center>
-
-![](images/GP5.png){width=70%}
-
-</center>
+-   Lab 4: Childcare Costs in California
 
 
 # Extensions to Relational Data
