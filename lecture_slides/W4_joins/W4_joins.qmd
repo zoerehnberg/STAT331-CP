@@ -1925,7 +1925,7 @@ A **superseded** functionality has a better alternative, but is not going away.
 
 
 
-## [Lab 4: Childcare Costs](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab4/LA4_avocado.html)
+## [Lab 4: Childcare Costs](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab4/LA4_childcare.html)
 
 <br> **Filtering Joins**
 

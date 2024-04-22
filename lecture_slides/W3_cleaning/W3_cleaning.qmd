@@ -1458,15 +1458,6 @@ cereal |>
 > + In what scenario might this come into play?
 
 
-## Institutional Review Board
-
-+ IRB reviews help to ensure that research participants are protected from research-related risks and treated ethically.
-+ This is a necessary prerequisite for maintaining the public’s trust in research and allowing science to advance for the common good.
-
-::: callout-note
-[Watch a video about IRB](https://www.youtube.com/watch?v=U8fme1boEbE&ab_channel=U.S.DepartmentofHealthandHumanServices) to learn more.
-:::
-
 
 ## [Lab 3: Teacher Evaluations](https://zoerehnberg.github.io/STAT331-S23//lab_assignments/lab3/LA3_dplyr.html)
 
