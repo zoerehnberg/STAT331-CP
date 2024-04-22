@@ -1925,51 +1925,13 @@ A **superseded** functionality has a better alternative, but is not going away.
 
 
 
-## [Lab 4: Childcare Costs](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab4/LA4_childcare.html)
+## [Lab 4: Childcare Costs in California](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab4/LA4_childcare.html)
 
-<br> **Filtering Joins**
-
-`semi_join()`: Keeps values found in another data set
-
-`anti_join()`: Keeps values **not** found in another data set
-
-
-## Workflow
-
-1.  Load packages + read in data.
-
-```{r}
-#| echo: true
-#| eval: false
-library(tidyverse)
-data_original <- read_csv(file = "path/to/datal.csv")
-```
-
-2.  Clean data and **save** changes -- use this data from now on!
-
-```{r}
-#| echo: true
-#| eval: false
-data_clean <- data_original |> 
-  mutate(across(x1:x5, ~ as.factor(.x)),
-         new_var = if_else(...))
-```
-
-3.  Create subsets from your cleaned data for specific tasks.
-
-```{r}
-#| echo: true
-#| eval: false
-demographics_subj <- data_clean |> 
-  distinct(subj, keep_all = TRUE)
-```
-
-4.  Output **only** the the information you want in your report.
 
 
 ## To do...
 
--   **Lab 4: Childcare Costs**
+-   **Lab 4: Childcare Costs in California**
     -   Due Saturday (4/27) at 11:59pm
 -   **Read Chapter 5: Strings + Dates**
     -   **Check-in 5.1 - 5.2** due Monday (4/29) at 10:00am
