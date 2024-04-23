@@ -290,7 +290,7 @@ We can use `pivot_longer()` to turn a **wide** dataset into a **long(er)** datas
 
 ## `pivot_longer()`
 
-Take a **wide** dataset and turn it into a **long** daaset.
+Take a **wide** dataset and turn it into a **long** dataset.
 
 + `cols` -- specify the columns that should be pivoted.
   + Do **not** include the names of ID columns (columns to not be pivoted).
@@ -328,7 +328,7 @@ slo_rainfall |>
 
 ## `pivot_wider()`
 
-Take a **long** dataset and turn it into a **wide** daaset.
+Take a **long** dataset and turn it into a **wide** dataset.
 
 + `id_cols` -- specify the column(s) that contain the ID for unique rows in the wide dataset.
 + `names_from` -- the name of the column containing the new column names.

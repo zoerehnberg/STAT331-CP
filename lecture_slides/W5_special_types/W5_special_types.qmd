@@ -22,7 +22,6 @@ data(cereal)
 Today we will...
 
 + Comments from Week 4
-+ Final Project Group Formation
 + New Material
   + String Variables
   + Regular Expressions
@@ -75,19 +74,6 @@ Maximum
 
 :::
 ::::
-
-
-## Final Project Group Formation
-
-You will be completing a final project in teams of four.
-
-+ **Group Formation Survey** due **Friday, 5/3 at 11:59pm**
-  + Help me gather information about your preferences and work styles to facilitate team formation.
-  + Your team does not all need to be in the same section, but you might find it useful for in-class work time.
-+ Group Contracts
-+ Project Proposal
-+ Final Deliverable
-
 
 
 # String Variables
@@ -953,9 +939,7 @@ x[c(1,4,5)] <- ""
 
 + **PA 5.1: Scrambled Message**
   + Due Saturday, 5/4 at 11:59pm
-  
-+ **Final Project Group Formation Survey**
-  + Due Friday, 5/3 at 11:59pm
+
   
   
 ## Wednesday, May 3
@@ -1323,8 +1307,6 @@ Unfortunately, the date and time of the jewel heist is not known. You have been 
 
 
 ## To do...
-
-+ **Final Project Group Formation Survey** -- due Friday, 5/3 at 11:59pm.
 
 + **PA 5.2: Jewel Heist** -- due Saturday, 5/4 at 11:59pm.
 
