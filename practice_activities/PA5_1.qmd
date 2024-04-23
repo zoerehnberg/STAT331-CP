@@ -1,9 +1,9 @@
 ---
-title: "PA 5.1:  Jewel Heist"
-subtitle: "Dates and Times with lubridate"
+title: "PA 5.1: Scrambled Message"
+subtitle: "`stringr` + Regular Expressions"
 format: 
   html:
-    self-contained: true
+    embed-resources: true
     code-tools: true
 editor: source
 execute: 
@@ -17,49 +17,77 @@ execute:
 
 ```{r setup}
 library(tidyverse)
-library(lubridate)
 ```
 
-::: callout-note
-Note that the `lubridate` package is a dependency that is installed as part of the `tidyverse` package, but it is not automatically loaded.
+## Pick your poison!
 
-In other words, you have already accomplished `install.packages("lubridate")` by default of installing the `tidyverse`, but you will always need to call `library(lubridate)`.
-:::
-
-## Solve the Mystery
-
-Just down the road in Montecito, CA several rare jewels went missing last fall. The jewels were stolen and replaced with fakes, but detectives have not been able to solve the case. They are now calling in a data scientist to help parse their clues. 
-
-A camera was located near the building where the jewels went missing, so the detectives have provided you with a list of people who may have entered the building last year. This list includes the date and time they were spotted on the camera, **in Pacific Standard Time (PST)**.
-
-Unfortunately, the date and time of the jewel heist is not known. You have been hired to crack the case. Use the clues below to discover the thief's identity.
+You may choose to work through Q1 - Q6 using a data.frame `message_data` and follow the `dplyr` pipeline syntax...
 
 ```{r}
-# 214 total suspects
-suspects <- read_csv("https://raw.githubusercontent.com/zoerehnberg/STAT331-S23/main/practice_activities/suspects.csv")
+message_data <- read_csv("https://github.com/earobinson95/stat331-calpoly/raw/master/practice-activities/data/scrambled_message.txt")
+
+class(message_data)
 ```
 
-::: callout-note
-Pay attention to the **time zone** that is assigned when the data are read in. How can you set the correct time zone?
+...or you might prefer to work with the character vector `message` and use indexing -- e.g. `message[1]` gives you the first element.
+
+```{r}
+message <- message_data |> 
+  pull(Word)
+
+class(message)
+```
+
+::: callout-tip
+
+In this activity, a "word" is a set of characters with no white space. That is, even though many of elements of the scrambled mess vector are nonsense, and some have punctuation, you can consider each element to be a "word".
+
 :::
 
-1. Based on the cleaning schedule for the room where the jewels are held, the heist was not committed in the morning.
+## Warm-up exercises
 
-2. The room where the heist was committed is closed on Tuesdays and Thursdays (and there were no signs of forced entry), so the heist did not happen on those days.
+1.  How many characters are in the scrambled message?
 
-3. It is believed that the heist was committed within 5 weeks (35 days) of Thanksgiving 2022.
+2.  How many words are in the scrambled message?
 
-4. The detectives partially decoded a message from a notorious fence in Iceland that reminded the thief to not steal the jewels "before I'm off work for the day."
+3.  Print out every word in the scrambled message that starts with the letter "m".
 
-5. The thief left behind a birthday card at the scene of the crime. The date is smudged, but the day of the month is shown to be 22. It is thought that perhaps the heist took place less than three days after the thief's birthday.
+4.  Print out every word in the scrambled message that ends with the letter "z"
 
-6. The thief is amused by your efforts and has sent you a cryptic clue:
+5.  Print out the punctuation symbols that are present in the scrambled message.
 
-> "The number of seconds between midnight on Jan 1, 1970 and the time I arrived on the scene is divisible by 10."
+6.  Print out the longest word in the scrambled message.
+
+## Decode the Message
+
+::: callout-caution
+You likely want to work with the `message` character vector for decoding.
+:::
+
+Complete the following steps to decode the message.
+
+1.  Remove any spaces before or after each word.
+
+2.  No word should be longer than 16 characters. Drop all extra characters off the end of each word.
+
+3.  Any time you see the word "ugh", with any number of h's, followed by a punctuation mark, delete this.
+
+4.  Replace all instances of exactly 2 a's with exactly 2 e's.
+
+5.  Replace all z's with t's.
+
+6.  Every word that ends in b, change that to a y.
+
+7.  Every word that starts with k (or K), change that to a v (or V).
+
+8.  Recombine all your words into a message.
+
+9.  Find the movie this quote is from.
 
 ::: callout-note
+
 ### Canvas Quiz Submission
 
-Who is the thief? *Only one name should remain.*
+What is the name of the movie the quote is from?
 
 :::
