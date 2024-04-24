@@ -25,7 +25,7 @@ Today we will...
 + New Material
   + String Variables
   + Regular Expressions
-+ [PA 5.1: Scrambled Message](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA5_2.html)
++ [PA 5.1: Scrambled Message](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA5_1.html)
 
 
 ## Comments from Week 4
@@ -896,7 +896,7 @@ What is that variable?!
 </font>
 
 
-## [PA 5.1: Scrambled Message](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA5_2.html)
+## [PA 5.1: Scrambled Message](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA5_1.html)
 
 In this activity, you will use regex to decode a message.
 
@@ -949,7 +949,7 @@ Today we will...
 + Midterm Exam 5/8: What to Expect
 + New Material
   + Working with Date & Time Variables
-+ [PA 5.2: Jewel Heist](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA5_1.html)
++ [PA 5.2: Jewel Heist](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA5_2.html)
 + [LA 5: Murder in SQL City](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab5/LA5_murder.html)
 
 
@@ -1290,7 +1290,7 @@ tz(x)
 ```
 
 
-## [PA 5.2: Jewel Heist](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA5_1.html)
+## [PA 5.2: Jewel Heist](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA5_2.html)
 
 Just down the road in Montecito, CA several rare jewels went missing last fall. The jewels were stolen and replaced with fakes, but detectives have not been able to solve the case. They are now calling in a data scientist to help parse their clues.
 

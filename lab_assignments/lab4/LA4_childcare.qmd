@@ -156,7 +156,7 @@ summary(reg_mod1)
 **9. Do you have evidence to conclude there is a relationship between the median household income and the median weekly cost of center-based childcare for infants in California? Cite values from your output for support.**
 
 
-## Open-ended Analysis
+## Open-Ended Analysis
 
 Let's give you a taste of what to expect for the open-ended essay portion of the midterm exam.
 
@@ -164,6 +164,7 @@ Let's give you a taste of what to expect for the open-ended essay portion of the
 
 ::: callout-tip
 + Aim for about 150-300 words.
+  + You should (1) introduce the data and the topic you are investigating, (2) discuss your table and plot, and (3) conclude.
 + This should read like a mini-report. I recommend using `#| code-fold: true` for readability.
 + Don't just have a summary table or plot show up "out of the blue" -- make sure to build up to them with text, describe what they show, and provide captions.
 :::
