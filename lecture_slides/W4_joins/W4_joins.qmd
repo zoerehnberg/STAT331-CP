@@ -982,6 +982,20 @@ Today we will...
 -   Lab 4: Childcare Costs in California
 
 
+## Changes to Week 5
+
+**I will be out of town for the second half of the week.**
+
++ I will introduce all material for the week on Monday.
+  + Two practice activities and the lab will be available on Monday and due on Saturday (at 11:59pm).
++ No class on Wednesday 5/1.
+  + Libby will hold open work time in the classroom from 3:10-4:00pm and 5:10-6:00pm.
++ Office Hours (all in 25-109):
+  + Dr. Rehnberg -- Tuesday, 4/30 from 1:00-3:00pm.
+  + Libby -- Thursday, 5/2 from 2:00-4:00pm.
+
+
+
 # Extensions to Relational Data
 
 
