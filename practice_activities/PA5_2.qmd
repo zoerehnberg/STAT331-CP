@@ -1,9 +1,9 @@
 ---
-title: "PA 5.1:  Jewel Heist"
-subtitle: "Dates and Times with lubridate"
+title: "PA 5.2:  Jewel Heist"
+subtitle: "Dates and Times with `lubridate`"
 format: 
   html:
-    self-contained: true
+    embed-resources: true
     code-tools: true
 editor: source
 execute: 
@@ -13,7 +13,7 @@ execute:
   warning: false
 ---
 
-[Download starter qmd file](PA5_1.qmd)
+[Download starter qmd file](PA5_2.qmd)
 
 ```{r setup}
 library(tidyverse)
@@ -21,14 +21,14 @@ library(lubridate)
 ```
 
 ::: callout-note
-Note that the `lubridate` package is a dependency that is installed as part of the `tidyverse` package, but it is not automatically loaded.
+Note that the `lubridate` package is a dependency that is installed as part of the `tidyverse` package, but it is **not** automatically loaded.
 
 In other words, you have already accomplished `install.packages("lubridate")` by default of installing the `tidyverse`, but you will always need to call `library(lubridate)`.
 :::
 
 ## Solve the Mystery
 
-Just down the road in Montecito, CA several rare jewels went missing last fall. The jewels were stolen and replaced with fakes, but detectives have not been able to solve the case. They are now calling in a data scientist to help parse their clues. 
+Just down the road in Montecito, CA several rare jewels went missing last fall. The jewels were stolen and replaced with fakes, but detectives have not been able to solve the case. They are now calling in a data scientist to help parse their clues.
 
 A camera was located near the building where the jewels went missing, so the detectives have provided you with a list of people who may have entered the building last year. This list includes the date and time they were spotted on the camera, **in Pacific Standard Time (PST)**.
 
@@ -43,19 +43,90 @@ suspects <- read_csv("https://raw.githubusercontent.com/zoerehnberg/STAT331-S23/
 Pay attention to the **time zone** that is assigned when the data are read in. How can you set the correct time zone?
 :::
 
+```{r}
+suspects_new <- suspects |> 
+  mutate(Time.Spotted = force_tz(Time.Spotted, "America/Los_Angeles"))
+```
+
+
 1. Based on the cleaning schedule for the room where the jewels are held, the heist was not committed in the morning.
+
+```{r}
+suspects_new <- suspects_new |> 
+  filter(!am(Time.Spotted))
+
+nrow(suspects_new)
+# end with 112 suspects left
+```
+
 
 2. The room where the heist was committed is closed on Tuesdays and Thursdays (and there were no signs of forced entry), so the heist did not happen on those days.
 
+```{r}
+suspects_new <- suspects_new |> 
+  mutate(week_day = wday(Time.Spotted, label = TRUE)) |> 
+  filter(!week_day %in% c("Tue","Thu"))
+
+nrow(suspects_new)
+# end with 78 suspects left
+```
+
+
 3. It is believed that the heist was committed within 5 weeks (35 days) of Thanksgiving 2022.
+
+::: callout-note
+Pay attention to **time zones**!
+:::
+
+```{r}
+tgiving <- mdy(112422, tz = "America/Los_Angeles")
+tgiving_interval <- (tgiving - days(35)) %--% (tgiving + days(35))
+
+suspects_new <- suspects_new |> 
+  filter(Time.Spotted %within% tgiving_interval)
+
+nrow(suspects_new)
+# end with 11 suspects left
+```
+
+
+4. The detectives partially decoded a message from the thief to a notorious fence in Iceland. In it, the thief said the job wouldn't be done "before the sun sets for you."
 
 4. The detectives partially decoded a message from a notorious fence in Iceland that reminded the thief to not steal the jewels "before I'm off work for the day."
 
-5. The thief left behind a birthday card at the scene of the crime. The date is smudged, but the day of the month is shown to be 22. It is thought that perhaps the heist took place less than three days after the thief's birthday.
+```{r}
+suspects_new <- suspects_new |> 
+  mutate(Iceland_times = with_tz(Time.Spotted, "GMT")) |> 
+  filter(hour(Iceland_times) >= 4)
+
+nrow(suspects_new)
+# end with 8 suspects left
+```
+
+
+5. The thief left behind a receipt at the scene of the crime. The receipt is smudged, but the day of the month is shown to be 22. It is thought that perhaps the heist took place no more than three days after the receipt was issued.
+
+```{r}
+suspects_new <- suspects_new |>
+  mutate(day_num = day(Time.Spotted)) |> 
+  filter(day_num<= 25,
+         day_num >= 22)
+
+nrow(suspects_new)
+# end with 3 suspects left
+```
+
 
 6. The thief is amused by your efforts and has sent you a cryptic clue:
 
 > "The number of seconds between midnight on Jan 1, 1970 and the time I arrived on the scene is divisible by 10."
+
+```{r}
+
+
+# end with 1 suspect left
+```
+
 
 ::: callout-note
 ### Canvas Quiz Submission

@@ -61,7 +61,7 @@ counties <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytues
 
 ![]()
 
-**b. Implement/code your game plan to create the dataset of childcare costs in California.** *Checkpoint: There are 53 counties in CA and 11 years in the dataset. Therefore, your new dataset should have 53 x 11 = 638 observations.*
+**b. Implement/code your game plan to create the dataset of childcare costs in California.** *Checkpoint: There are 58 counties in CA and 11 years in the dataset. Therefore, your new dataset should have 53 x 11 = 638 observations.*
 
 ```{r}
 # Code for Q2
