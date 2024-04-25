@@ -953,7 +953,7 @@ Today we will...
 + [LA 5: Murder in SQL City](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab5/LA5_murder.html)
 
 
-## [Midterm Exam](https://canvas.calpoly.edu/courses/98835/pages/midterm-exam-what-to-expect) -- Wednesday, 5/8
+## [Midterm Exam](https://canvas.calpoly.edu/courses/130201/pages/midterm-exam-what-to-expect) -- Wednesday, 5/8
 
 + This is a three-part exam:
   1. You will first complete a **General Questions** section on paper and **without your computer**.
@@ -962,10 +962,10 @@ Today we will...
   3. The third section, **Open-Ended Analysis**, will be started in class and due **24 hours** after the end of class.
 
 
-## [Midterm Exam](https://canvas.calpoly.edu/courses/98835/pages/midterm-exam-what-to-expect) -- Wednesday, 5/8
+## [Midterm Exam](https://canvas.calpoly.edu/courses/130201/pages/midterm-exam-what-to-expect) -- Wednesday, 5/8
 
-+ The exam is worth a total of 100 points.
-  + Approx. 20 pts, 30 pts, and 50 pts for the three sections.
++ The exam is worth approximately 90 points.
+  + Approx. 20 pts, 30 pts, and 40 pts for the three sections.
 + I will provide a `.qmd` template for the Short Answer.
 + You will create your own `.qmd` for the Open-Ended Analysis. **You are encouraged to create this ahead of time.**
 
