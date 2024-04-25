@@ -69,6 +69,12 @@ Detective Wickham reaches out to you...
 
 **Follow the evidence to the murderer, building a report as you go.**
 
+::: callout-caution
+
+Make sure you check for interviews with any suspects!
+
+:::
+
 ::: callout-note
 
 ## And the murderer is...
