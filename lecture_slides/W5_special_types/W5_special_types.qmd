@@ -942,7 +942,7 @@ x[c(1,4,5)] <- ""
 
   
   
-## Wednesday, May 3
+## Wednesday, May 1
 
 Today we will...
 
