@@ -24,7 +24,7 @@ Today we will...
 + New Material
   + git/GitHub
   + Connect GitHub to RStudio
-+ PA 6: Merge Conflicts -- Collaborating within a GitHub Repo
++ [PA 6: Merge Conflicts](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA6.html) -- Collaborating within a GitHub Repo
 
 
 ## Comments from Week 5
@@ -334,7 +334,7 @@ knitr::include_graphics("https://t3.ftcdn.net/jpg/00/60/10/14/240_F_60101445_pT7
 . . .
 
 + Git commits **lines** -- lines of code, lines of text, etc.
-  + Practice good code format and don't have overly long lines.
+  + Practice good code format -- no overly long lines!
 
 
 
@@ -435,7 +435,7 @@ knitr::include_graphics("images/pat-verify.png")
 ```
 
 
-## PA 6: Merge Conflicts
+## [PA 6: Merge Conflicts](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA6.html)
 
 You will be completing this activity in groups of 4.
 
