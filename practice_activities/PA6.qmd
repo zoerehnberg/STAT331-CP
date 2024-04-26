@@ -1,0 +1,249 @@
+---
+title: "PA 6: Merge Conflicts"
+subtitle: "Using GitHub"
+format: html
+editor: source
+---
+
+In this practice activity, you will be working in groups to create a new GitHub repository. You will practice pushing, pulling, and resolving conflicts as a team.
+
+::: callout-warning
+
+##    **IMPORTANT**
+
+This activity will only work if you follow the directions **in the exact order** that I have specified them. **Do not work ahead of your group members!**
+
+:::
+
+
+## Get into Groups!
+
+Form groups of four people. Designate each person one of the suits:
+
+<center>
+![](images/card-suits.jpg){width="20%"}
+</center>
+
+As you work through the activity, you will complete the steps assigned to your suit. Make sure you complete the steps in order and only complete the steps assigned to you!
+
+::: callout-note
+
+If you only have 3 group members here, assign one person both ![](images/club.jpg){width="3%"} and ![](images/heart.jpg){width="3%"}.
+
+:::
+
+
+## Repository Setup
+
+
+###  1. Create a Repo on GitHub.
+
+![](images/club.jpg){width="4%"} 
+
++ Create a new Github repo: `Repositories` > `New` .
+  + Name the repo `stat331-PA6`.
+  + You can choose to make it Public or Private.
+  + Select `.gitignore template: R`.
++ After creating the repo, go to `Settings` > `Collaborators` > `Add people`.
+  + Add your group members using their username or email.
+
+
+### 2. Access the Remote Repo.
+
+![](images/spade.jpg){width="4%"} ![](images/diamond.jpg){width="4%"} ![](images/heart.jpg){width="4%"}
+
++ Accept the repo invite in your email -- `View invite` > `Accept invite`.
++ Open the repo on GitHub.
+
+
+### 3. Clone the Remote Repo Locally.
+
+![](images/spade.jpg){width="4%"} ![](images/diamond.jpg){width="4%"} ![](images/club.jpg){width="4%"} ![](images/heart.jpg){width="4%"} 
+
++ In Rstudio: `File` > `New Project` > `Version Control` > `Git`.
++ In GitHub: click `<> Code` and copy the HTTPS address.
++ In Rstudio: paste the address as the `Repository URL`.
++ Click `Browse` and create this new project on your **desktop**.
+  + **Do not save this in your STAT 331 folder!!! We don't want to embed an Rproj within another Rproj.**
++ `Create Project`.
+
+
+## Collaborating in GitHub
+
+
+### 4. Add Documents to the Repo.
+
+![](images/spade.jpg){width="4%"}
+
++ In RStudio, create a new Quarto file.
+  + Change the title to "Practice Activity 6".
+  + **Resist** the urge to add authors.
+  + Save as `PA6.qmd` in your **new** `stat331-PA6` folder on your desktop.
+  + Add `embed-resources: true` to the YAML.
+  + Keep the defaulty template as is.
+  + Render the document.
++ Edit the `.gitignore` file to include `*.Rproj`.
+
+
+### 5. Push Documents to GitHub.
+
+![](images/spade.jpg){width="4%"}
+
++ Rstudio: `Git` pane > `Commit`.
+  + Stage (checkmark) the `.gitignore`, add a commit message (*"ignore all .Rproj files"*), click `Commit`, click `Close`.
+  + Stage (checkmark) `PA6.qmd` and `PA6.html`, add a commit message (*"create PA quarto file"*), click `Commit`, click `Close`.
++ Rstudio: `Git` pane > `Push` the changes to the remote repo.
+
+
+### 6. Pull Changes from GitHub.
+
+![](images/diamond.jpg){width="4%"} ![](images/club.jpg){width="4%"} ![](images/heart.jpg){width="4%"}
+
++ Rstudio: `Git` pane > `Pull` the changes that were made!
+
+Everyone should now have the `.qmd` and `.html` files in their local repo!
+
++ Look in your `Files` pane to make sure.
+
+
+### 7. Make a Change.
+
+![](images/diamond.jpg){width="4%"} 
+
++ Add `author:` to the YAML and include everyone's **first** names.
++ Render the document.
++ Rstudio: `Git` pane > `Commit` > Stage (checkmark) files > add commit message > `Commit`.
+  + Use a commit message like *"add first names"*.
++ Rstudio: `Git` pane > `Push` the changes.
+
+
+### 8. Forget to Pull.
+
+![](images/spade.jpg){width="4%"} ![](images/club.jpg){width="4%"} ![](images/heart.jpg){width="4%"}
+
+**Do NOT** pull the changes that were made!
+
+
+### 9. Make the Same Change.
+
+ ![](images/heart.jpg){width="4%"}
+
++ Add `author:` to the YAML and include everyone's **first and last** names.
++ Render the document.
++ Rstudio: `Git` pane > `Commit` > Stage (checkmark) files > add commit message > `Commit`
+  + Use a commit message like *"add first and last names"*.
++ Rstudio: `Git` pane > `Push` the changes.
+
+::: callout-warning
+
+## Oh No!
+
+You got an error! Ugh. We forgot to pull before we started making changes.
+
+:::
+
+![](images/same-changes-error.png)
+
+
+### 10. Resolve the Merge Conflict.
+
+ ![](images/heart.jpg){width="4%"}
+ 
+Rstudio: `Git` pane > `Pull` the changes from the repo.
+
+If your Git Pull window does **NOT** look like this...
+
+![](images/same-conflict-pull.jpg)
+
+</br>
+
+then...
+
+(a) copy-paste the first command (`git config pull.rebase false`) into the `Terminal` in RStudio pane and hit Enter,
+(b) and `Pull` again.
+
+
+Your Quarto file should now look like this...
+
+![](images/fix_conflict.png)
+
+
+::: callout-tip
+
+Note how the conflicting lines are marked! You might need to submit this to Canvas...
+
+:::
+
++ Edit the `.qmd` file to resolve the conflict with the preferred change. Render.
++ `Commit` your changes.
++ `Push` your changes to GitHub.
+
+
+### 11. Forget to Pull.
+
+![](images/spade.jpg){width="4%"} ![](images/diamond.jpg){width="4%"} ![](images/club.jpg){width="4%"}
+
+**Do NOT** pull the changes that were made!
+
+
+### 12. Make a Different Change.
+
+![](images/spade.jpg){width="4%"}
+
++ Eidt the first code chunk to find the product of $13 \times 13$.
++ Render the document.
++ `Commit` your changes and `Push` your changes to GitHub.
+
+::: callout-warning
+**You will get an error**, read it and `Pull`.
+:::
+
++ No merge conflicts should occur -- the changes were auto-merged!
+    + Your merge may have been made by a different strategy, but that's okay.
+
+![](images/auto_merge.png)
+
++ `Push` your changes again.
+
+
+### 13. Forget to Pull.
+
+ ![](images/diamond.jpg){width="4%"} ![](images/club.jpg){width="4%"} ![](images/heart.jpg){width="4%"}
+
+**Do NOT** pull the changes that were made!
+
+
+### 14. Make the Same Change (Again).
+
+![](images/club.jpg){width="4%"}
+
++ Eidt the first code chunk to find the product of $11 \times 11$.
++ Render the document.
++ `Commit` your changes and `Push` your changes to GitHub.
+
+::: callout-warning
+**You will get an error.** Ugh!!!! We forgot to pull again!
+:::
+
+
++ `Pull` the changes from GitHub.
++ Edit the `.qmd` file to resolve the conflict with the preferred change.
++ `Commit` your changes and `Push` your changes to GitHub.
+
+
+### 15. Final Document
+
+![](images/spade.jpg){width="4%"} ![](images/diamond.jpg){width="4%"} ![](images/club.jpg){width="4%"} ![](images/heart.jpg){width="4%"}
+ 
+ `Pull` the changes and look at your final document.
+
+
+::: callout-tip
+
+## Canvas Quiz Submission
+
+How does Git mark the start of lines with a **merge conflict**?
+
++ Specifically, I want the **four capital characters** with which every conflict is marked.
+
+:::

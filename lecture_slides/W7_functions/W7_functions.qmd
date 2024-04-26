@@ -19,6 +19,7 @@ library(palmerpenguins)
 
 Today we will...
 
++ Discuss Group Contract
 + New Material
   + Function Basics
   + Variable Scope + Environment
@@ -27,6 +28,9 @@ Today we will...
   + Lab 7: Functions & Fish
   + Challenge 7: Incorporating Multiple Inputs
   
+  
+## Final Project Group Contract
+
   
 ## Why write functions?
 
@@ -537,12 +541,12 @@ You will write several small functions, then use them to unscramble a message. M
 ## To do...
 
 + **PA 7: Writing Functions**
-  + Due Wednesday, 5/17 at 10:00am.
+  + Due Wednesday, 5/15 at 10:00am.
 + **Final Project Group Contract**
-  + Due Wednesday, 5/17 at 11:59pm.
+  + Due Monday, 5/20 at 11:59pm.
 
 
-## Wednesday, May 17
+## Wednesday, May 15
 
 Today we will...
 
@@ -995,12 +999,12 @@ knitr::include_graphics("https://github.com/earobinson95/stat331-calpoly/blob/ma
 ## To do...
   
 + **Lab 7: Functions + Fish**
-  + Due Friday, 5/19 at 11:59pm.
-
-+ **Challenge 7: Incorporating Multiple Inputs**
-  + Due Saturday, 5/20 at 11:59pm.
+  + Due Friday, 5/17 at 11:59pm.
   
 + Read **Chapter 8: Functional Programming**
-  + Check-in 8.1 due Monday 5/22 at 10:00am.
+  + Check-in 8.1 due Monday 5/20 at 10:00am.
+  
+  + **Final Project Group Contract**
+  + Due Monday, 5/20 at 11:59pm.
   
   
