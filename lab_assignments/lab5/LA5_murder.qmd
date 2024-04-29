@@ -60,14 +60,14 @@ source("https://raw.githubusercontent.com/zoerehnberg/STAT331-S23/main/challenge
 
 Detective Wickham reaches out to you...
 
-> A crime has taken place and I need your help! There was a murder in SQL City sometime on Jan.15, 2018. Could you retrieve the crime scene report from the police department’s database and follow the clues to find the murderer?!
+> A crime has taken place and I need your help! There was a murder in SQL City sometime on Jan.15, 2018. Could you retrieve the crime scene report from the police department’s database and follow the clues to find the person responsible for the murder?!
 
 ```{r}
 # Code for looking at the relevant crime scene report.
 ```
 
 
-**Follow the evidence to the murderer, building a report as you go.**
+**Follow the evidence to the person responsible for the murder, building a report as you go.**
 
 ::: callout-caution
 
@@ -77,6 +77,8 @@ Make sure you check for interviews with any suspects!
 
 ::: callout-note
 
-## And the murderer is...
+## And the final suspect is...
+
+*put the name of the person responsible for the murder here.*
 
 :::

@@ -21,6 +21,7 @@ data(cereal)
 
 Today we will...
 
++ **Reminder: no class on Wednesday!**
 + Comments from Week 4
 + New Material
   + String Variables
@@ -183,10 +184,11 @@ str_detect(my_vector, pattern = "Bond")
 . . .
 
 ::: {.callout-note collapse="true"}
-### Related functions 
-`str_subset()` returns a vector of the strings that contain a match.
+
+## Related Function
 
 `str_which()` returns the indexes of the strings that contain a match.
+
 :::
 
 
@@ -224,9 +226,11 @@ str_extract(my_vector, pattern = "Bond")
 . . .
 
 ::: callout-warning
+
 `str_extract()` only returns the **first** pattern match.
 
 Use `str_extract_all()` to return **every** pattern match.
+
 :::
 
 
@@ -245,7 +249,8 @@ str_locate(my_vector, pattern = "Bond")
 . . .
 
 ::: callout-note
-### Related Functions
+
+## Related Function
 
 `str_sub()` extracts values based on a starting and ending location.
 :::
@@ -303,9 +308,11 @@ str_replace(my_vector, pattern = "Bond", replace = "Franco")
 ```
 
 ::: {.callout-note collapse="true"}
-### Related functions 
+
+## Related Function
 
 `str_replace_all()` replaces **all** matched patterns in each string.
+
 :::
 
 ### `str_remove()`
@@ -319,10 +326,13 @@ str_remove(my_vector, pattern = "Bond")
 ```
 
 ::: {.callout-note collapse="true"}
-### Related functions 
+
+## Related Functions
+
 This is a special case of  `str_replace(x, pattern, replace = "")`.
 
 `str_remove_all()` removes **all** matched patterns in each string.
+
 :::
 
 :::
@@ -854,7 +864,7 @@ military |>
 
 ## `matches(pattern)`
 
-Slect all variables with a name that matches the supplied pattern.
+Select all variables with a name that matches the supplied pattern.
 
 + Pairs well with `select()`, `rename_with()`, and `across()`.
 

@@ -82,7 +82,7 @@ If you only have 3 group members here, assign one person both ![](images/club.jp
   + Add `embed-resources: true` to the YAML.
   + Keep the defaulty template as is.
   + Render the document.
-+ Edit the `.gitignore` file to include `*.Rproj`.
++ In RStudio, oen and edit the `.gitignore` file to include `*.Rproj`.
 
 
 ### 5. Push Documents to GitHub.
@@ -110,7 +110,7 @@ Everyone should now have the `.qmd` and `.html` files in their local repo!
 
 ![](images/diamond.jpg){width="4%"} 
 
-+ Add `author:` to the YAML and include everyone's **first** names.
++ Directly under the `title:` line, add `author:` to the YAML and include everyone's **first** names.
 + Render the document.
 + Rstudio: `Git` pane > `Commit` > Stage (checkmark) files > add commit message > `Commit`.
   + Use a commit message like *"add first names"*.
@@ -128,7 +128,7 @@ Everyone should now have the `.qmd` and `.html` files in their local repo!
 
  ![](images/heart.jpg){width="4%"}
 
-+ Add `author:` to the YAML and include everyone's **first and last** names.
++ Directly under the `title:` line, add `author:` to the YAML and include everyone's **first and last** names.
 + Render the document.
 + Rstudio: `Git` pane > `Commit` > Stage (checkmark) files > add commit message > `Commit`
   + Use a commit message like *"add first and last names"*.
