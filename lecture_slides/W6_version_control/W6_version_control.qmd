@@ -12,13 +12,15 @@ embed-resources: true
 #| include: false
 #| message: false
 library(tidyverse)
+library(liver)
+data(cereal)
 ```
 
 ## Monday, May 6
 
 Today we will...
 
-+ Comments from Week 5
++ Open-Ended Analysis from Week 5
 + Questions about Midterm?
 + Final Project Group Formation
 + New Material
@@ -27,12 +29,51 @@ Today we will...
 + [PA 6: Merge Conflicts](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA6.html) -- Collaborating within a GitHub Repo
 
 
-## Comments from Week 5
+## Open-Ended Analysis from Week 5
 
-+ "Table of Summary Statistics"
-+ Table Design
-+ Plot Design
-+ Examples
+**Written Description**
+
++ Start with an intro to the data and topic.
++ Intersperse written description and table / plot output!
++ Do not use variable names or R function names in your written text.
++ Breaking up sections with headers can help with organization and flow.
++ Do not print out the data!
+
+
+## Open-Ended Analysis from Week 5
+
+**"Table of Summary Statistics"**
+
++ **Not asking for inferential statistics!**
++ E.g., We can construct a table of the mean amount of protein per manufacturer and shelf.
+
+```{r}
+#| echo: true
+#| code-fold: true
+#| fig-align: center
+cereal |> 
+  group_by(manuf, shelf) |> 
+  summarize(mean_protein = mean(protein)) |> 
+  arrange(shelf) |> 
+  pivot_wider(id_cols = manuf,
+              names_from = shelf,
+              values_from = mean_protein,
+              names_prefix = "Shelf_")
+```
+
+
+## Open-Ended Analysis from Week 5
+
+**Table Design**
+
++ Think about the number of rows/columns -- is it readable?
++ Change row/column names to be understandable.
+
+**Plot Design**
+
++ What type of plot will best display the data?
++ What order of elements will best display the comparison you want to make?
++ Think about: colors, order of categories, if a legend is needed, etc.
 
 
 # Questions about Midterm Exam?
@@ -219,7 +260,7 @@ The log of these changes (and the file history) is called your *git commit histo
 + Use short, but informative commit messages.
 + Commit small blocks of changes -- commit every time you accomplish a small task. 
   + You’ll have a set of bite-sized changes (with description) to serve as a record of what you’ve done.
-  + With frequent commits, its easier to find the issue when you mess up or end up!
+  + With frequent commits, its easier to find the issue when you mess up!
 
 
 ## Pushing Changes

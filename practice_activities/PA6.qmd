@@ -80,18 +80,18 @@ If you only have 3 group members here, assign one person both ![](images/club.jp
   + **Resist** the urge to add authors.
   + Save as `PA6.qmd` in your **new** `stat331-PA6` folder on your desktop.
   + Add `embed-resources: true` to the YAML.
-  + Keep the defaulty template as is.
+  + Keep the default template as is.
   + Render the document.
-+ In RStudio, oen and edit the `.gitignore` file to include `*.Rproj`.
++ In RStudio, open and edit the `.gitignore` file to include `*.Rproj`.
 
 
 ### 5. Push Documents to GitHub.
 
 ![](images/spade.jpg){width="4%"}
 
-+ Rstudio: `Git` pane > `Commit`.
-  + Stage (checkmark) the `.gitignore`, add a commit message (*"ignore all .Rproj files"*), click `Commit`, click `Close`.
-  + Stage (checkmark) `PA6.qmd` and `PA6.html`, add a commit message (*"create PA quarto file"*), click `Commit`, click `Close`.
++ Rstudio: `Git` pane.
+  + Stage (checkmark) the `.gitignore`  > `Commit` > add a commit message (*"ignore all .Rproj files"*) > `Commit` > `Close`.
+  + Stage (checkmark) `PA6.qmd` and `PA6.html` > `Commit` > add a commit message (*"create PA quarto file"*) > `Commit` > `Close`.
 + Rstudio: `Git` pane > `Push` the changes to the remote repo.
 
 
@@ -112,7 +112,7 @@ Everyone should now have the `.qmd` and `.html` files in their local repo!
 
 + Directly under the `title:` line, add `author:` to the YAML and include everyone's **first** names.
 + Render the document.
-+ Rstudio: `Git` pane > `Commit` > Stage (checkmark) files > add commit message > `Commit`.
++ Rstudio: `Git` pane > Stage (checkmark) files > `Commit` > add commit message > `Commit` > `Close`.
   + Use a commit message like *"add first names"*.
 + Rstudio: `Git` pane > `Push` the changes.
 
@@ -130,7 +130,7 @@ Everyone should now have the `.qmd` and `.html` files in their local repo!
 
 + Directly under the `title:` line, add `author:` to the YAML and include everyone's **first and last** names.
 + Render the document.
-+ Rstudio: `Git` pane > `Commit` > Stage (checkmark) files > add commit message > `Commit`
++ Rstudio: `Git` pane > Stage (checkmark) files > `Commit` > add commit message > `Commit` > `Close`.
   + Use a commit message like *"add first and last names"*.
 + Rstudio: `Git` pane > `Push` the changes.
 
