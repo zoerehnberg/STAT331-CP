@@ -1,0 +1,106 @@
+---
+title: "Lab 4: Childcare Costs in California"
+format: 
+  html:
+    embed-resources: true
+    code-tools: true
+    toc: true
+editor: source
+code-fold: true
+execute: 
+  error: true
+  echo: true
+  message: false
+  warning: false
+---
+
+```{r setup}
+# load libraries
+library(tidyverse)
+```
+
+```{r load_data}
+# load data
+childcare_costs <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-05-09/childcare_costs.csv")
+counties <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-05-09/counties.csv")
+```
+
+
+```{r}
+ca_childcare <- childcare_costs |>
+  full_join(counties, by = join_by(county_fips_code)) |>
+  filter(state_abbreviation == "CA")
+
+ca_childcare <- ca_childcare |>
+  mutate(county_name = str_remove(county_name, " County")) |>
+  mutate(county_region = fct_collapse(county_name,
+    `Superior California` = c("Butte", "Colusa", "El Dorado", "Glenn", "Lassen", "Modoc", "Nevada", "Placer", "Plumas", "Sacramento", "Shasta", "Sierra", "Siskiyou", "Sutter", "Tehama", "Yolo", "Yuba"),
+    `North Coast` = c("Del Norte", "Humboldt", "Lake", "Mendocino", "Napa", "Sonoma", "Trinity"),
+    `San Fransisco Bay Area` = c("Alameda", "Contra Costa", "Marin", "San Francisco", "San Mateo", "Santa Clara", "Solano"),
+    `Northern San Joaquin Valley` = c("Alpine", "Amador", "Calaveras", "Madera", "Mariposa", "Merced", "Mono", "San Joaquin", "Stanislaus", "Tuolumne"),
+    `Central Coast` = c("Monterey", "San Benito", "San Luis Obispo", "Santa Barbara", "Santa Cruz", "Ventura"),
+    `Southern San Joaquin Valley` = c("Fresno", "Inyo", "Kern", "Kings", "Tulare"),
+    `Inland Empire` = c("Riverside", "San Bernardino"),
+    `Los Angeles County` = "Los Angeles",
+    `Orange County` = "Orange",
+    `San Diego - Imperial` = c("Imperial", "San Diego")
+  ))
+```
+
+
+```{r}
+costs <- ca_childcare |>
+  select(study_year, county_region, `mc_infant`:`mfcc_preschool`) |>
+  pivot_longer(
+    cols = `mc_infant`:`mfcc_preschool`,
+    names_to = "education_level",
+    values_to = "median_center_cost"
+  ) |>
+  mutate(
+    education_level = fct_recode(fct(education_level),
+      "Infant (center)" = "mc_infant",
+      "Infant (family)" = "mfcc_infant",
+      "Toddler (center)" = "mc_toddler",
+      "Toddler (family)" = "mfcc_toddler",
+      "Preschool (center)" = "mc_preschool",
+      "Preschool (family)" = "mfcc_preschool"
+    ),
+    education_level = fct_relevel(
+      education_level,
+      "Infant (center)",
+      "Infant (family)",
+      "Toddler (center)",
+      "Toddler (family)",
+      "Preschool (center)",
+      "Preschool (family)"
+    )
+  )
+```
+
+It's no secret that children are an financially weighty investment--some of the fiscal burden of children is due to trivial things such as an increase in food required for the household, higher water usage, higher electricity usage, etc. This federal dataset provides data on the costs of children and various demographics regarding their families at the county level. We are looking at a truncated dataset focusing on California. Some of the costs of children are a bit more hidden, such as childcare, especially for children under 5 years--let us look at the costs of children across both center based and family based childcare, as well as over three age ranges.
+
+```{r}
+costs |>
+  ggplot(aes(x = education_level, y = median_center_cost, fill = education_level)) +
+  geom_violin() +
+  theme(
+    axis.title.y = element_blank(),
+    legend.position = "none",
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  ) +
+  labs(
+    title = "Weekly California Childcare Price by Age Group and Provider",
+    subtitle = "Weekly Median Price ($)",
+    x = "Age and Childcare Provider",
+  )
+```
+
+As you can see from the comparative violin plots, center based infant care is clearly the most expensive, significantly more than family based infant care, and still more expensive than toddler and preschool care for both family and center based childcare. Speaking of which, looking at those categories reveals that family based childcare seems to be cheaper on a whole, across all three age classifications. Let us look at the median childcare cost across these groups to get a better view of how big the difference is:
+
+```{r}
+costs |>
+  group_by(education_level) |>
+  summarize(median = median(median_center_cost), IQR = IQR(median_center_cost))
+```
+
+From this table we can see that center based infant care is roughly \$92 more expensive per week, which is a significant increase--being 55% more expensive than family based infant childcare. That gap is closed when looking at toddler and preschool children (which is a distinction that may not have been made when the data was collected as the two costs are equivalent.) Herein we can see only a roughly \$30 increase going from family based to center based childcare, being roughly 20% more expensive. As such, we can safely conclude that center based chilcare is more expensive than family based childcare in California, and the degree of that effect varies based upon the age of the child.

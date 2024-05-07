@@ -1,0 +1,150 @@
+---
+title: "Lab 4: Childcare Costs in California"
+format: 
+  html:
+    embed-resources: true
+    code-tools: true
+    toc: true
+    code-fold: true
+editor: source
+execute: 
+  error: true
+  echo: true
+  message: false
+  warning: false
+---
+
+
+```{r setup}
+# load libraries
+library(tidyverse)
+library(janitor)
+```
+
+```{r load_data}
+# load data
+childcare_costs <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-05-09/childcare_costs.csv')
+counties <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-05-09/counties.csv')
+```
+
+```{r}
+california <- counties |> 
+  filter(state_name == "California")
+
+ca_childcare <- childcare_costs  |>
+    inner_join(california,
+               join_by(county_fips_code))
+
+ca_childcare <- ca_childcare |> 
+  mutate(county_name = str_remove(county_name, " County")) |>
+  mutate(county_name = fct(county_name)) |> 
+  mutate(region = fct_collapse(.f= county_name,
+                       "superiror california" = c("Butte", 
+                                                  "Colusa", "El Dorado", "Glenn", 
+                                                  "Lassen", "Modoc", "Nevada", 
+                                                  "Placer", "Plumas", "Sacramento", 
+                                                  "Shasta", "Sierra", "Siskiyou", 
+                                                  "Sutter", "Tehama", "Yolo", "Yuba"),
+                       
+                       "north coast" = c("Del Norte", 
+                                         "Humboldt", "Lake", "Mendocino", 
+                                         "Napa", "Sonoma", "Trinity"),
+                       
+                       "san fransisco bay" = c("Alameda", 
+                                               "Contra Costa", "Marin", "San Francisco", 
+                                               "San Mateo", "Santa Clara", "Solano"),
+                       
+                       "northern san joaquin valley" = c("Alpine",
+                                                         "Amador", "Calaveras", "Madera", 
+                                                         "Mariposa", "Merced", "Mono", 
+                                                         "San Joaquin", "Stanislaus", "Tuolumne"),
+                       
+                       "central coast" = c("Monterey", 
+                                           "San Benito", "San Luis Obispo", "Santa Barbara", 
+                                           "Santa Cruz", "Ventura"),
+                       
+                       "southern san joaquin valley" = c("Fresno",
+                                                         "Inyo", "Kern", "Kings", "Tulare"),
+                       
+                       "inland empire" = c("Riverside", "San Bernardino"),
+                       
+                       "los angeles county" = c("Los Angeles"),
+                       
+                       "orange county" = c("Orange"),
+                       
+                       "san diego" = c("Imperial", "San Diego")))
+
+```
+
+
+# Center-Based Childcare setting versus Family (in-home) Childcare setting. 
+---
+
+## Introduction
+
+This analysis explores the differences in childcare costs between center-based and family (in-home) settings across various developmental stages in California. Understanding these cost variations is crucial for families making informed decisions about childcare options. The data analyzed here include median full-time prices for infants, toddlers, and preschoolers, providing a comprehensive view of how childcare costs vary by type of setting and developmental stage.
+
+## Data
+The data consists of childcare prices collected across multiple regions in California, which includes median full-time costs in both center-based and family settings. We compared these costs by combining three primary developmental stages: infant, toddler, and preschool. Below is our summary statistics output table.
+
+
+```{r}
+#| code-fold: true
+transformed2 <- ca_childcare |> 
+  select(
+    study_year, 
+    region, 
+    mc_infant, 
+    mc_toddler, 
+    mc_preschool,
+    mfcc_infant, 
+    mfcc_toddler, 
+    mfcc_preschool
+  ) |> 
+  pivot_longer(
+    cols = starts_with("mc_") | starts_with("mfcc"),
+    names_to = "category",
+    values_to = "price"
+  ) |> 
+  mutate(category = fct(category)) |> 
+  mutate(
+    setting = fct_collapse(
+      .f = category,
+      "family" = c("mfcc_infant", "mfcc_toddler", "mfcc_preschool"),
+      "center based" = c("mc_infant", "mc_toddler", "mc_preschool")
+    )
+  ) 
+transformed2 |>
+  filter(setting %in% c("center based", "family")) |>
+  group_by(setting, category) |> 
+  summarise(
+    mean_price = mean(price, na.rm = TRUE),
+    median_price = median(price, na.rm = TRUE),
+    sd_price = sd(price, na.rm = TRUE),
+    min_price = min(price, na.rm = TRUE),
+    max_price = max(price, na.rm = TRUE),
+    .groups = "drop"
+  )
+```
+From the table, its apparent that center-childcare groups tend to have higher mean, median, sd, min, and max. The table clearly shows numerical evidence that families may find more affordable and consistent pricing in family settings, whereas center-based care offers a broader range of prices, potentially reflecting a wider variety of services or facilities.
+
+
+## Visualization
+The bar plot below illustrates the median childcare costs in both settings across different developmental stages. 
+
+```{r}
+#| code-fold: true
+ggplot(transformed2, aes(x = category, y = price, fill = setting)) +
+  geom_boxplot(outlier.colour = "red", position = position_dodge(width = 0.8)) +
+  labs(title = "Price Distribution by Category and Setting",
+       x = "Category",
+       y = "Price",
+       fill = "Setting") +
+  theme_minimal()
+```
+
+From the graph, it's evident that the median prices for center-based childcare are consistently higher than those for family settings across all developmental stages. The spread of prices, as shown by the IQR, suggests more variability in the cost of center-based childcare, particularly for infants, where the box is visibly taller. For family settings, prices are not only lower on average, but they also demonstrate less variability, as indicated by the shorter boxes and fewer outliers. The cost for family-based settings also seems to be more consistent across the different developmental stages, showing less differentiation in price between development groups.
+
+## Conclusion
+
+Center-based care consistently incurs higher costs, with infants incurring the greatest expense and significant price variability. Conversely, family settings demonstrate lower and more uniform prices, indicating a more economical and stable option for families.
