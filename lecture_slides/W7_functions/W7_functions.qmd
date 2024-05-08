@@ -22,9 +22,7 @@ Today we will...
 + New Material
   + Function Basics
   + Variable Scope + Environment
-+ Work time:
-  + PA 7: Writing Functions
-  + Lab 7: Functions & Fish
++ PA 7: Writing Functions
 
   
 ## Why write functions?
@@ -562,9 +560,9 @@ find_car_make("Ford Anglica")
 :::
 
 
-## [Practice Activity 7: Writing Functions](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA7.html)
+## [PA 7: Writing Functions](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA7.html)
 
-You will write several small functions, then use them to unscramble a message. Many of the functions have been started for you, but **none** of them are complete as is.
+You will write a few small functions and use them to unscramble a message!
 
 
 ## To do...
@@ -578,7 +576,7 @@ You will write several small functions, then use them to unscramble a message. M
 
 Today we will...
 
-+ Discuss Group Contract
++ Discuss Groupt Project + Group Contract
 + New Material
   + Calling Functions on Datasets
   + Thinking About Missing Data
@@ -590,6 +588,11 @@ Today we will...
 <br>
 
 Check out the Canvas page outlining the group project!
+
+
+## Group Contract Details
+
+
 
 # Calling Functions on Datasets
 
@@ -635,6 +638,17 @@ mtcars |>
 ```
 
 
+## Recall the `penguins` Data
+
+```{r}
+#| echo: true
+library(palmerpenguins)
+data(penguins)
+penguins |> 
+  head()
+```
+
+
 ## Function to Standardize Data
 
 We want to take in a vector of numbers and **standardize** it -- make all values be between 0 and 1.
@@ -652,6 +666,29 @@ std_to_01 <- function(var) {
   return(num / denom)
 }
 ```
+
+
+## Standardizing Variables
+
+Is it a good idea to standardize (scale) variables in a data analysis?
+
+:::: columns
+::: column
+**Why standardize?**
+
++ Easier to compare across variables.
++ Easier to model -- standardizes the amount of variability.
+:::
+::: column
+**Why not standardize?**
+
++ More difficult to interpret the values.
+:::
+::::
+
+. . .
+
+E.g., a penguin with a bill length of 35 mm (std to 0.11) and a mass of 5500 g (std to 0.78).
 
 
 ## Pair Our Function with `dplyr`
@@ -675,34 +712,12 @@ penguins |>
 Recall `across()`!
 
 ```{r}
-#| eval: false
 #| echo: true
 penguins |> 
-  mutate(across(bill_length_mm:body_mass_g, std_to_01))
+  mutate(across(.cols = bill_length_mm:body_mass_g,
+                .fns = ~ std_to_01(.x))) |> 
+  slice_head(n = 4)
 ```
-
-
-## Scaling Variables
-
-Is it a good idea to scale (standardize) variables in a data analysis?
-
-:::: columns
-::: column
-**Why scale?**
-
-+ Easier to compare across variables.
-+ Easier to model -- standardizes the amount of variability.
-:::
-::: column
-**Why not scale?**
-
-+ More difficult to interpret the values.
-:::
-::::
-
-. . .
-
-E.g., a penguin with a bill length of 35 mm (std to 0.11) and a mass of 5500 g (std to 0.78).
 
 
 ## Use variables as function arguments?
@@ -837,13 +852,13 @@ std_column_01(penguins, "bill_length_mm")
 ```
 
 
-## Solution 2
+## Solution 2: `rlang`
 
-Use **embrace injection**.
+Use the `rlang` package!
 
 :::: {.columns}
 ::: {.column width="70%"}
-+ The `rlang` package provides the embrace operator (`{{ }}`) to simplify writing functions around `tidyverse` pipelines. 
++ This package provides operators that simplify writing functions around `tidyverse` pipelines. 
 :::
 ::: {.column width="30%"}
 ```{r}
@@ -854,11 +869,28 @@ knitr::include_graphics("https://github.com/rstudio/hex-stickers/blob/main/thumb
 :::
 ::::
 
-+ With the `{{ }}` operator, you can transport a variable from one function to another and can get around defused code!
++ Read more about using this package for function writing [here](https://rlang.r-lib.org/reference/topic-defuse.html)!
 
-<!-- ::: callout-warning -->
-<!-- This only works for `select()` type functions, that use a literal (tidy) name of the variable to subset the data. -->
-<!-- ::: -->
+
+## Solution 2: `rlang`
+
+Two ways to get around the issue of defused code:
+
+1. Embrace Operator (`{{ }}`)
+  + With `{{ }}`, you can **transport** a variable from one function to another.
+
+. . .
+
+2. Defuse and Inject
+  + You can first use `enquo(arg)` to **defuse** the variable.
+  + Then use `!!arg` to **inject** the variable.
+
+
+## Solution 2: `rlang`
+
+If we use either of these solutions, we also need to use the **walrus operator** (`:=`).
+
++ This means we have to use `:=` instead of `=` in any `dplyr` verb containing one of these `rlang` fixes.
 
 
 ## Recall Our Broken Function
@@ -878,12 +910,14 @@ std_column_01(penguins, body_mass_g)
 ```
 
 + The code is defused, so `mutate()` doesn't know what `body_mass_g` is.
-+ We can inject in the `body_mass_g` variable using `{{ }}`!
++ We need to modify `variable` to make this work correctly!
 
 
-## The Walrus Operator: `:=`
+## Fixing Our Broken Function
 
-When we use the *embrace operator*, we also have to use the *walrus operator* -- `:=` instead of `=`.  
+::: panel-tabset
+
+### Embrace Operator
 
 ```{r}
 #| echo: true
@@ -916,6 +950,46 @@ std_column_01(tmp, body_mass_g) |>
   head()
 ```
 
+### Defuse + Inject
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "4,7"
+std_column_01 <- function(data, variable) {
+  stopifnot(is.data.frame(data))
+  
+  variable <- enquo(variable)
+
+  data <- data |>
+    mutate(!!variable := std_to_01(!!variable))
+  return(data)
+}
+
+std_column_01(penguins, body_mass_g)
+```
+
+
+```{r}
+#| echo: false
+std_column_01 <- function(data, variable) {
+  stopifnot(is.data.frame(data))
+  
+  variable <- enquo(variable)
+
+  data <- data |>
+    mutate(!!variable := std_to_01(!!variable))
+  return(data)
+}
+
+tmp <- penguins |> 
+  select(-flipper_length_mm)
+std_column_01(tmp, body_mass_g) |> 
+  head()
+```
+
+
+:::
 
 ## Inject Multiple Variables
 
@@ -926,12 +1000,13 @@ What if I want to modify multiple columns?
 ```{r}
 #| echo: true
 #| eval: false
-#| code-line-numbers: "5"
+#| code-line-numbers: "5-6"
 std_column_01 <- function(data, variables) {
   stopifnot(is.data.frame(data))
   
   data <- data |> 
-    mutate(across({{variables}}, std_to_01))
+    mutate(across(.cols = {{variables}},
+                  .fns = ~ std_to_01(.x)))
   return(data)
 }
 
@@ -1008,12 +1083,10 @@ We implicitly assume observations are missing **completely** at random!
 . . .
 
 + Can we impute values?
-    + If fish lengths are MAR *within* month, year, and river section, then the distribution of length will be similar for fish of the same month, year, and river section.
+    + If depression levels are MCAR *within* reported sex, age, and education level, then the distribution of depression will be similar for people of the same reported sex, age, and education level.
 
 
-## Lab 7
-
-[Lab 7: Functions + Fish](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab7/LA7_functions.html)
+## [Lab 7: Functions + Fish](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab7/LA7_functions.html)
 
 
 ```{r}
@@ -1026,12 +1099,12 @@ knitr::include_graphics("https://github.com/earobinson95/stat331-calpoly/blob/ma
 ## To do...
   
 + **Lab 7: Functions + Fish**
-  + Due Friday, 5/17 at 11:59pm.
+  + Due Saturday, 5/18 at 11:59pm.
   
 + Read **Chapter 8: Functional Programming**
   + Check-in 8.1 due Monday 5/20 at 10:00am.
   
-  + **Final Project Group Contract**
++ **Final Project Group Contract**
   + Due Monday, 5/20 at 11:59pm.
   
   
