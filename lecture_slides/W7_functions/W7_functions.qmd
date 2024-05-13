@@ -19,6 +19,7 @@ library(palmerpenguins)
 
 Today we will...
 
++ Remember: Group Formation Survey due tonight!
 + New Material
   + Function Basics
   + Variable Scope + Environment
@@ -567,6 +568,8 @@ You will write a few small functions and use them to unscramble a message!
 
 ## To do...
 
++ **PC1: Group Project Formation Survey**
+  + Due TODAY -- Monday, 5/13 at 11:59pm.
 + **PA 7: Writing Functions**
   + Due Wednesday, 5/15 at 10:00am.
 
