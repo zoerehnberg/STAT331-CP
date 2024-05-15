@@ -27,7 +27,7 @@ Today we will...
 + New Material^[Material and images for today's lecture were modified from Dr. Theobold and [Hansjörg Neth's ds4psy text](https://bookdown.org/hneth/ds4psy/12.3-iter:functional-programming.html#iter:functional-programming)]
   + Performing Repeated Tasks + Vectorization
   + Functional Programming: the `map()` family
-+ PA 8: The 12 Days of Christmas Starter Functions
++ PA 8: The Twelve Days of Christmas Starter Functions
 
 
 ## Project Proposal + Data
@@ -568,7 +568,7 @@ knitr::include_graphics("images/bart_board_map.png")
 ```
 
 
-## [PA 8: The 12 Days of Christmas](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA8.html)
+## [PA 8: The Twelve Days of Christmas](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA8.html)
 
 ```{r}
 #| echo: false
@@ -662,7 +662,7 @@ bottles_song(4)
 
 ## To do...
   
-+ **PA 8: The 12 Days of Christmas Starter Functions**
++ **PA 8: The Twelve Days of Christmas Starter Functions**
   + Due Wednesday 5/22 at 10:00am.
   
 + **Project Proposal + Data**
@@ -681,7 +681,7 @@ Today we will...
 + New Material
   + The `map2()` Family
 + Work Time
-  + Lab 8: The 12 Days of Christmas
+  + Lab 8: The Twelve Days of Christmas
   + Project Proposal
 
 
@@ -771,7 +771,7 @@ map2(mods, by_cyl, predict)
 
 
 
-## Lab 8: The 12 Days of Christmas
+## Lab 8: The Twelve Days of Christmas
 
 1. Write a `sing_day()` function.
   
@@ -788,7 +788,7 @@ map2(mods, by_cyl, predict)
 
 ## To do...
   
-+ **Lab 8: The 12 Days of Christmas**
++ **Lab 8: The Twelve Days of Christmas**
   + Due Saturday, 5/25 at 11:59pm.
   
 + **Project Proposal + Data**
