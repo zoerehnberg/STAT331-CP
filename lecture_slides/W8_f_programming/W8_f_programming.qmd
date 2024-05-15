@@ -5,7 +5,7 @@ format:
     theme: default
     auto-stretch: false
 editor: source
-self-contained: true
+embed-resources: true
 execute:
   echo: true
 ---
@@ -19,14 +19,14 @@ library(glue)
 ```
 
 
-## Monday, May 22
+## Monday, May 20
 
 Today we will...
 
 + Project Proposal + Data
 + New Material^[Material and images for today's lecture were modified from Dr. Theobold and [Hansjörg Neth's ds4psy text](https://bookdown.org/hneth/ds4psy/12.3-iter:functional-programming.html#iter:functional-programming)]
-  + Review vectorization
-  + The `map()` family
+  + Performing Repeated Tasks + Vectorization
+  + Functional Programming: the `map()` family
 + PA 8: The 12 Days of Christmas Starter Functions
 
 
@@ -34,7 +34,7 @@ Today we will...
 
 You must complete the *objectives* and write up the *written components* outlined under Section 1 on the Project Details page on Canvas.
 
-  + Due on Canvas on Monday, 5/29.
+  + Due on Canvas by 11:59pm on Tuesday, 5/28 (Tuesday follows a Monday schedule...).
 
 
 # Performing Repeated Tasks
@@ -519,7 +519,7 @@ penguins |>
 :::
 
 
-## `pmap()` + Family
+## The `pmap()` Family
 
 These functions take in a **list of vectors** and a **function**.
 
@@ -533,11 +533,28 @@ knitr::include_graphics("images/pmap.png")
 ```
 
 
-## The `map()` Family
+## The `pmap()` Family
+
+The vectors need to have the **same names** as the arguments of the function you are applying.
+
+```{r}
+fruit <- data.frame(string = c("apple", "banana", "cherry"),
+                    pattern = c("p", "n", "h"),
+                    replacement = c("P", "N", "H"))
+fruit
+```
+
+```{r}
+fruit |> 
+  pmap_chr(str_replace_all)
+```
+
+
+## The `map()` and `pmap()` Family
 
 <br>
 
-There are **so many** functions in the `map()` family -- check out the `purrr` [cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/purrr.pdf)!
+There are **so many** functions -- check out the `purrr` [cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/purrr.pdf)!
 
 
 ## Use functional programming!
@@ -562,35 +579,7 @@ knitr::include_graphics("https://studioplayhouse.org/wp-content/uploads/2020/06/
 ```
 
 
-## A (boring) Example
-
-::: panel-tabset
-
-### Break It Down
-
-How can we print out Timothee Chalamet's statistics [song](https://www.youtube.com/watch?v=BvWefB4NGGI&ab_channel=Timoth%C3%A9eChalametFan)?
-
-+ We need to repeat "Statistics, yup" man times...
-
-```{r}
-map_chr(1:10, ~ "Statistics, yup")
-```
-
-+ ...but at different points in the song, he repeats this phrase a different number of times!
-
-### Function
-
-Let's turn this into a function!
-
-```{r}
-chalamet_statistics <- function(n){
-  lyrics <- map_chr(1:n, ~ "Statistics, yup")
-  
-  return(glue("{lyrics}"))
-}
-```
-
-### `glue()`
+## `glue()`
 
 :::: {.columns}
 ::: {.column width="70%"}
@@ -611,23 +600,16 @@ knitr::include_graphics("images/glue.jpg")
 
 ```{r}
 library(glue)
+
 name <- "Dr. Rehnberg"
 glue('My name is {name}.')
 ```
 
+</br>
 
-### Repeat
+This will be a handy function (and package) for putting our song together!
 
-```{r}
-chalamet_statistics(n = 8)
-```
-
-With `glue()`, long strings get broken by line and concatenated together.
-
-:::
-
-
-## A (better) Example
+## An Example
 
 *99 bottles of beer on the wall, 99 bottles of beer. Take one down, pass it around, 98 bottles of beer on the wall...*
 
@@ -645,6 +627,7 @@ bottles_lyrics(3)
 ```
 
 ### Song
+
 ```{r}
 bottles_song <- function(n){
   song <- map_chr(n:0, bottles_lyrics)
@@ -680,21 +663,25 @@ bottles_song(4)
 ## To do...
   
 + **PA 8: The 12 Days of Christmas Starter Functions**
-  + Due Wednesday 5/24 at 10:00am.
+  + Due Wednesday 5/22 at 10:00am.
   
 + **Project Proposal + Data**
-  + Due Monday 5/29 at 11:59pm.
+  + Due Tuesday 5/28 at 11:59pm.
+  
+</br>
+
+**Tuesday, 5/28 follows a Monday schedule!**
 
 
-## Wednesday, May 24
+## Wednesday, May 22
 
 Today we will...
 
 + Midterm Exam
 + New Material
-  + The `map2()` family
+  + The `map2()` Family
 + Work Time
-  + Lab and Challenge 8
+  + Lab 8: The 12 Days of Christmas
   + Project Proposal
 
 
@@ -707,7 +694,7 @@ Today we will...
     + Don't print out the head of the data (or the full data).
     + Data description -- don't just list the variable names.
     + Intersperse written discussion and plots/tables.
-    + A table of summary statistics should be easily readable -- 40 rows is not easily readbale.
+    + A table of summary statistics should be easily readable -- 40 rows is not easily readable.
 
 
 ## The `map2()` Family
@@ -784,13 +771,15 @@ map2(mods, by_cyl, predict)
 
 
 
-## Lab + Challenge: 12 Days of Christmas
+## Lab 8: The 12 Days of Christmas
 
 1. Write a `sing_day()` function.
   
 ::: callout-tip
+
 + Start with a small example and test it on a single day **outside of the function**.
 + `glue_collapse()` might be useful -- find its arguments in the documentation.
+
 :::
 
 2. Iterate your `sing_day()` function over all days.
@@ -799,16 +788,13 @@ map2(mods, by_cyl, predict)
 
 ## To do...
   
-+ **Lab 8: The 12 Days of Christmas Full Song**
-  + Due Friday, 5/26 at 11:59pm.
-
-+ **Challenge 8: Styling The 12 Days of Christmas**
-  + Due Saturday, 5/27 at 11:59pm.
++ **Lab 8: The 12 Days of Christmas**
+  + Due Saturday, 5/25 at 11:59pm.
   
 + **Project Proposal + Data**
-  + Due Monday, 5/29 at 11:59pm.
+  + Due Tuesday, 5/28 at 11:59pm.
   
 + Read **Chapter 9: Regression & Simulation**
-  + Check-in 9.1 & 9.2 due Monday, 5/29 at 10:00am.
+  + Check-in 9.1 & 9.2 due Tuesday, 5/28 at 10:00am.
   
   
