@@ -1,10 +1,10 @@
 ---
-title: "Lab 8: The 12 Days of Christmas"
+title: "Lab 8: The Twelve Days of Christmas"
 subtitle: "Sing the Full Song"
 author: "Your name"
 format: 
   html:
-    self-contained: true
+    embed-resources: true
     code-tools: true
     toc: true
     number-sections: true
@@ -16,7 +16,7 @@ execute:
   warning: false
 ---
 
-```{r packages}
+```{r setup}
 library(tidyverse)
 xmas <- read.csv("https://raw.githubusercontent.com/zoerehnberg/STAT331-S23/main/practice_activities/xmas.csv")
 ```
@@ -27,12 +27,16 @@ You've already created two helper functions, `pluralize_gift()` and `make_phrase
 
 Today, you will write a function that sings the appropriate lines of the song for a given day. We will then use this function to iterate through the 12 days of Christmas to sing the full song!
 
+## Helper Functions
+
 ::: callout-note
+
 You will need to copy over your functions from the practice activity into your new lab Quarto document.
+
 :::
 
 ```{r}
-# Copy over functions from your practice activity
+# Copy over functions from your practice activity!
 ```
 
 Use your PA functions to create a `Full.Phrase` column in the `xmas2` data set.
@@ -49,7 +53,7 @@ xmas2 <- xmas |>
 ```
 
 
-## Iteration.
+## Iteration
 
 Write a function called `sing_day()` that takes as input:
 
@@ -68,9 +72,11 @@ should return
     a partridge in a pear tree.
 
 ::: callout-tip
+
 **Hint 1:** The `{{phrase_col}}` part, which I provided for you, lets you use column names as arguments to a function. Don't delete that line of code!
 
 **Hint 2:** The `ordinal()` function from the **english** package could be helpful when converting the `line` input (e.g., 1) to a word (e.g., "first").
+
 :::
 
 ```{r sing-day-function}
@@ -78,7 +84,7 @@ should return
 # Arguments:  dataset -- a dataframe containing information about gifts.
 #             num -- the number of the day you want to sing about.
 #             phrase_col -- the variable name for the column in dataset with the song phrases.
-# Returns:  a string with the line of the song containing ALL gifts for the given day.
+# Returns:    a string with the line of the song containing ALL gifts for the given day.
 
 sing_day <- function(dataset, num, phrase_col){
   
@@ -105,17 +111,19 @@ sing_day <- function(dataset, num, phrase_col){
 ```
 
 ::: callout-note
+
 ### A Small Test
 
 ```{r}
 xmas2 |>
   sing_day(num = 2, phrase_col = Full.Phrase)
 ```
+
 :::
 
-## Use Your Functions!
+## Sing the Song
 
-Run the following code to test out your functions! The output should be the lyrics for the entire 12 Days of Christmas song.
+Run the following code to test out your functions! The output should be the lyrics for the entire *The Twelve Days of Christmas* song.
 
 ```{r}
 map_chr(1:12, ~ sing_day(dataset = xmas2, 
@@ -126,10 +134,73 @@ map_chr(1:12, ~ sing_day(dataset = xmas2,
 ```
 
 ::: callout-warning
+
 **You will get automatic deductions for:**
 
 + Functions that do not work the way they are intended.
 + Hard coding values in your in functions.
 + Not using the `map()` code supplied for you to iterate the function you just wrote.
 + Not singing the full song. Remember, each day, you get the gift for that day *and* all the prior days.
+
+:::
+
+## Style the Song Output
+
+Let's output the song in a visually appealing way!
+
+::: callout-note
+
+Make the following changes to your `sing_day()` function above. Do not copy the code to a new code chunk for the style section.
+
+:::
+
+
+
+**a. Remove any additional whitespace.**
+
++ There should be only *one* whitespace character between words.
++ There should be *no* whitespace at the beginning or end of each phrase.
+
+**b. Print each phase on its own line.**
+
++ For example, your function should output the following for `sing_line(xmas, num = 2, phrase_col = Full.Phrase)`:
+
+```
+On the second day of Christmas, my true love gave to me: 
+two turtle doves and 
+a partridge in a pear tree
+```
+
+**c. Add blank lines between the different lines of the song.**
+
++ For example, your output should look like the following:
+
+```
+On the second day of Christmas, my true love gave to me: 
+two turtle doves and 
+a partridge in a pear tree
+
+On the first day of Christmas, my true love gave to me:
+a partridge in a pear tree
+```
+
+**d. Ensure the lines of your song are grammatically correct.**
+
+1.  *Use of Commas* -- each line should end in a comma *except* for the last line.
+2.  *Use of And* -- there should be an "and" included *either* at the [end]{.underline} of the second to last line *or* at the [beginning]{.underline} of the final line.
+3.  *Use of Period* -- there should be a period at the end of the final line.
+
++ For example, your function should output the following for `sing_line(xmas, num = 3, phrase_col = Full.Phrase)`:
+
+```
+On the third day of Christmas, my true love gave to me: 
+three french hens, 
+two turtle doves, and 
+a partridge in a pear tree.
+```
+
+::: callout-note
+
+While I am a fan of the Oxford comma, you do not have to use an Oxford comma for the second to last phrase of your song.
+
 :::
