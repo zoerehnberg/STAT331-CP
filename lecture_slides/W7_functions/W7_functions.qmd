@@ -588,13 +588,12 @@ Today we will...
 
 ## Group Project Details
 
-<br>
-
 Check out the Canvas page outlining the group project!
 
+<br>
 
-## Group Contract Details
-
++ Groups have been assigned.
++ Your group contract is due on Monday!
 
 
 # Calling Functions on Datasets
@@ -1054,7 +1053,7 @@ Consider a study of depression.
 1. **Missing Completely at Random** (MCAR)
     + Some subjects have missing lab values because a batch of samples was processed improperly.
 2. **Missing at Random** (MAR)
-    + Subjects who *identify as male* are less likely to complete a survey on depression severity.
+    + Subjects who *identify as men* are less likely to complete a survey on depression severity.
 3. **Missing Not at Random** (MNAR)
     + Subjects *with more severe depression* are less likely to complete a survey on depression severity.
 
@@ -1063,7 +1062,7 @@ Consider a study of depression.
 
 We implicitly assume observations are missing **completely** at random!
 
-+ We might be mostly removing data from subjects who identify as male.
++ We might be mostly removing data from subjects who identify as men.
 + We might be mostly removing data from subjects with severe depression.
 + We are inadvertently making our data **less representative**.
 
@@ -1086,7 +1085,7 @@ We implicitly assume observations are missing **completely** at random!
 . . .
 
 + Can we impute values?
-    + If depression levels are MCAR *within* reported sex, age, and education level, then the distribution of depression will be similar for people of the same reported sex, age, and education level.
+    + If depression is MCAR *within* gender, age, and education level, then the distribution of depression will be similar for people of the same gender, age, and education level.
 
 
 ## [Lab 7: Functions + Fish](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab7/LA7_functions.html)
