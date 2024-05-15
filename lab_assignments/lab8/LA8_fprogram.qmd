@@ -39,7 +39,7 @@ You will need to copy over your functions from the practice activity into your n
 # Copy over functions from your practice activity!
 ```
 
-Use your PA functions to create a `Full.Phrase` column in the `xmas2` data set.
+Use your PA functions to create a `Full.Phrase` column in the `xmas2` dataset.
 
 ```{r}
 xmas2 <- xmas |>
@@ -195,7 +195,7 @@ a partridge in a pear tree
 ```
 On the third day of Christmas, my true love gave to me: 
 three french hens, 
-two turtle doves, and 
+two turtle doves and 
 a partridge in a pear tree.
 ```
 
