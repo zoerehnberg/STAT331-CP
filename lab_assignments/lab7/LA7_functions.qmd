@@ -94,7 +94,7 @@ I might write the following `R` code to carry out the rescaling procedure for th
 #| eval: false
 fish <- fish |> 
   mutate(length = (length - min(length, na.rm = TRUE)) / 
-           (max(length, na.rm = TRUE) - min(length)), 
+           (max(length, na.rm = TRUE) - min(length, na.rm = TRUE)), 
          weight = (weight - min(weight, na.rm = TRUE)) / 
            (max(weight, na.rm = TRUE) - min(length, na.rm = TRUE)))
 ```

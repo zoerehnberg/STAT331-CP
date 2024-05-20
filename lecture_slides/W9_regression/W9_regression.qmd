@@ -6,7 +6,7 @@ format:
     theme: default
     auto-stretch: false
 editor: source
-self-contained: true
+embed-resources: true
 self-contained-math: true
 execute:
   echo: true
@@ -18,7 +18,7 @@ execute:
 library(tidyverse)
 ```
 
-## Monday, May 29
+## Tuesdaym May 28
 
 Today we will...
 
@@ -277,10 +277,10 @@ broom::augment(ncbirth_lm) |>
 
 There are four conditions that must be met for  a linear regression model to be appropriate:
 
-1. A linear relationship.
-2. Independent observations.
-3. Normally distributed residuals.
-4. Residuals have constant variance.
+1. **L**inear relationship.
+2. **I**ndependent observations.
+3. **N**ormally distributed residuals.
+4. **E**qual variance of residuals.
 
 
 ## Model Diagnostics
@@ -345,31 +345,21 @@ Should not be able to know the $y$ value for one observation based on the $y$ va
 
 **Are the residuals normally distributed?**
 
-Observations should be symmetric around the regression line.
-
-:::: {.columns}
-::: {.column width=60%}
-
 Less important than linearity or independence: 
 
-+ Always get an unbiased estimate of the population model.
-+ Large sample sizes make the model more reliable.
-
-:::
-::: {.column width=40%}
 ```{r}
 #| echo: false
-#| fig-height: 8
+#| fig-height: 4
 ncbirth_lm |> 
   broom::augment() |> 
   ggplot(aes(x = .resid)) +
   geom_histogram(aes(y = ..density..)) +
   geom_density(color = "steelblue", 
                lwd = 1.5) + 
-  xlab("Residuals")
+  xlab("Residuals") +
+  theme(aspect.ratio = 1)
 ```
-:::
-::::
+
 
 ### Equal Variance
 
@@ -517,31 +507,28 @@ When fitting a linear regression, you can include...
 `lm(y ~ I(x1^2) + x1)`
 
 
-## Work Time:
+## [PA 9.1: Mystery Animal](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA9_1.html)
 
-+ [PA 9.1: Mystery Animal](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA9_1.html)
 
-+ [Lab 9: Baby Names](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab9/LA9_regression.html)
-
-+ [Challenge 9: Formatting Nice Tables](https://zoerehnberg.github.io/STAT331-S23/challenges/CH_regression.html)
+## [Lab 9: Baby Names](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab9/LA9_regression.html)
 
 
 ## To do...
   
++ **PC3: Project Proposal + Data**
+  + Due **TODAY, 5/28 at 11:59pm**
+
 + **PA 9.1: Mystery Animal**
-  + Due **Friday, 6/2 at 11:59pm**
+  + Due **Wednesday, 5/29 at 10:00am**
 
 + **Lab 9: Baby Names**
-  + Due **Friday, 6/2 at 11:59pm**
+  + Due **Saturday, 6/1 at 11:59pm**
   
-+ **Challenge 9: Formatting Nice Tables**
-  + Due **Saturday, 6/3 at 11:59pm**
-  
-+ **Project Check-point 2: Linear Regression**
-  + Due **Monday, 6/5 at 11:59pm**
++ **PC4: Linear Regression**
+  + Due **Monday, 6/3 at 11:59pm**
 
 
-## Wednesday, May 31
+## Wednesday, May 29
 
 Today we will...
 
@@ -549,8 +536,8 @@ Today we will...
   + Simulating Distributions
 + Work Time
   + PA 9.2: Instrument Con
-  + Lab & Challenge 9
-  + Project: Linear Regression
+  + Lab 9: Baby Names
+  + PC4: Linear Regression
 
 
 ## Statistical Distributions
@@ -990,22 +977,24 @@ Type this: `` My random number is `r knitr::inline_expr("my_rand")`. ``
 To get this: My random number is `r my_rand`.
 
 
-## Work Time:
+## [PA 9.2: Instrument Con](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA9_2.html)
 
-+ [PA 9.2: Instrument Con](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA9_2.html)
 
-+ [Lab 9: Baby Names](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab9/LA9_regression.html)
-
-+ [Challenge 9: Formatting Nice Tables](https://zoerehnberg.github.io/STAT331-S23/challenges/CH_regression.html)
 
 
 ## To do...
 
-+ **PA 9.1: Mystery Animal** -- due Friday, 6/2 at 11:59pm.
-+ **PA 9.2: Instrument Con** -- due Friday, 6/2 at 11:59pm.
-+ **Lab 9: Baby Names** -- due Friday, 6/2 at 11:59pm.
-+ **Challenge 9: Formatting Nice Tables** -- due Saturday, 6/3 at 11:59pm.
-+ **Project: Linear Regression** -- due Monday, 6/5 at 11:59pm.
-+ Read **Chapter 10** and complete **Check-in 10.1** -- due Monday, 6/5 at 10:00am.
++ **PA 9.2: Instrument Con**
+  + Due Saturday, 6/1 at 11:59pm.
+
++ **Lab 9: Baby Names**
+  + Due Saturday, 6/1 at 11:59pm.
+
++ Read **Chapter 10** and complete **Check-in 10.1**.
+  + Due Monday, 6/3 at 10:00am.
+
++ **PC4: Linear Regression**
+  + Due Monday, 6/3 at 11:59pm.
+
   
   
