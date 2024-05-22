@@ -1039,14 +1039,14 @@ mtcars |>
 :::
 
 
-## Lab 8: The Twelve Days of Christmas
+## [Lab 8: The Twelve Days of Christmas](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab8/LA8_fprogram.html)
 
 1. Write a `sing_day()` function.
   
 ::: callout-tip
 
 + Start with a small example and test it on a single day **outside of the function**.
-+ `str_flattens()` might be useful -- find its arguments in the documentation.
++ `str_flatten()` might be useful -- find its arguments in the documentation.
 
 :::
 
