@@ -66,10 +66,41 @@ Repeatedly execute the *same* operation over and over.
 ::: {.column width="40%"}
 ```{r}
 #| echo: true
-for(i in 1:10){
+for(i in 1:6){
   print(i^2)
 }
 ```
+
+:::
+::: {.column width="60%"}
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 80%
+#| fig-cap: "https://bookdown.org/hneth/ds4psyl"
+knitr::include_graphics("images/bart_board_for.png")
+```
+:::
+::::
+
+
+## Iteration
+
+Repeatedly execute the *same* operation over and over.
+
++ Loops (e.g., `for()` and `while()`) allow us to iterate.
+
+:::: {.columns}
+::: {.column width="40%"}
+```{r}
+#| echo: true
+for(i in 1:6){
+  print(i^2)
+}
+```
+
++ But loops tend to be **slow**!
+
 :::
 ::: {.column width="60%"}
 ```{r}
@@ -110,6 +141,36 @@ x
 ```
 :::
 ::: {.column width="50%"}
+
+:::
+::::
+
+
+## Vectorization
+
+Many operations in R are **vectorized**.
+
++ These functions operate on *vectors* of values rather than a *single* value.
++ We can iterate *without* writing a loop.
+
+```{r}
+#| echo: true
+x <- seq(from = -4, to = 6)
+x
+```
+
+:::: {.columns}
+::: {.column width="50%"}
+Loop:
+
+```{r}
+for(i in 1:length(x)){
+  x[i] <- abs(x[i])
+}
+x
+```
+:::
+::: {.column width="50%"}
 Vectorized:
 
 ```{r}
@@ -126,7 +187,7 @@ abs(x)
 
 ## Vectorization
 
-**Not every function is (or can be) vectorized.**
+**Not every function is vectorized.**
 
 + E.g., a function using `if()` statements **cannot** operate on vectors.
 
@@ -161,7 +222,7 @@ The `if(x > 0)` statement can only be checked for something of length 1 (a singl
 
 ## Vectorization
 
-**Not every function is (or can be) vectorized.**
+**Not every function is vectorized.**
 
 + E.g., a function using `if()` statements **cannot** operate on vectors.
 
@@ -200,10 +261,15 @@ result
 
 ## Vectorization
 
-**Not every function is (or can be) vectorized.**
+**Not every function is vectorized.**
 
-+ E.g., a function using `if()` statements **cannot** operate on vectors.
-+ A **vectorized** version of `if()` statements? `case_when()`
++ **Vectorized** versions of `if()` statements?
+
+<center>
+
+`if_else()` and `case_when()`
+
+</center>
 
 ```{r}
 pos_neg_zero <- function(x){
@@ -465,6 +531,66 @@ R returns an error if the output is of the wrong type!
 :::
 
 
+## Comparing Speed
+
+Using functional programming can be **much faster** than using `for` loops.
+
+::: panel-tabset
+
+### `for()`
+
+```{r}
+#| echo: true
+loop_func <- function(d){
+  typ <- rep(NA, ncol(d))
+  for(i in 1:ncol(d)){
+    typ[i] <- class(d[,i])
+  }
+  return(typ)
+}
+```
+
+### `map()`
+
+```{r}
+#| echo: true
+map_func <- function(d){
+  typ <- map_chr(d, class)
+  return(typ)
+}
+```
+
+### Run
+
+```{r}
+#| echo: true
+df <- as.data.frame(matrix(1,
+                           nrow = 5,
+                           ncol = 7))
+
+loop_func(df)
+map_func(df)
+```
+
+### Comparae
+
+```{r}
+#| echo: true
+#| eval: false
+df <- as.data.frame(matrix(1,
+                           nrow = 5,
+                           ncol = 100000))
+
+microbenchmark::microbenchmark(loop_func(df),
+                               map_func(df),
+                               times = 20)
+```
+
+![](images/speed.png)
+
+:::
+
+
 ## `map_if()`
 
 The `map_if()` function allows us to **conditionally** apply a function to each item in a list.
@@ -677,24 +803,72 @@ bottles_song(4)
 
 Today we will...
 
-+ Midterm Exam
++ Midterm Exam (extra point on SA and OEA)
 + New Material
   + The `map2()` Family
 + Work Time
   + Lab 8: The Twelve Days of Christmas
-  + Project Proposal
+  + PC3: Project Proposal + Data
 
 
-## Midterm Exam
+## Comparing Speed
 
-+ Call a function only once, when possible.
-+ ONLY print out what is being asked for.
-+ Open-Ended Analysis
-    + State your research question up front.
-    + Don't print out the head of the data (or the full data).
-    + Data description -- don't just list the variable names.
-    + Intersperse written discussion and plots/tables.
-    + A table of summary statistics should be easily readable -- 40 rows is not easily readable.
+Using `for` loops can be **much slower** than using functional programming.
+
+::: panel-tabset
+
+### `for()`
+
+```{r}
+#| echo: true
+loop_func <- function(d){
+  typ <- rep(NA, ncol(d))
+  for(i in 1:ncol(d)){
+    typ[i] <- class(d[,i])
+  }
+  return(typ)
+}
+```
+
+### `map()`
+
+```{r}
+#| echo: true
+map_func <- function(d){
+  typ <- map_chr(d, class)
+  return(typ)
+}
+```
+
+### Run
+
+```{r}
+#| echo: true
+df <- as.data.frame(matrix(1,
+                           nrow = 5,
+                           ncol = 7))
+
+loop_func(df)
+map_func(df)
+```
+
+### Comparae
+
+```{r}
+#| echo: true
+#| eval: false
+df <- as.data.frame(matrix(1,
+                           nrow = 5,
+                           ncol = 100000))
+
+microbenchmark::microbenchmark(loop_func(df),
+                               map_func(df),
+                               times = 20)
+```
+
+![](images/speed.png)
+
+:::
 
 
 ## The `map2()` Family
@@ -737,7 +911,8 @@ map2_chr(a, b,
 
 ### The Problem
 
-Regress vehicle MPG on vehicle weight. Do the regression *separately* for 4-, 6-, and 8-cylinder vehicles.
++ Regress vehicle MPG on vehicle weight.
++ Do the regression *separately* for 4-, 6-, and 8-cylinder vehicles.
 
 ### Split Data
 
@@ -770,6 +945,99 @@ map2(mods, by_cyl, predict)
 :::
 
 
+## `nest()` and `unnest()`
+
++ We can pair functions from the `map()` family very nicely with two `tidyr` functions: `nest()` and `unnest()`.
++ These allow us to easily map functions onto subsets of the data.
+
+
+## `nest()`
+
+**Nest** subsets of the data (as tibbles) inside a tibble.
+
++ Specify the column(s) to create subsets on.
+
+:::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| echo: true
+mtcars |> 
+  nest(cyl_data = -cyl)
+```
+:::
+::: {.column width="50%"}
+```{r}
+mtcars |> 
+  nest(cg_data = -c(cyl,gear))
+```
+
+:::
+::::
+
+## `unnest()`
+
+**Un-nest** the data by row binding the subsets back together.
+
++ Specify the column(s) that contains the subsets.
+
+```{r}
+#| echo: true
+mtcars |> 
+  nest(cyl_data = -cyl) |> 
+  unnest(cyl_data) |> 
+  head()
+```
+
+
+## Big `map2()` Example (Again)
+
+::: panel-tabset
+
+### `nest()`
+
+```{r}
+mtcars |>
+  nest(cyl_data = -cyl)
+```
+
+### `lm()`
+
+```{r}
+mtcars |>
+  nest(cyl_data = -cyl) |>
+  mutate(mod = map(cyl_data, 
+                   ~ lm(mpg ~ wt, data = .x)))
+```
+
+### `predict()`
+
+```{r}
+mtcars |>
+  nest(cyl_data = -cyl) |>
+  mutate(mod = map(cyl_data, 
+                   ~ lm(mpg ~ wt, data = .x)),
+         pred_mpg = map2(.x = mod,
+                         .y = cyl_data, 
+                         .f = ~ predict(object = .x, data = .y)))
+```
+
+### `unnest()`
+
+```{r}
+mtcars |>
+  nest(cyl_data = -cyl) |>
+  mutate(mod = map(cyl_data, 
+                   ~ lm(mpg ~ wt, data = .x)),
+         pred_mpg = map2(.x = mod,
+                         .y = cyl_data,
+                         .f = ~ predict(object = .x, data = .y))) |> 
+  select(-mod) |> 
+  unnest(cols = c(cyl_data, pred_mpg)) |> 
+  select(cyl, wt, mpg, pred_mpg)
+```
+
+:::
+
 
 ## Lab 8: The Twelve Days of Christmas
 
@@ -778,7 +1046,7 @@ map2(mods, by_cyl, predict)
 ::: callout-tip
 
 + Start with a small example and test it on a single day **outside of the function**.
-+ `glue_collapse()` might be useful -- find its arguments in the documentation.
++ `str_flattens()` might be useful -- find its arguments in the documentation.
 
 :::
 

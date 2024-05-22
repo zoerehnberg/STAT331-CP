@@ -3,7 +3,7 @@ title: "PA 9.1: Mystery Animal"
 subtitle: "Linear Regression"
 format: 
   html:
-    self-contained: true
+    embed-resources: true
     code-tools: true
     toc: true
     number-sections: true
@@ -24,7 +24,7 @@ library(tidyverse)
 
 ## Data
 
-The data set contains the weights of a particular animal before and after a year of eating only roasted duck.
+The data contain the weights of a particular animal before and after a year of eating only roasted duck.
 
 ```{r}
 mystery_animal <- read_csv("https://raw.githubusercontent.com/zoerehnberg/STAT331-S23/main/practice_activities/mystery_animal.csv")
