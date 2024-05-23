@@ -23,10 +23,15 @@ library(tidyverse)
 Today we will...
 
 + New Material
-  + Simulating Distributions
+  + Statistical Distributions
+  + Simulating Data
 + Work Time
   + PA 9.1: Instrument Con
+  + PC3: Project Proposal + Data
   + PC4: Linear Regression
+
+
+# Statistical Distributions
 
 
 ## Statistical Distributions
@@ -267,7 +272,7 @@ dbinom(x = 12, size = 20, prob = 0.3)
 :::
 
 
-## Empirical vs Theoretical Distributions
+## Empirical vs. Theoretical Distributions
 
 ```{r}
 #| echo: false
@@ -376,8 +381,10 @@ data |>
 
 :::
 
+# Simulating Data
 
-## Simulating Data
+
+## Simulate a Dataset
 
 ::: panel-tabset
 
@@ -462,13 +469,13 @@ fake_data |>
 :::
 
 
-## simulate + `map()`
+## Simulate Multiple Datasets
 
 ::: panel-tabset
 
 ### Function
 
-Write a function to simulate height data for a population with some average and SD height.
+Write a function to simulate height data from a population with some mean and SD height.
 
 ```{r}
 ht_func <- function(n = 200, avg, std){
@@ -479,24 +486,43 @@ ht_func <- function(n = 200, avg, std){
 ht_func(n = 5, avg = 66, std = 3)
 ```
 
+### Parameters
+
+Create a mean and SD height for each population.
+
+```{r}
+expand_grid(mean_ht = seq(from = 60, to = 78, by = 6),
+            std_ht  = c(3, 6))
+```
+
 ### Simulate
 
-Simulate multiple datasets with different average heights and SDs of height.
+Simulate datasets with different mean and SD heights.
 
 ```{r}
 #| code-fold: true
+expand_grid(mean_ht = seq(from = 60, to = 78, by = 6),
+            std_ht  = c(3, 6)) |> 
+  mutate(ht_data = pmap(list(avg = mean_ht,
+                             std  = std_ht),
+                        ht_func)) |>
+  unnest(cols = ht_data) |> 
+  head()
+```
+
+### Plot
+
+Consider the samples simulated from each population.
+
+```{r}
+#| echo: false
 fake_ht_data <- expand_grid(mean_ht = seq(from = 60, to = 78, by = 6),
                           std_ht  = c(3, 6)) |> 
   mutate(ht_data = pmap(list(avg = mean_ht,
                              std  = std_ht),
                         ht_func)) |>
   unnest(cols = c(ht_data))
-
-fake_ht_data |> 
-  head()
 ```
-
-### Plot
 
 ```{r}
 #| code-fold: true
@@ -506,37 +532,52 @@ fake_ht_data |>
 fake_ht_data |> 
   ggplot(aes(x = ht)) +
   geom_histogram(color = "white") +
-  facet_grid(std_ht ~ mean_ht)
+  facet_grid(std_ht ~ mean_ht) +
+  labs(x = "Height (in)",
+       y = "",
+       subtitle = "Frequency",
+       title = "Simulated Height Data from 8 Populations")
 ```
 :::
 
+## Draw a Random Sample
 
-## `sample()`
-
-Suppose you want to take a random sample of values:
+Use `sample()` to take a random sample of values from a vector.
 
 ```{r}
 my_vec <- c("dog", "cat", "bunny", "horse", "goat", "chicken")
+
 sample(x = my_vec, size = 3)
+
 set.seed(1)
 sample(x = my_vec, size = 5, replace = T)
 ```
 
 
-## `sample_n()`
+## Draw a Random Sample
 
-Suppose you want to take a random sample of observations from your data:
+Use `sample_n()` to take a random sample of observations (rows) from a dataset.
 
 ```{r}
-fake_sample <- fake_data |> 
+fake_data |> 
   sample_n(size = 3)
-fake_sample
 ```
 
 
-## Simulation Example (Bdays)
+## Example: Birthday Simulation
 
-Suppose there is a group of 50 people. Simulate the approximate probability at least two people have the same birthday (i.e. the same day of the year not considering year of birth; also ignore the leap year). 
+Suppose there is a group of 50 people.
+
++ Simulate the approximate probability that at least two people have the same birthday (same day of the year, not considering year of birth or leap years).
+
+
+## Example: Birthday Simulation
+
+Write a function to ...
+
++ ... simulate the birthdays of 50 people.
++ ... count how many birthdays are shared.
++ ... return whether or not a shared birthday exists.
 
 ```{r}
 bDays <- function(n = 50){
@@ -546,17 +587,18 @@ bDays <- function(n = 50){
   double_bdays <- bday_data |> 
     count(bday) |> 
     filter(n >= 2) |> 
-    count() |> 
-    pull(n)
+    nrow()
   
   return(double_bdays > 0)
 }
 ```
 
 
-## Simulation Example (Bdays)
+## Example: Birthday Simulation
 
-Suppose there is a group of 50 people. Simulate the approximate probability at least two people have the same birthday (i.e. the same day of the year not considering year of birth; also ignore the leap year). 
+Use a `map()` function to simulate 1000 datasets.
+
++ What proportion of these datasets contain at least two people with the same birthday?
 
 ```{r}
 sim_results <- map_lgl(.x = 1:1000,
@@ -564,15 +606,6 @@ sim_results <- map_lgl(.x = 1:1000,
 
 sum(sim_results)/1000
 ```
-
-
-
-
-
-
-
-
-
 
 
 ## In-line Code
@@ -591,22 +624,35 @@ Type this: `` My random number is `r knitr::inline_expr("my_rand")`. ``
 To get this: My random number is `r my_rand`.
 
 
-## [PA 9.2: Instrument Con](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA9_2.html)
+## [PA 9.1: Instrument Con](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA9_1.html)
+
+</br>
+
+Work with statistical distributions to determine if an instrument salesman is lying.
 
 
 
+## To do...
+  
++ **PC3: Project Proposal + Data**
+  + Due **TODAY, 5/28 at 11:59pm**
+
++ **PA 9.1: Instrument Con**
+  + Due **TOMORROW, 5/29 at 10:00am**
+  
++ **PC4: Linear Regression**
+  + Due **Monday, 6/3 at 11:59pm**
 
 
 
-
-## Tuesdaym May 28
+## Wednesday, May 29
 
 Today we will...
 
 + New Material
   + Review of Simple Linear Regression
   + Assessing Model Fit
-+ PA 9.1: Mystery Animal
++ PA 9.2: Mystery Animal
 + Lab 9: Baby Names
 
 
@@ -1088,31 +1134,15 @@ When fitting a linear regression, you can include...
 `lm(y ~ I(x1^2) + x1)`
 
 
-## [PA 9.1: Mystery Animal](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA9_1.html)
+## [PA 9.2: Mystery Animal](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA9_2.html)
 
 
 ## [Lab 9: Baby Names](https://zoerehnberg.github.io/STAT331-S23/lab_assignments/lab9/LA9_regression.html)
 
 
 ## To do...
-  
-+ **PC3: Project Proposal + Data**
-  + Due **TODAY, 5/28 at 11:59pm**
 
-+ **PA 9.1: Mystery Animal**
-  + Due **Wednesday, 5/29 at 10:00am**
-
-+ **Lab 9: Baby Names**
-  + Due **Saturday, 6/1 at 11:59pm**
-  
-+ **PC4: Linear Regression**
-  + Due **Monday, 6/3 at 11:59pm**
-
-
-
-## To do...
-
-+ **PA 9.2: Instrument Con**
++ **PA 9.2: Mystery Animal**
   + Due Saturday, 6/1 at 11:59pm.
 
 + **Lab 9: Baby Names**
@@ -1123,6 +1153,3 @@ When fitting a linear regression, you can include...
 
 + **PC4: Linear Regression**
   + Due Monday, 6/3 at 11:59pm.
-
-  
-  

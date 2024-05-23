@@ -3242,20 +3242,20 @@ Note
 </ul>
 <p><strong>b. Print each phase on its own line.</strong></p>
 <ul>
-<li>For example, your function should output the following for <code>sing_line(xmas, num = 2, phrase_col = Full.Phrase)</code>:</li>
+<li>For example, your function should output the following for <code>sing_day(xmas, num = 2, phrase_col = Full.Phrase)</code>:</li>
 </ul>
-<pre><code>On the second day of Christmas, my true love gave to me: 
+<pre><code>On the second day of Christmas, my true love sent to me: 
 two turtle doves and 
 a partridge in a pear tree</code></pre>
 <p><strong>c. Add blank lines between the different lines of the song.</strong></p>
 <ul>
 <li>For example, your output should look like the following:</li>
 </ul>
-<pre><code>On the second day of Christmas, my true love gave to me: 
+<pre><code>On the second day of Christmas, my true love sent to me: 
 two turtle doves and 
 a partridge in a pear tree
 
-On the first day of Christmas, my true love gave to me:
+On the first day of Christmas, my true love sent to me:
 a partridge in a pear tree</code></pre>
 <p><strong>d. Ensure the lines of your song are grammatically correct.</strong></p>
 <ol type="1">
@@ -3264,9 +3264,9 @@ a partridge in a pear tree</code></pre>
 <li><em>Use of Period</em> – there should be a period at the end of the final line.</li>
 </ol>
 <ul>
-<li>For example, your function should output the following for <code>sing_line(xmas, num = 3, phrase_col = Full.Phrase)</code>:</li>
+<li>For example, your function should output the following for <code>sing_day(xmas, num = 3, phrase_col = Full.Phrase)</code>:</li>
 </ul>
-<pre><code>On the third day of Christmas, my true love gave to me: 
+<pre><code>On the third day of Christmas, my true love sent to me: 
 three french hens, 
 two turtle doves and 
 a partridge in a pear tree.</code></pre>
@@ -3738,10 +3738,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb16-171"><a href="#cb16-171" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-172"><a href="#cb16-172" aria-hidden="true" tabindex="-1"></a>**b. Print each phase on its own line.**</span>
 <span id="cb16-173"><a href="#cb16-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-174"><a href="#cb16-174" aria-hidden="true" tabindex="-1"></a><span class="ss">+ </span>For example, your function should output the following for <span class="in">`sing_line(xmas, num = 2, phrase_col = Full.Phrase)`</span>:</span>
+<span id="cb16-174"><a href="#cb16-174" aria-hidden="true" tabindex="-1"></a><span class="ss">+ </span>For example, your function should output the following for <span class="in">`sing_day(xmas, num = 2, phrase_col = Full.Phrase)`</span>:</span>
 <span id="cb16-175"><a href="#cb16-175" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-176"><a href="#cb16-176" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-177"><a href="#cb16-177" aria-hidden="true" tabindex="-1"></a><span class="in">On the second day of Christmas, my true love gave to me: </span></span>
+<span id="cb16-177"><a href="#cb16-177" aria-hidden="true" tabindex="-1"></a><span class="in">On the second day of Christmas, my true love sent to me: </span></span>
 <span id="cb16-178"><a href="#cb16-178" aria-hidden="true" tabindex="-1"></a><span class="in">two turtle doves and </span></span>
 <span id="cb16-179"><a href="#cb16-179" aria-hidden="true" tabindex="-1"></a><span class="in">a partridge in a pear tree</span></span>
 <span id="cb16-180"><a href="#cb16-180" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
@@ -3751,11 +3751,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb16-184"><a href="#cb16-184" aria-hidden="true" tabindex="-1"></a><span class="ss">+ </span>For example, your output should look like the following:</span>
 <span id="cb16-185"><a href="#cb16-185" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-186"><a href="#cb16-186" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-187"><a href="#cb16-187" aria-hidden="true" tabindex="-1"></a><span class="in">On the second day of Christmas, my true love gave to me: </span></span>
+<span id="cb16-187"><a href="#cb16-187" aria-hidden="true" tabindex="-1"></a><span class="in">On the second day of Christmas, my true love sent to me: </span></span>
 <span id="cb16-188"><a href="#cb16-188" aria-hidden="true" tabindex="-1"></a><span class="in">two turtle doves and </span></span>
 <span id="cb16-189"><a href="#cb16-189" aria-hidden="true" tabindex="-1"></a><span class="in">a partridge in a pear tree</span></span>
 <span id="cb16-190"><a href="#cb16-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-191"><a href="#cb16-191" aria-hidden="true" tabindex="-1"></a><span class="in">On the first day of Christmas, my true love gave to me:</span></span>
+<span id="cb16-191"><a href="#cb16-191" aria-hidden="true" tabindex="-1"></a><span class="in">On the first day of Christmas, my true love sent to me:</span></span>
 <span id="cb16-192"><a href="#cb16-192" aria-hidden="true" tabindex="-1"></a><span class="in">a partridge in a pear tree</span></span>
 <span id="cb16-193"><a href="#cb16-193" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb16-194"><a href="#cb16-194" aria-hidden="true" tabindex="-1"></a></span>
@@ -3765,10 +3765,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb16-198"><a href="#cb16-198" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>*Use of And* -- there should be an &quot;and&quot; included *either* at the [end]{.underline} of the second to last line *or* at the <span class="co">[</span><span class="ot">beginning</span><span class="co">]</span>{.underline} of the final line.</span>
 <span id="cb16-199"><a href="#cb16-199" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>*Use of Period* -- there should be a period at the end of the final line.</span>
 <span id="cb16-200"><a href="#cb16-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-201"><a href="#cb16-201" aria-hidden="true" tabindex="-1"></a><span class="ss">+ </span>For example, your function should output the following for <span class="in">`sing_line(xmas, num = 3, phrase_col = Full.Phrase)`</span>:</span>
+<span id="cb16-201"><a href="#cb16-201" aria-hidden="true" tabindex="-1"></a><span class="ss">+ </span>For example, your function should output the following for <span class="in">`sing_day(xmas, num = 3, phrase_col = Full.Phrase)`</span>:</span>
 <span id="cb16-202"><a href="#cb16-202" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-203"><a href="#cb16-203" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-204"><a href="#cb16-204" aria-hidden="true" tabindex="-1"></a><span class="in">On the third day of Christmas, my true love gave to me: </span></span>
+<span id="cb16-204"><a href="#cb16-204" aria-hidden="true" tabindex="-1"></a><span class="in">On the third day of Christmas, my true love sent to me: </span></span>
 <span id="cb16-205"><a href="#cb16-205" aria-hidden="true" tabindex="-1"></a><span class="in">three french hens, </span></span>
 <span id="cb16-206"><a href="#cb16-206" aria-hidden="true" tabindex="-1"></a><span class="in">two turtle doves and </span></span>
 <span id="cb16-207"><a href="#cb16-207" aria-hidden="true" tabindex="-1"></a><span class="in">a partridge in a pear tree.</span></span>
