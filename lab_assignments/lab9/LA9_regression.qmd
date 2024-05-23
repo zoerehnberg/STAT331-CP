@@ -1,10 +1,10 @@
 ---
 title: "Lab 9: Baby Names"
-subtitle: "Regression"
+subtitle: "Linear Regression"
 author: "Your name"
 format: 
   html:
-    self-contained: true
+    embed-resources: true
     code-tools: true
     toc: true
 editor: source
@@ -26,16 +26,13 @@ library(tidyverse)
 
 Our dataset for this lab contains the popularity over time for baby names that begin with the letter "Z". For each year and each name with at least 50 recorded babies born, we are given the counts of how many babies had that name in each US state.
 
+**We are going to look at how the name "Zoe" has changed over time!**
+
 ::: callout-note
-If you wish to download the data set for the first letter of **your name**, you can find that data [here](https://github.com/earobinson95/stat331-calpoly/tree/master/lab-assignments/lab9/baby-names-data).
+
+If you wish to download the data for the first letter of **your name**, you can find that data [here](https://github.com/earobinson95/stat331-calpoly/tree/master/lab-assignments/lab9/baby-names-data).
+
 :::
-
-Let's take a look at how the name "Zoe" has changed over time. As my name begins with "Z", you should load in the `StateNames_Z.csv` data set.
-
-```{r}
-#| include: false
-babies_z <- read.csv("../../lab_assignments/lab9/StateNames_Z.csv")
-```
 
 ## Explore the Number of Zoes
 
@@ -45,38 +42,43 @@ babies_z <- read.csv("../../lab_assignments/lab9/StateNames_Z.csv")
   + **Additionally, if there were no babies born with the name "Zoe" for that combination of state and assigned sex, the table should have a value of 0 (not an `NA`).** 
   
 ::: callout-warning 
+
 To be clear, there should be **one** row per state, which means you need to `summarize()` all the years for each state.
+
 :::
 
 ::: callout-caution
-The dataset has a column titled `Gender`, which contains two values `"F"` and `"M"`, representing "Female" and "Male". The sex someone was assigned at birth is different from their gender identity [(definitions)](https://www.plannedparenthood.org/learn/gender-identity/sex-gender-identity). Thus, this variable should be renamed to `Sex` or `Assigned_Sex`.
+
+The dataset has a column titled `Gender`, which contains two values `"F"` and `"M"`, representing "Female" and "Male". The sex someone was assigned at birth is different from their gender or gender identity [(definitions)](https://www.plannedparenthood.org/learn/gender-identity/sex-gender-identity). Thus, this variable should be **renamed** to `Sex` or `Assigned_Sex`.
 
 You should be using only **one** `dplyr` pipeline!
+
 :::
 
-<!-- Insert your game plan sketch with markdown code here -->
+![Game Plan]()
 
 ```{r}
-# Code Q1
+# Code for Q1.
 ```
 
-
-**2. You should see in the table above that "Zoe" is a name given overwhelmingly to babies assigned "female" at birth. Create a new dataset that includes only babies named "Zoe" assigned `F`emale at birth. Summarize the data so there is one observation (the total number of "Zoe"s born) for each year.**
+**2. You should see in the table above that "Zoe" is a name given overwhelmingly to babies assigned "female" at birth. Create a new dataset that includes only babies named "Zoe" assigned `F` at birth. Summarize the data so there is one observation (the total number of "Zoe"s born) for each year.**
 
 ::: callout-note
+
 + Remember you want to rename the `Gender` variable.
 + Save this dataset so you can use it going forward.
 + No output needed for this question, only code.
+
 :::
 
 ```{r}
-# Code Q2
+# Code for Q2.
 ```
 
 **3. Using the new summarized dataset from above, make a visualization showing how the popularity of the name "Zoe" for babies assigned female at birth has changed over the years.**
 
 ```{r}
-# Code Q3
+# Code for Q3.
 ```
 
 ## Modeling the Number of Zoes
@@ -84,31 +86,42 @@ You should be using only **one** `dplyr` pipeline!
 **4. Using the summarized dataset from above, create a linear model with `Year` as the explanatory variable and the number of "Zoe"s as the response.**
 
 ```{r}
-# Code Q4
+# Code for Q4.
 ```
 
 **5. Visualize the fitted linear regression line.**
 
 ```{r}
-# Code Q5
+# Code for Q5.
 ```
 
 **6. Write out the estimated regression equation.**
 
 ```{r}
-# Code Q6
+# Code for Q6.
 ```
+
+::: callout-tip
+
+You may want to try using **LaTeX math mode** to nicely format your regression equation.
+
++ LaTeX allows us to easily typeset complicated mathematical formulas. You can include LaTeX math within a Quarto document with `$`’s.
++ Here is some basic [info](https://quarto.org/docs/authoring/markdown-basics.html#equations) on adding equations to a Quarto doc.
+
+:::
 
 <!-- Equation for Q6 -->
 
 **7. Plot the *residuals* of the fitted model versus `Year`. Comment on the residuals - do you see any patterns?**
 
 ::: callout-tip
+
 The `augment()` function from the `broom` package may be helpful!
+
 :::
 
 ```{r}
-# Code Q7
+# Code for Q7.
 ```
 
 **8. What do you conclude from this model? Is my name getting cooler?**
@@ -122,33 +135,75 @@ I am very sensitive about the spelling of my name -- Zoe is objectively the best
 **9. Narrow the original Z name dataset down to only female-assigned babies with these alternative spellings -- "Zoey", "Zooey", "Zoie", or "Zowie".**
 
 ```{r}
-# Code Q9
+# Code for Q9.
 ```
 
 **10. Make a plot comparing the popularity (total count) of these alternate spellings over time.**
 
 ```{r}
-# Code Q10
+# Code for Q10.
 ```
 
 **11. The "Zoey" spelling is way more common than the other three alternatives. Remake the above plot without "Zoey" so we can better see the trends.**
 
 ```{r}
-# Code Q11
+# Code for Q11.
 ```
 
 **12. The spellings "Zowie" and "Zooey" are not very common alternatives; however, "Zooey" gained some popularity in the 2010's. Create a table to display the number of babies born with each alternative spelling in California, Texas, and Pennsylvania during 2012.**
 
 ::: callout-warning
+
 Specifically, each of the **four** alternative spellings should be in their own column and each of the **three** states should have their own row.
 
 Again, replace any `NA` with 0.
+
 :::
 
 ::: callout-caution
+
 You should be using only **one** `dplyr` pipeline!
+
 :::
 
 ```{r}
-# Code Q12
+# Code for Q12.
+```
+
+## Format Your Tables
+
+We are now going to improve the formatting of our summary tables. There are many packages for generating nice tables, but I prefer the `kable()` function from the `knitr` package for *simple* tables and the `datatable()` function from the `DT` package for *more sophisticated* tables.
+
+I want you to think of tables just like the visualizations you've been making. **We want all aspects of our tables to be clear to the reader.** Tables are also a great avenue to display creativity! In fact, there is a yearly [Posit table contest](https://www.rstudio.com/blog/rstudio-table-contest-2022/), and [here](https://community.rstudio.com/c/table-gallery/64) is a gallery of the award winning tables.
+
+**13. Use the `kable()` function from the [kable package](https://bookdown.org/yihui/rmarkdown-cookbook/kable.html) to create a nice, basic HTML version of the tables in *both Q1 and Q12*.**
+
+::: callout-warning
+
+Similar to axis labels in visualizations, **every** column name in a table should describe what it contains. For example, a column of `n` is less explanatory than `Frequency of Babies`.
+
+:::
+
+```{r}
+# Code for Q13.
+```
+
+**14. Use either the `DT` or `kableExtra` packages to spice up both your tables from above. You should add *different* features to the two tables.**
+
++ [kableExtra package](https://bookdown.org/yihui/rmarkdown-cookbook/kableextra.html)
++ [DT package](https://rstudio.github.io/DT/)
+  
+::: callout-tip
+
+Some ideas on how to "spice up" a table:
+
++ Change the font and / or font size.
++ Add striping and / or cell borders.
++ Create custom formatting of columns.
++ Allow the user to interact with the table (e.g., filtering columns, editing cells).
+
+:::
+    
+```{r}
+# Code for Q14.
 ```
