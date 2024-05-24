@@ -6,7 +6,7 @@ format:
     html-math-method: mathjax
     auto-stretch: false
 editor: source
-self-contained: true
+embed-resources: true
 execute:
   echo: true
 ---
@@ -17,17 +17,22 @@ execute:
 library(tidyverse)
 ```
 
-## Monday, June 5
+## Monday, June 3
 
 Today we will...
 
-+ Canvas Announcement
-+ Cookie allergies?
-+ Questions from Week 9: Linear Regression?
++ Game Plan Survey
 + Data Intro + Cleaning: Feedback
 + New Material:
   + Predictive Checks
-+ Final Project Work Time
++ Work Time
+  + PA 10: MPG and Horsepower?
+  + Final Project
+
+
+## Game Plan Survey
+
+
 
 
 ## Data Intro + Cleaning: Feedback
@@ -300,27 +305,32 @@ For your group project, you will run predictive checks to assess how well your m
 + This is Section 3 of the Project Details page.
 
 
+## [PA 10: MPG and Horsepower?](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA_10.html)
+
+
 ## To do...
 
-+ **Course Evaluation**
-  + Closes **Friday, 6/9 at 11:59pm**.
++ **PA 10: MPG and Horsepower?**
+  + Due **Wednesday, 6/5 at 10:00am**.
   
-+ **Final Project Report**
-  + Due **Monday, 6/12 at 11:59pm**.
++ **Course Evaluation**
+  + Closes **Friday, 6/7 at 11:59pm**.
 
 + **Final Exam**
-  + Friday, 6/16 from 10:10-1:00 for the 10:10am section.
-  + Wednesday, 6/14 from 10:10-1:00 for the 12:10pm section.
+  + Monday, 6/10 from 1:10-4:00pm for the 2:10pm section.
+  + Tuesday, 6/11 from 7:10-10:00am for the 4:10pm section.
+  
++ **Final Project Report**
+  + Due **Wednesday, 6/12 at 11:59pm**.
   
 
-## Wednesday, June 7
+## Wednesday, June 5
 
 Today we will...
 
 + Linear Regression: Feedback
 + Final Exam: What to Expect
 + Remaining Q & A
-+ R Hex Cookies!
 + Final Project Work Time
 
 
@@ -352,9 +362,6 @@ Today we will...
   + I encourage you to find a clearer way to display this relationship over time.
   + If you choose to go this route, you will need lots of clear explanation about what ratio you are calculating and what it means.
   
-  
-  
-  
 
 ## Final Exam: What to Expect
 
@@ -378,21 +385,28 @@ The exam is **cumulative** and will definitely contain questions on:
 + Statistical modeling with `lm`.
 
 
+
+## Finals Week Office Hours
+
+</br>
+
+Monday 6/10 from 10:00am to 12:00pm!
+
+
 # Q & A
 
-# Cookies!
-
-![](images/hex.png)
 
 ## To do...
 
++ **Game Plan Survey!**
+
 + **Course Evaluation**
-  + Closes **Friday, 6/9 at 11:59pm**.
+  + Closes **Friday, 6/7 at 11:59pm**.
+
++ **Final Exam**
+  + Monday, 6/10 from 1:10-4:00pm for the 2:10pm section.
+  + Tuesday, 6/11 from 7:10-10:00am for the 4:10pm section.
   
 + **Final Project Report**
-  + Due **Monday, 6/12 at 11:59pm**.
-  
-+ **Final Exam**
-  + 10:10-12:00 Section: **Friday, 6/16 from 10:10am - 1:00pm**.
-  + 12:10-2:00 Section: **Wednesday, 6/14 from 10:10am - 1:00pm**.
+  + Due **Wednesday, 6/12 at 11:59pm**.
   
