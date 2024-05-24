@@ -1,0 +1,110 @@
+---
+title: "PA 10: MPG and Horsepower?"
+subtitle: "Simulating Response Values"
+format: 
+  html:
+    embed-resources: true
+    code-tools: true
+    toc: true
+    number-sections: true
+editor: source
+execute: 
+  error: true
+  echo: true
+  message: false
+  warning: false
+---
+
+```{r setup}
+#| include: false
+library(tidyverse)
+```
+
+[Download starter .qmd file](PA10.qmd)
+
+## The Data
+
+We will be using the `mtcars` datraset. These data are available in base R -- use the following code to load the dataset into your workspace.
+
+```{r}
+data("mtcars")
+```
+
+We will simulate some response values to help evaluate the validity of using linear regression to model the relationship between car gas mileage and horsepower.
+
+## Fit the Model
+
+Fit a linear regression model to predict gas mileage (`mpg`) from horsepower (`hp`). Call your fitted model `mod`.
+
+```{r}
+# Linear regression code.
+```
+
+## Predict Responses
+
+Now that we've fit a linear model, we need to predict a response value (`pred_mpg`) for each observed explanatory value (`hp`). Use the `predict()` function, and call your vector or predictions `pred_mpg`.
+
+```{r}
+# Prediction code.
+```
+
+## Add Random Error
+
+We don't expect there to be a *perfectly* linear relationship between horsepower and gas mileage. Therefore, to make our predictions realistic, we need to add some random error to the predicted values. Linear regression assumes this random error is normally distributed with mean 0 and standard deviation $\sigma$.
+
+First, let's extract an estimate of $\sigma$ from our fitted linear regression model. Call your estimated standard deviation `est_sigma`.
+
+```{r}
+# Standard deviation code.
+```
+
+Next, let's write a function to add the normal random error to our predictions.
+
+```{r}
+# The input x should be a numeric vector or value.
+rand_error <- function(x, mean = 0, sd){
+  
+  # Add the body.
+  
+}
+```
+
+Finally, run the following code to add random error to your predictions.
+
+```{r}
+set.seed(1234)
+sim_response <- tibble(sim_mpg = rand_error(pred_mpg,
+                                            sd = est_sigma))
+```
+
+## Compare Simulated and Observed MPG
+
+Run the following code to create a dataset of observed horsepower, observed MPG, and simulated MPG.
+
+```{r}
+full_data <- mtcars |> 
+  select(hp, mpg) |> 
+  bind_cols(sim_response)
+```
+
+Now create a scatterplot of simulated MPG vs. observed MPG. Add a 45$^o$ line to represent a perfect linear relationship.
+
+```{r}
+# Scatterplot code.
+```
+
+## Regress Observed MPG on Simulated MPG
+
+Perform another linear regression, this time of observed MPG on simulated MPG. Extract the $R^2$ value from the fitted model to quantify the strength of relationship between the observed and simulated values.
+
+```{r}
+# Second linear regression code.
+```
+
+To fully perform predictive checks, we would iterate over this process many times. We will leave that task for your final project.
+
+## Canvas Submission: Strength of Relationship
+
+> What is the $R^2$ from your last regression?
+
+> What does this tell you about the usefulness of using linear regression to model the relationship between MPG and horsepower?

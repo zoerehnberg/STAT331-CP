@@ -176,11 +176,11 @@ a partridge in a pear tree
 + For example, your output should look like the following:
 
 ```
-On the second day of Christmas, my true love sent to me: 
-two turtle doves and 
+On the first day of Christmas, my true love sent to me:
 a partridge in a pear tree
 
-On the first day of Christmas, my true love sent to me:
+On the second day of Christmas, my true love sent to me: 
+two turtle doves and 
 a partridge in a pear tree
 ```
 
