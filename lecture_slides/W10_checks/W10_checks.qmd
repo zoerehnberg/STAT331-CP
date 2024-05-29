@@ -33,51 +33,6 @@ Today we will...
 ## Game Plan Survey
 
 
-
-
-## Data Intro + Cleaning: Feedback
-
-**Your grade reflects the completeness of your submission, not the correctness!**
-
-+ Describe **how** the data were collected, if provided.
-  + E.g., how do we know the average life expectancy?
-+ Explain **why** you performed your chosen cleaning steps.
-+ This assignment is to assess **your learning in this course**. You are expected to use functions and code techniques from this class.
-  + You will lose points for using non-tidyverse functions to do tasks that we have discussed in this class!
-
-
-## Data Intro + Cleaning: Feedback
-
-**Code:**
-
-+ All code should be hidden -- use `echo: false`.
-+ Don't name the `R` functions you have used ("We used `str_detect` to...".).
-  + Instead, describe what you did in plain English.
-+ Don't use dataset or variable names in the text.
-  + Say "We removed missing values from per capita GDP." rather than "We removed `NA` from `per_cap_gdp`."
-+ Don't print out the head of the data!
-
-
-## Data Intro + Cleaning: Feedback
-
-**Citations:**
-
-+ Cite your sources, including:
-  + data sources.
-  + description of your variables that is not general knowledge.
-+ You should have **both** in-line citations and a *References* section at the end of your report.
-
-
-## Data Intro + Cleaning: Feedback
-
-**Style + Organization:**
-
-+ Define all acronyms, especially any that are related to the variables of interest.
-+ Everything should be in paragraph form -- **no** bullets or numbered lists.
-+ Read through your paper from top to bottom to make sure the organization makes sense.
-  + At what point might someone get confused?
-
-
 # Predictive Checks
 
 > Any good analysis should include a check of the “adequacy of the fit of the model to the data and the plausibility of the model...” -- Andrew Gelman

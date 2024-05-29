@@ -649,11 +649,55 @@ Work with statistical distributions to determine if an instrument salesman is ly
 
 Today we will...
 
++ Data Intro + Cleaning: Feedback
 + New Material
   + Review of Simple Linear Regression
   + Assessing Model Fit
 + PA 9.2: Mystery Animal
 + Lab 9: Baby Names
+
+
+## Data Intro + Cleaning: Feedback
+
++ Describe **how** the data were collected, if provided.
+  + E.g., how do we know the average life expectancy?
++ Explain **why** you performed your chosen cleaning steps.
++ This assignment is to assess **your learning in this course**. You are expected to use functions and code techniques from this class.
+  + You will lose points for using non-tidyverse functions to do tasks that we have discussed in this class!
+
+
+## Data Intro + Cleaning: Feedback
+
+**Code:**
+
++ All code should be hidden -- use `echo: false` or `code-fold: true` in your YAML.
++ Don't name the `R` functions you have used ("We used `str_detect` to...".).
+  + Instead, describe what you did in plain English.
++ Don't use dataset or variable names in the text.
+  + Say "We removed missing values from per capita GDP." rather than "We removed `NA` from `per_cap_gdp`."
++ Don't print out the head of the data!
+
+
+## Data Intro + Cleaning: Feedback
+
+**Citations:**
+
++ Cite your sources, including:
+  + data sources.
+  + description of your variables that is not general knowledge.
+  + any other outside resources.
++ You should have **both** in-line citations and a *References* section at the end of your report.
+
+
+## Data Intro + Cleaning: Feedback
+
+**Style + Organization:**
+
++ Define all acronyms, especially any that are related to the variables of interest.
++ Everything should be in paragraph form -- **no** bullets or numbered lists.
++ Read through your paper from top to bottom to make sure the organization makes sense.
+  + At what point might someone get confused?
+
 
 
 # Some Data
