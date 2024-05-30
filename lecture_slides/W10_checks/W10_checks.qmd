@@ -22,12 +22,12 @@ library(tidyverse)
 Today we will...
 
 + Game Plan Survey
-+ Data Intro + Cleaning: Feedback
 + New Material:
   + Predictive Checks
 + Work Time
   + PA 10: MPG and Horsepower?
-  + Final Project
+  + PC4: Linear Regression
+  + PC5: Final Report
 
 
 ## Game Plan Survey
@@ -257,10 +257,14 @@ knitr::include_graphics("images/predchecks-5.jpg")
 
 For your group project, you will run predictive checks to assess how well your model performs.
 
-+ This is Section 3 of the Project Details page.
++ This is Section 3 of the Project Details page!
 
 
 ## [PA 10: MPG and Horsepower?](https://zoerehnberg.github.io/STAT331-S23/practice_activities/PA_10.html)
+
+</br>
+
+Let's practice implementing *one iteration* of predictive checks.
 
 
 ## To do...
@@ -348,7 +352,7 @@ The exam is **cumulative** and will definitely contain questions on:
 Monday 6/10 from 10:00am to 12:00pm!
 
 
-# Q & A
+# Final Exam + Final Project Q & A
 
 
 ## To do...
