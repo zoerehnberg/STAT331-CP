@@ -20,7 +20,7 @@ execute:
 library(tidyverse)
 ```
 
-[Download starter .qmd file](PA10.qmd)
+[Download starter .qmd file](PA_10.qmd)
 
 ## The Data
 
