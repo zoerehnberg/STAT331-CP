@@ -301,11 +301,13 @@ Today we will...
 
 + Think about the readability of the numbers you are presenting.
   + Do you need 6 decimal places?
-  + Is scientific notation easily understood by the public?
+  + Is scientific notation easily understood?
 
-+ Include units on your plots!
++ Include **units** on your plots!
 
-+ If you do any transformations, make sure you mention them.
++ If your data do not look to have a linear relationship, try transforming them!
+
++ If you do any **transformations**, make sure you discuss them.
   + Also make sure they are clear on any plots!
 
 
@@ -316,15 +318,10 @@ Today we will...
 
 
 + If you are modeling the average across years (or one particular year) make sure you include a plot of the average (or that year) in addition to the full data.
+  + Show the data you are using for your linear regression.
 
++ Before you implement your linear regression, give an overview of the method and why it is appropriate in this setting.
 
-## Linear Regression: Feedback
-
-+ Some of you used a ratio of the response to the explanatory to show the relationship over time.
-  + This is often not easy to understand or interpret.
-  + I encourage you to find a clearer way to display this relationship over time.
-  + If you choose to go this route, you will need lots of clear explanation about what ratio you are calculating and what it means.
-  
 
 ## Final Exam: What to Expect
 
