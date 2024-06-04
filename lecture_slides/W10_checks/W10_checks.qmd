@@ -320,7 +320,7 @@ Today we will...
 + If you are modeling the average across years (or one particular year) make sure you include a plot of the average (or that year) in addition to the full data.
   + Show the data you are using for your linear regression.
 
-+ Before you implement your linear regression, give an overview of the method and why it is appropriate in this setting.
++ Before implementing linear regression, give an overview of the method and why it is appropriate in this setting.
 
 
 ## Final Exam: What to Expect
